@@ -1,0 +1,13 @@
+{
+  "scripts": {
+    "docs:dev": "vitepress dev",
+    "docs:build": "vitepress build",
+    "docs:preview": "vitepress preview"
+  },
+  "dependencies": {
+    "js-yaml": "^4.1.0",
+    "pinia": "^2.0.33",
+    "vitepress": "^1.0.0-alpha.61",
+    "vue": "^3.2.47"
+  }
+}

@@ -1,0 +1,57 @@
+<script setup lang="ts">
+import { storeToRefs } from "pinia"
+import { useContentStore } from '../stores/content'
+import FilterGroup from '../components/FilterGroup.vue'
+
+const contentStore = useContentStore();
+const { filterList, labelledFilteredContent } = storeToRefs(contentStore);
+const { resetAllFilters } = contentStore;
+</script>
+
+<template>
+  <div class="sidebar">
+    <div class="card">
+      <div class="card-header">
+        <span class="header-text">Filter ({{ labelledFilteredContent.length }} results)</span>
+        <button class="btn btn-sm btn-secondary float-right" @click="resetAllFilters">
+          Reset
+        </button>
+      </div>
+      <div class="card-body">
+        <form>
+          <FilterGroup v-for="filterGroup of filterList" :label="filterGroup.label" :filters="filterGroup.filters"
+            :key="filterGroup.key" />
+        </form>
+      </div>
+    </div>
+  </div>
+</template>
+
+<style scoped>
+.choice {
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #CCC
+}
+
+.choice:last-child {
+  border-bottom: none;
+}
+
+.float-right {
+  float: right !important
+}
+
+.header-text {
+  font-size: 1.2em;
+}
+
+.sidebar {
+  max-width: 300px;
+  min-width: 300px;
+  height: 100%;
+  float: left;
+  margin-right: 20px;
+  margin-top: 20px;
+}
+</style>
