@@ -11,6 +11,10 @@ filterDimensions:
     value: pattern
 ---
 
+## {{ $frontmatter.title }}
+
+{{ $frontmatter.description }}
+
 The following snippet is an AWS CloudFormation template for an ECS task definition.
 
 It launches an NGINX reverse proxy server, directly from Amazon Elastic Container Registry Public. This default container does not do anything except show a simple

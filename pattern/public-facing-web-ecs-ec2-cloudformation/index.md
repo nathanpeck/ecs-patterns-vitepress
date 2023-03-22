@@ -13,11 +13,10 @@ filterDimensions:
   - key: type
     value: pattern
 ---
-<card>
 
-  ## {{ title }}
+## {{ $frontmatter.title }}
 
-  <br />
+{{ $frontmatter.description }}
 
   <diagram filename='diagram.png'></diagram>
 
@@ -29,8 +28,6 @@ filterDimensions:
   - A public facing endpoint designed to receive push notifications, perhaps from Amazon SNS (Simple Notification Service)
   - An edge service which needs to make outbound connections to other services on the internet
 
-
-</card>
 
 <codefile filename='public-cluster.yml' language='yml'>
 </codefile>

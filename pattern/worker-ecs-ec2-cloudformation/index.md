@@ -13,11 +13,9 @@ filterDimensions:
   - key: type
     value: pattern
 ---
-<card>
+## {{ $frontmatter.title }}
 
-  ## {{ title }}
-
-  <br />
+{{ $frontmatter.description }}
 
   A fully private service is generally used for important internal business services that need to be protected from direct access by the public:
 
@@ -41,8 +39,6 @@ The public facing subnet hosts a couple resources:
 - NAT gateway: A networking bridge to allow resources inside the private subnet to initiate outbound communications to the internet, while not allowing inbound connections.
 
 The private subnet is used to run your application containers. The EC2 instances hosting the containers do not have a public IP address, only a private IP address internal to the VPC. As a result if your application initiates an outbound connection the connection gets routed through the NAT gateway in the public subnet. Additionally, there is no way for any traffic to directly reach your container. Instead all inbound connections must go to the load balancer which will pick and choose whether to pass the inbound connection on to the protected container inside the private VPC subnet.
-
-</card>
 
 <codefile filename='private-cluster.yml' language='yml'>
 </codefile>

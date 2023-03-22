@@ -13,11 +13,13 @@ filterDimensions:
     value: tutorial
 ---
 
-  #### About
+## {{ $frontmatter.title }}
 
-  AWS Copilot is the official command line tool for Amazon ECS. It helps you to build your local container and deploy it as a serverless deployment hosted in AWS Fargate, and orchestrated by Amazon ECS
+#### About
 
-  #### Step 1: Download & Configure AWS Copilot
+AWS Copilot is the official command line tool for Amazon ECS. It helps you to build your local container and deploy it as a serverless deployment hosted in AWS Fargate, and orchestrated by Amazon ECS
+
+#### Step 1: Download & Configure AWS Copilot
 
 You’ll need a few things to use AWS Copilot - the AWS Copilot binary, AWS CLI, Docker Desktop (needs to be running) and AWS credentials.
 
