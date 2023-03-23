@@ -22,5 +22,4 @@ Autoscaling works like this:
 
 The following template automatically sets up CloudWatch alarms, autoscaling policies, and attaches them to an ECS service.
 
-<codefile filename='scale-service-by-cpu.yml' language='yml'>
-</codefile>
+<<< @/pattern/scale-ecs-service-cloudformation/files/scale-service-by-cpu.yml

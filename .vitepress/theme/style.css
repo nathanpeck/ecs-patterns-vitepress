@@ -12635,3 +12635,44 @@ fieldset:disabled .btn {
 }
 
 /*# sourceMappingURL=bootstrap.min.css.map */
+
+
+
+.shiki {
+  background-color: #2e3440ff;
+  overflow: auto;
+  overflow-wrap: break-word;
+  padding: 2rem;
+  margin-top: 1rem;
+  margin-bottom: 3rem;
+  white-space: pre-wrap;
+  border-radius: 5px;
+}
+
+div[class^="language-"] {
+  position: relative;
+  max-width: 1000px;
+}
+
+.copy {
+  position: absolute;
+  right: 0px;
+  margin: 10px;
+  border-radius: 5px;
+}
+
+.copy:after {
+  content: 'Copy';
+}
+
+.lang {
+  display: none;
+}
+
+h2 {
+  padding-bottom: .75em;
+}
+
+h4 {
+  padding-bottom: .5em;
+}

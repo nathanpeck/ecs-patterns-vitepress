@@ -34,5 +34,6 @@ const { labelledFilteredContent } = storeToRefs(contentStore);
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+  margin-bottom: 100px;
 }
 </style>

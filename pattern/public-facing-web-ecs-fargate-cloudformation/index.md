@@ -27,10 +27,6 @@ filterDimensions:
   - A public facing endpoint designed to receive push notifications, perhaps from Amazon SNS (Simple Notification Service)
   - An edge service which needs to make outbound connections to other services on the internet
 
+<<< @/pattern/public-facing-web-ecs-fargate-cloudformation/files/public-cluster.yml
 
-
-<codefile filename='public-cluster.yml' language='yml'>
-</codefile>
-
-<codefile filename='public-service.yml' language='yml'>
-</codefile>
+<<< @/pattern/public-facing-web-ecs-fargate-cloudformation/files/public-service.yml

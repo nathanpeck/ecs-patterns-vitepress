@@ -8,6 +8,8 @@ filterDimensions:
     value: aws-cli
   - key: type
     value: script
+  - key: capacity
+    value: anywhere
 ---
 
 ## {{ $frontmatter.title }}
@@ -19,5 +21,4 @@ However, you should be
 aware that each time you cleanup the SSM registration key and reregister the host it will
 be a new SSM managed intance. Additionally, you may still need to use the SSM console or API to clean up old managed instances that you no longer wish to track.
 
-<codefile filename='uninstall-ecs-anywhere.sh' language='shell'>
-</codefile>
+<<< @/pattern/uninstall-ecs-anywhere/files/uninstall-ecs-anywhere.sh

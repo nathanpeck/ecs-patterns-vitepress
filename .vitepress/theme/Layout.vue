@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useData, useRoute } from 'vitepress'
+import { useData } from 'vitepress'
 import { data as posts } from './loaders/posts.data.js'
 import { data as loadedFilters } from './loaders/filters.data.js'
 import { data as loadedFilterGroups } from './loaders/filter-groups.data.js'

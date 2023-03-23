@@ -32,6 +32,24 @@ export const useContentStore = defineStore('content', () => {
   const filters = ref([] as Array<Filter>)
   const filterGroups = ref([] as Array<FilterGroup>)
 
+  // Computed dictionary of filters by key
+  const filtersByKeyValue = computed(() => {
+    var dict = {}
+    filters.value.forEach(function (filter) {
+      dict[`${filter.key}:${filter.value}`] = filter;
+    })
+    return dict;
+  })
+
+  // Computed dictionary of filter groups by key
+  const filterGroupsByKey = computed(() => {
+    var dict = {}
+    filterGroups.value.forEach(function (filterGroup) {
+      dict[filterGroup.key] = filterGroup;
+    })
+    return dict;
+  })
+
   // A computed list of filters organized by filter group, used for rendering the
   // sidebar filter component
   const filterList = computed(() => {
@@ -49,6 +67,10 @@ export const useContentStore = defineStore('content', () => {
     return filters.value.filter(thisFilter => thisFilter.checked === true)
   })
 
+  // A list of the required categories that have checked filters.
+  // Users can multiselect within a single category. A piece of content
+  // has to match at least one of the checked filters inside of that
+  // category.
   const filterCategories = computed(() => {
     var categories = new Set();
     for (const checkedFilter of checkedFilters.value) {
@@ -60,7 +82,7 @@ export const useContentStore = defineStore('content', () => {
   // A computed list of the available content filtered according to
   // the checked filters.
   const filteredContent = computed(() => {
-    // If no filters are applied, then return all content.
+    // Fast path: if no filters are applied, then return all content.
     if (checkedFilters.value.length == 0) {
       return content.value;
     }
@@ -112,5 +134,17 @@ export const useContentStore = defineStore('content', () => {
     }
   }
 
-  return { content, filteredContent, filters, filterGroups, filterList, labelledFilteredContent, resetAllFilters }
+  // Expose all stored values and computed values to
+  // consumers of the store.
+  return {
+    content,
+    filteredContent,
+    filters,
+    filterGroups,
+    filterList,
+    labelledFilteredContent,
+    resetAllFilters,
+    filtersByKeyValue,
+    filterGroupsByKey
+  }
 });
