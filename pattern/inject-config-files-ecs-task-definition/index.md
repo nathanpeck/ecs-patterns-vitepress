@@ -1,5 +1,5 @@
 ---
-title: Inject configuration files in an ECS task definition
+title: Inject configuration files in an Elastic Container Service (ECS) task definition
 description: >-
   How to add custom config files to your container at runtime, by using a command
   override in the ECS task definition

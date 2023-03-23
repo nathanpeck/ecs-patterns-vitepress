@@ -87,17 +87,19 @@ export const useContentStore = defineStore('content', () => {
       return content.value;
     }
 
-    // If filters are applied then find at least one match in each category
+    // If filters are applied then find at least one match from each category
     return content.value.filter(function (thisContent) {
       for (const requiredCategory of filterCategories.value) {
         let matchedCategory = false;
         for (const dimension of thisContent.filterDimensions) {
           if ((dimension.key == requiredCategory)) {
-            for (const checkedFilter of checkedFilters.value) {
-              if (checkedFilter.value === dimension.value) {
-                matchedCategory = true;
-                break;
-              }
+            if (!filtersByKeyValue.value[`${dimension.key}:${dimension.value}`]) {
+              console.error(`Failed to find filter ${dimension.key}:${dimension.value}`);
+            }
+
+            if (filtersByKeyValue.value[`${dimension.key}:${dimension.value}`].checked) {
+              matchedCategory = true;
+              break;
             }
           }
         }
@@ -118,9 +120,7 @@ export const useContentStore = defineStore('content', () => {
       return {
         ...contentPiece,
         tags: contentPiece.filterDimensions.map(function (dimension) {
-          return filters.value.find(function (filter) {
-            return (filter.key == dimension.key) && (filter.value == dimension.value);
-          })
+          return filtersByKeyValue.value[`${dimension.key}:${dimension.value}`]
         })
       }
     });

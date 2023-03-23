@@ -51,10 +51,23 @@ const dimensions = frontmatter.value.filterDimensions.map(function (dimension) {
           <span class="badge rounded-pill" :style="{ 'background-color': dimension.filter.color }">{{
             dimension.filter.label }} </span>
         </div>
-        <div class="choice" v-if="code">
+        <div class="choice" v-if="frontmatter.license">
+          <h5>License</h5>
+          <a :href="frontmatter.license.link">
+            <span class="badge rounded-pill" :style="{ 'background-color': 'black' }">{{ frontmatter.license.label
+            }}</span>
+          </a>
+        </div>
+        <div class="choice" v-if="code && !frontmatter.license">
           <h5>License</h5>
           <a href="https://github.com/aws-samples/aws-cdk-changelogs-demo/blob/master/LICENSE">
             <span class="badge rounded-pill" :style="{ 'background-color': 'black' }">MIT No Attribution</span>
+          </a>
+        </div>
+        <div class="choice" v-if="frontmatter.repositoryLink">
+          <h5>Repository</h5>
+          <a :href="frontmatter.repositoryLink">
+            <span class="badge rounded-pill" :style="{ 'background-color': 'black' }">Github</span>
           </a>
         </div>
       </div>

@@ -14,6 +14,8 @@ const imgUrl = `${route.path}/files/${filename}`;
 <style scoped>
 .image-wrapper img {
   max-width: 1000px;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 @media screen and (max-width: 800px) {
