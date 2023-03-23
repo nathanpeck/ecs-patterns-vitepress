@@ -10,33 +10,36 @@ const { filtersByKeyValue, filterGroupsByKey } = storeToRefs(store);
 var code = false;
 
 // Precompute the labels for the dimensions
-const dimensions = frontmatter.value.filterDimensions.map(function (dimension) {
-  if (dimension.value == 'pattern' || dimension.value == 'script') {
-    code = true;
-  }
+var dimensions = [];
+if (frontmatter.value.filterDimensions) {
+  dimensions = frontmatter.value.filterDimensions.map(function (dimension) {
+    if (dimension.value == 'pattern' || dimension.value == 'script') {
+      code = true;
+    }
 
-  const filterGroup = filterGroupsByKey.value[dimension.key];
-  var filterGroupLabel;
+    const filterGroup = filterGroupsByKey.value[dimension.key];
+    var filterGroupLabel;
 
-  if (!filterGroup) {
-    filterGroupLabel = `Label not found for '${dimension.key}''`;
-  } else {
-    filterGroupLabel = filterGroup.label
-  }
+    if (!filterGroup) {
+      filterGroupLabel = `Label not found for '${dimension.key}''`;
+    } else {
+      filterGroupLabel = filterGroup.label
+    }
 
-  const filter = filtersByKeyValue.value[`${dimension.key}:${dimension.value}`];
+    const filter = filtersByKeyValue.value[`${dimension.key}:${dimension.value}`];
 
-  if (!filter) {
-    filter = {
-      label: `Filter not found: ${dimension.key}=${dimension.value}`
-    };
-  }
+    if (!filter) {
+      filter = {
+        label: `Filter not found: ${dimension.key}=${dimension.value}`
+      };
+    }
 
-  return {
-    filterGroupLabel,
-    filter
-  }
-})
+    return {
+      filterGroupLabel,
+      filter
+    }
+  })
+}
 </script>
 
 <template>

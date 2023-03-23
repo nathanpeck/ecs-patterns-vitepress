@@ -18,7 +18,7 @@ store.filters = loadedFilters;
 store.content = posts.map((post) => {
   return {
     ...post.frontmatter,
-    id: 'pattern/' + post.url.split('/')[2]
+    id: '/pattern/' + post.url.split('/')[2]
   }
 })
 

@@ -12655,15 +12655,23 @@ div[class^="language-"] {
 }
 
 .copy {
-  position: absolute;
-  right: 0px;
-  margin: 10px;
+  margin-right: 10px;
   border-radius: 5px;
 }
 
 .copy:after {
   content: 'Copy';
 }
+
+.download {
+  margin-right: 10px;
+  border-radius: 5px;
+}
+
+.download:after {
+  content: 'Download';
+}
+
 
 .lang {
   display: none;
