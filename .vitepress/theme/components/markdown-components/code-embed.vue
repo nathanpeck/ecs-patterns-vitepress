@@ -75,8 +75,8 @@ function download() {
   border-bottom-right-radius: 5px;
 }
 
-.no-line-numbers code {
-  padding-left: 1rem;
+.no-line-numbers code .line {
+  margin-left: 1rem;
 }
 
 .codeBlockTopper {
@@ -87,6 +87,7 @@ function download() {
   background-color: rgb(26, 30, 36);
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
+  max-width: 1000px;
 }
 
 .codeBlockTopper .badge {
