@@ -18,7 +18,7 @@ filterDimensions:
 
 Download the script below and use `chmod` to make it executable:
 
-```
+```sh
 chmod +x delete-tasks.sh
 ```
 

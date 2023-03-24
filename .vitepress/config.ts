@@ -40,13 +40,11 @@ export default defineConfig({
     config: (md) => {
       // Fully override the fence rules with my own customized version
       md.renderer.rules.fence = (...args) => {
-
         const [tokens, idx] = args
         const token = tokens[idx]
 
         const filename = extractFilename(token.info);
 
-        // remove title from info
         token.info = token.info.replace(/\[.*\]/, '')
         const lang = extractLang(token.info)
 

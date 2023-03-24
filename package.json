@@ -1,8 +1,9 @@
 {
   "scripts": {
-    "docs:dev": "vitepress dev",
-    "docs:build": "vitepress build",
-    "docs:preview": "vitepress preview"
+    "dev": "vitepress dev",
+    "build": "vitepress build",
+    "preview": "vitepress preview",
+    "publish": "./scripts/publish.sh"
   },
   "dependencies": {
     "js-yaml": "^4.1.0",
