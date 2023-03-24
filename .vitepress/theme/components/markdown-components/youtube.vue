@@ -18,6 +18,7 @@ const videoUrl = `https://www.youtube.com/embed/${id}`
   padding-bottom: 56.25%;
   /* 16:9 */
   height: 0;
+  margin-bottom: 1em;
 }
 
 .videoWrapper iframe {

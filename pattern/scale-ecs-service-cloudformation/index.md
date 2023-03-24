@@ -18,7 +18,7 @@ Autoscaling is very important to making sure that your services stay online when
 
 Autoscaling works like this:
 
-<diagram filename='diagram.png'></diagram>
+![](./files/diagram.png)
 
 The following template automatically sets up CloudWatch alarms, autoscaling policies, and attaches them to an ECS service.
 

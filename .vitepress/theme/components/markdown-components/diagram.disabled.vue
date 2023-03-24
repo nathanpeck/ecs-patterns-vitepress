@@ -3,6 +3,7 @@ import { useRoute } from 'vitepress'
 const { filename } = defineProps(['filename'])
 const route = useRoute()
 const imgUrl = `${route.path}/files/${filename}`;
+console.log(imgUrl);
 </script>
 
 <template>

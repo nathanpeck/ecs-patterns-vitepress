@@ -26,7 +26,7 @@ filterDimensions:
 
 At a high level the architecture looks like this:
 
-  <diagram filename='diagram.svg'></diagram>
+![](./files/diagram.svg)
 
   Everything is deployed in an Amazon Virtual Private Cloud (VPC) which has two subnets:
 

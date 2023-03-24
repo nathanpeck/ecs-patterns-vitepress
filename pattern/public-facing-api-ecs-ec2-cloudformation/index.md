@@ -26,7 +26,7 @@ Sometimes you want to create a public facing service, but you want stricter cont
 
 At a high level the architecture looks like this:
 
-  <diagram filename='diagram.png'></diagram>
+<img src="./files/diagram.png" />
 
   Everything is deployed in an Amazon Virtual Private Cloud (VPC) which has two subnets:
 

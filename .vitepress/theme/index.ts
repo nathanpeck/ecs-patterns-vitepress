@@ -3,7 +3,7 @@ import DefaultTheme from 'vitepress/theme'
 import Layout from './Layout.vue'
 import './style.css'
 
-import Diagram from './components/markdown-components/diagram.vue'
+//import Diagram from './components/markdown-components/diagram.vue'
 import Youtube from './components/markdown-components/youtube.vue'
 
 import { createPinia } from 'pinia'
@@ -16,7 +16,7 @@ export default {
     // ...
     app.use(pinia)
 
-    app.component('diagram', Diagram)
+    //app.component('diagram', Diagram)
     app.component('youtube', Youtube)
   }
 }

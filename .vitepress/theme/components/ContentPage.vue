@@ -26,3 +26,35 @@
   padding-right: 40px;
 }
 </style>
+
+<style>
+.content img {
+  max-width: 1000px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+@media screen and (max-width: 800px) {
+  .content img {
+    max-width: 400px;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .content img {
+    max-width: 500px;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .content img {
+    max-width: 600px;
+  }
+}
+
+@media screen and (max-width: 1400px) {
+  .content img {
+    max-width: 700px;
+  }
+}
+</style>

@@ -17,7 +17,7 @@ filterDimensions:
 
 {{ $frontmatter.description }}
 
-  A fully private service is generally used for important internal business services that need to be protected from direct access by the public:
+A fully private service is generally used for important internal business services that need to be protected from direct access by the public:
 
 - Cache service such as Redis
 - Internal API that provides a thin wrapper around a database
@@ -26,9 +26,9 @@ filterDimensions:
 
 A private service’s architecture looks like this:
 
-  <diagram filename='diagram.png'></diagram>
+![](./files/diagram.png)
 
-  Everything is deployed in an Amazon Virtual Private Cloud (VPC) which has two subnets:
+Everything is deployed in an Amazon Virtual Private Cloud (VPC) which has two subnets:
 
 - Public subnet: Has an attached internet gateway to allow resources launched in that subnet to accept connections from the internet, and initiate connections to the internet. Resources in this subnet have public IP addresses.
 - Private subnet: For internal resources. Instances in this subnet have no direct internet access, and only have private IP addresses that are internal to the VPC, not directly accessible by the public.
