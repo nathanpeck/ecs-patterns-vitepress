@@ -2,8 +2,6 @@
 import { ref, onMounted } from 'vue';
 const { lang, filename } = defineProps(['lang', 'filename'])
 
-console.log(filename);
-
 let fileExists = false;
 if (filename !== 'undefined') {
   fileExists = true;
