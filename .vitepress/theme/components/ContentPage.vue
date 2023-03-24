@@ -9,6 +9,7 @@
 </template>
 
 <style scoped>
+/* These styles control the wrapper around the pattern page content */
 .content {
   flex: 1;
   margin-top: 20px;
@@ -28,6 +29,20 @@
 </style>
 
 <style>
+/** These styles clean up the presentation of the text and images
+inside of each pattern page */
+h2 {
+  padding-bottom: .75em;
+}
+
+h4 {
+  padding-bottom: .5em;
+}
+
+table {
+  margin-bottom: 1.2em;
+}
+
 .content img {
   max-width: 1000px;
   margin-top: 20px;

@@ -49,8 +49,9 @@ terraform plan
 terraform apply --auto-approve
 ```
 
-Now we can deploy a load balanced service along with CI/CD pipeline to the above cluster. The following diagram shows how the resulting infrastrucutre is structured:
- <diagram filename='lb-service.png'></diagram>
+Now we can deploy a load balanced service along with CI/CD pipeline to the above cluster. The following diagram shows the resulting infrastructure:
+
+![](./files/lb-service.png)
 
 To deploy:
 

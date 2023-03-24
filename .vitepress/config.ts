@@ -12,6 +12,19 @@ const extractLang = (info: string) => {
     .replace(/^vue-html$/, 'template')
 }
 
+const filenameRE = /\[(.*?)\]/;
+
+const extractFilename = (info: string) => {
+  const match = info.match(filenameRE);
+
+  if (match) {
+    return match[1]
+  }
+  else {
+    null
+  }
+};
+
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   title: "ECS Patterns",
@@ -30,13 +43,15 @@ export default defineConfig({
 
         const [tokens, idx] = args
         const token = tokens[idx]
+
+        const filename = extractFilename(token.info);
+
         // remove title from info
         token.info = token.info.replace(/\[.*\]/, '')
-
         const lang = extractLang(token.info)
+
         const rawCode = defaultFence(...args)
-        return `<div class="language-${lang}${/ active( |$)/.test(token.info) ? ' active' : ''
-          }"><button type="button" class="download"></button><button type="button" class="copy"></button>${rawCode}</div>`
+        return `<code-embed lang='${lang}' filename='${filename}'>${rawCode}</code-embed>`
       }
 
       // Now restore the plugins that I want to use

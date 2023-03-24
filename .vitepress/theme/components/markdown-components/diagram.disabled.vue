@@ -1,9 +1,16 @@
 <script setup>
+/**
+Note this is component does not work well with vitepress. Although
+vitepress claims that it can detect and bundle assets that are referenced
+from within components, this does not seem to be working for some reason.
+So don't use this component or otherwise the image file will not actually
+be copied into the bundle
+*/
+
 import { useRoute } from 'vitepress'
 const { filename } = defineProps(['filename'])
 const route = useRoute()
 const imgUrl = `${route.path}/files/${filename}`;
-console.log(imgUrl);
 </script>
 
 <template>
