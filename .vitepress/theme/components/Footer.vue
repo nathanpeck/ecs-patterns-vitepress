@@ -8,7 +8,7 @@
 .footer {
   width: 100%;
   color: white;
-  background-color: #2e3440ff;
+  background-color: black;
   padding: 20px;
   margin-top: 20px;
 }

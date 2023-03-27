@@ -15,6 +15,11 @@
   color: '#8add80'
   checked: false
 - key: tool
+  value: pulumi
+  label: Pulumi IaC
+  color: '#8add80'
+  checked: false
+- key: tool
   value: copilot
   label: AWS Copilot CLI
   color: '#8add80'

@@ -56,4 +56,12 @@ const { site, frontmatter } = useData()
   display: flex;
   flex-direction: row
 }
+
+/* On mobile width move the sidebar to the top
+   and switch the layout to a column vs a side by side */
+@media screen and (max-width: 600px) {
+  .wrapper {
+    flex-direction: column;
+  }
+}
 </style>

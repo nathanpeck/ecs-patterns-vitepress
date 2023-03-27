@@ -45,6 +45,13 @@ const { tags } = defineProps(['title', 'description', 'image', 'tags', 'to', 'id
   }
 }
 
+/* On mobile the content cards just take the full width of the column */
+@media screen and (max-width: 600px) {
+  .content-card {
+    flex: 0 1 100%;
+  }
+}
+
 .tag {
   margin-right: 5px;
 }

@@ -88,6 +88,13 @@ if (frontmatter.value.filterDimensions) {
   margin-top: 20px;
 }
 
+/* On mobile hide this sidebar */
+@media screen and (max-width: 600px) {
+  .sidebar {
+    display: none;
+  }
+}
+
 .choice {
   margin-bottom: 10px;
   padding-bottom: 10px;

@@ -13,6 +13,11 @@ const videoUrl = `https://www.youtube.com/embed/${id}`
 </template>
 
 <style scoped>
+/**
+These styles ensure that the video stays at the 16:9 aspect ratio
+A potential future improvement would be to support vertical story videos too
+with another storyVideo class or similar.
+ */
 .videoWrapper {
   position: relative;
   padding-bottom: 56.25%;

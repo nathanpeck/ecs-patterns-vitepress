@@ -47,11 +47,22 @@ const { resetAllFilters } = contentStore;
 }
 
 .sidebar {
-  max-width: 300px;
-  min-width: 300px;
   height: 100%;
   float: left;
   margin-right: 20px;
   margin-top: 20px;
+  padding-bottom: 20px;
+  max-width: 300px;
+  min-width: 300px;
+}
+
+/* On mobile make the sidebar take up the full width and push
+   content cards to the bottom. */
+@media screen and (max-width: 600px) {
+  .sidebar {
+    width: 100%;
+    max-width: none;
+    min-width: 100px;
+  }
 }
 </style>

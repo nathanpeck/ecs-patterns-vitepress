@@ -12635,3 +12635,8 @@ fieldset:disabled .btn {
 }
 
 /*# sourceMappingURL=bootstrap.min.css.map */
+
+
+body {
+  background-color: rgb(246, 242, 235);
+}
