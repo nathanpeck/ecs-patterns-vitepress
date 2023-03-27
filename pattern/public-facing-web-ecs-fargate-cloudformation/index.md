@@ -12,6 +12,8 @@ filterDimensions:
     value: fargate
   - key: type
     value: pattern
+authors:
+  - peckn
 ---
 
 ![](./files/diagram.svg)

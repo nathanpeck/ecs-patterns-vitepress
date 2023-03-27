@@ -8,6 +8,8 @@ filterDimensions:
     value: aws-cli
   - key: type
     value: script
+authors:
+  - peckn
 ---
 
 #### Installation

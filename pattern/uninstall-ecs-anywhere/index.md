@@ -10,6 +10,8 @@ filterDimensions:
     value: script
   - key: capacity
     value: anywhere
+authors:
+  - peckn
 ---
 
 The following script removes the components of ECS Anywhere from a host. After running

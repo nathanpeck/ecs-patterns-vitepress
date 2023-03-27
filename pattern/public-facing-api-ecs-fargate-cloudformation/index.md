@@ -12,6 +12,8 @@ filterDimensions:
     value: fargate
   - key: type
     value: pattern
+authors:
+  - peckn
 ---
 
   Sometimes you want to create a public facing service, but you want stricter control over the networking of the service. This pattern is suitable for many of the same use cases of the public facing website pattern, but it is especially used in the following cases:

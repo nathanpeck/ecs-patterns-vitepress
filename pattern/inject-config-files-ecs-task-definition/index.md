@@ -9,6 +9,8 @@ filterDimensions:
     value: cloudformation
   - key: type
     value: pattern
+authors:
+  - peckn
 ---
 
 The following snippet is an AWS CloudFormation template for an ECS task definition.

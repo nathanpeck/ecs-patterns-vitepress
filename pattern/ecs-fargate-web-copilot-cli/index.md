@@ -11,6 +11,8 @@ filterDimensions:
     value: fargate
   - key: type
     value: tutorial
+authors:
+  - peckn
 ---
 
 #### About

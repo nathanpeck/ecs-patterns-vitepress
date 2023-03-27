@@ -12,6 +12,8 @@ filterDimensions:
     value: pattern
   - key: capacity
     value: fargate
+authors:
+  - peckn
 ---
 
 #### Usage

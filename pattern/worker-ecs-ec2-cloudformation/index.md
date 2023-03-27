@@ -12,6 +12,8 @@ filterDimensions:
     value: ec2
   - key: type
     value: pattern
+authors:
+  - peckn
 ---
 
 A fully private service is generally used for important internal business services that need to be protected from direct access by the public:

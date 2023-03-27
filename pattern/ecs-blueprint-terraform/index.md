@@ -13,6 +13,8 @@ filterDimensions:
   - key: capacity
     value: fargate
 repositoryLink: https://github.com/aws-ia/ecs-blueprints
+authors:
+  - peckn
 ---
 
 #### Prerequisites

@@ -10,6 +10,8 @@ filterDimensions:
     value: script
   - key: capacity
     value: anywhere
+authors:
+  - peckn
 ---
 
 The easiest way to register external capacity with an ECS cluster is to use the Elastic Container Service web console, as it will automatically create an activation key and code, and prepopulate the commands with the right activation key for you. However if you wish to automate the registration process you can use the following commands as a template:
