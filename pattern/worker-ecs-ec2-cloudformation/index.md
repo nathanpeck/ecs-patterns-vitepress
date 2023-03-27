@@ -13,9 +13,6 @@ filterDimensions:
   - key: type
     value: pattern
 ---
-## {{ $frontmatter.title }}
-
-{{ $frontmatter.description }}
 
 A fully private service is generally used for important internal business services that need to be protected from direct access by the public:
 

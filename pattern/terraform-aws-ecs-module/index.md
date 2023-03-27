@@ -19,10 +19,6 @@ license:
   link: https://github.com/terraform-aws-modules/terraform-aws-ecs/blob/master/LICENSE
 ---
 
-## {{ $frontmatter.title }}
-
-{{ $frontmatter.description }}
-
 #### Available Features
 
 - ECS cluster

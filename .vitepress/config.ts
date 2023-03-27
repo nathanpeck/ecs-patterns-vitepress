@@ -30,6 +30,7 @@ export default defineConfig({
   title: "ECS Patterns",
   description: "A list of ECS patterns",
   cleanUrls: true,
+  srcExclude: ['**/README.md', '**/TODO.md'],
   rewrites: {
     'pattern/:patternName/index.md': 'pattern/:patternName.md'
   },

@@ -1,7 +1,17 @@
+<script setup>
+import Author from '../components/Author.vue'
+
+import { useData } from 'vitepress'
+const { frontmatter } = useData();
+</script>
+
 <template>
   <div class="content">
     <div class="card content-card">
       <div class="card-body">
+        <h1>{{ frontmatter.title }}</h1>
+        <Author v-for="author of frontmatter.authors" :authorId="author" />
+        <div class="clearfix"></div>
         <Content />
       </div>
     </div>
@@ -15,7 +25,6 @@
   margin-top: 20px;
   min-width: 500px;
   max-width: 1100px;
-  margin-bottom: 100px;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;

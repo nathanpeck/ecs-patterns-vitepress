@@ -11,11 +11,9 @@ filterDimensions:
     value: pattern
   - key: capacity
     value: ec2
+authors:
+  - peckn
 ---
-
-## {{ $frontmatter.title }}
-
-{{ $frontmatter.description }}
 
 #### Usage
 

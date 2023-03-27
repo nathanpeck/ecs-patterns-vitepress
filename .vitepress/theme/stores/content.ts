@@ -27,10 +27,39 @@ export interface FilterGroup {
   label: string
 }
 
+enum LinkType {
+  website = 'website',
+  github = 'github',
+  twitter = 'twitter'
+}
+
+export interface Link {
+  type: LinkType,
+  uri: string
+}
+
+export interface TeamMember {
+  id: string,
+  name: string,
+  title: string,
+  image: string,
+  links: Array<Link>
+}
+
 export const useContentStore = defineStore('content', () => {
   const content = ref([] as Array<Content>)
   const filters = ref([] as Array<Filter>)
   const filterGroups = ref([] as Array<FilterGroup>)
+  const team = ref([] as Array<TeamMember>)
+
+  // Computed dictionary of team members by id
+  const teamById = computed(() => {
+    var dict = {}
+    team.value.forEach(function (teamMember) {
+      dict[teamMember.id] = teamMember;
+    })
+    return dict;
+  });
 
   // Computed dictionary of filters by key
   const filtersByKeyValue = computed(() => {
@@ -145,6 +174,8 @@ export const useContentStore = defineStore('content', () => {
     labelledFilteredContent,
     resetAllFilters,
     filtersByKeyValue,
-    filterGroupsByKey
+    filterGroupsByKey,
+    team,
+    teamById
   }
 });

@@ -15,10 +15,6 @@ filterDimensions:
 repositoryLink: https://github.com/aws-ia/ecs-blueprints
 ---
 
-## {{ $frontmatter.title }}
-
-{{ $frontmatter.description }}
-
 #### Prerequisites
 
 * You can use [AWS Cloud9](https://aws.amazon.com/cloud9/) which has all the prerequisites preinstalled and skip to [Quick Start](#quick-start)

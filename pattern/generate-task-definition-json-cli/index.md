@@ -10,10 +10,6 @@ filterDimensions:
     value: script
 ---
 
-## {{ $frontmatter.title }}
-
-{{ $frontmatter.description }}
-
 #### Installation
 
 Download the script below and use `chmod` to make it executable:

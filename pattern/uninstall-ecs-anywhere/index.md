@@ -12,8 +12,6 @@ filterDimensions:
     value: anywhere
 ---
 
-## {{ $frontmatter.title }}
-
 The following script removes the components of ECS Anywhere from a host. After running
 this you can reinstall ECS Anywhere back onto the host cleanly.
 

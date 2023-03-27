@@ -13,8 +13,6 @@ filterDimensions:
     value: tutorial
 ---
 
-## {{ $frontmatter.title }}
-
 #### About
 
 AWS Copilot is the official command line tool for Amazon ECS. It helps you to build your local container and deploy it as a serverless deployment hosted in AWS Fargate, and orchestrated by Amazon ECS

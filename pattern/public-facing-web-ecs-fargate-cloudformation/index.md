@@ -13,9 +13,6 @@ filterDimensions:
   - key: type
     value: pattern
 ---
-## {{ $frontmatter.title }}
-
-{{ $frontmatter.description }}
 
 ![](./files/diagram.svg)
 

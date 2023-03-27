@@ -3,16 +3,20 @@ import { useData } from 'vitepress'
 import { data as posts } from './loaders/posts.data.js'
 import { data as loadedFilters } from './loaders/filters.data.js'
 import { data as loadedFilterGroups } from './loaders/filter-groups.data.js'
+import { data as loadedTeam } from './loaders/team.data.js'
 
 import ContentList from './components/ContentList.vue'
 import ContentListFilter from './components/ContentListFilter.vue'
 import ContentPageSidebar from './components/ContentPageSidebar.vue'
 import ContentPage from './components/ContentPage.vue'
+import Header from './components/Header.vue'
+import Footer from './components/Footer.vue'
 
 import { useContentStore } from './stores/content'
 
 const store = useContentStore();
 
+store.team = loadedTeam;
 store.filterGroups = loadedFilterGroups;
 store.filters = loadedFilters;
 store.content = posts.map((post) => {
@@ -27,6 +31,7 @@ const { site, frontmatter } = useData()
 </script>
 
 <template>
+  <Header />
   <div v-if="frontmatter.home">
     <div class="container-fluid">
       <div class="wrapper">
@@ -43,6 +48,7 @@ const { site, frontmatter } = useData()
       </div>
     </div>
   </div>
+  <Footer />
 </template>
 
 <style scoped>

@@ -14,10 +14,6 @@ filterDimensions:
     value: pattern
 ---
 
-## {{ $frontmatter.title }}
-
-{{ $frontmatter.description }}
-
 Sometimes you want to create a public facing service, but you want stricter control over the networking of the service. This pattern is suitable for many of the same use cases of the public facing website pattern, but it is especially used in the following cases:
 
 - An API which is public facing but needs an extra layer of security hardening by not even having a public IP address that an attacker could send a request directly to.

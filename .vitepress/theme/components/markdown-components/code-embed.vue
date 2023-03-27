@@ -70,7 +70,7 @@ function download() {
   padding-right: 1rem;
   padding-bottom: 1rem;
   margin-bottom: 3rem;
-  white-space: pre-wrap;
+  /**white-space: pre-wrap;**/
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
 }

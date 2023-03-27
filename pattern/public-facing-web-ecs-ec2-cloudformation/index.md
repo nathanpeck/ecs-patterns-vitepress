@@ -12,11 +12,9 @@ filterDimensions:
     value: ec2
   - key: type
     value: pattern
+authors:
+  - peckn
 ---
-
-## {{ $frontmatter.title }}
-
-{{ $frontmatter.description }}
 
 ![](./files/diagram.png)
 

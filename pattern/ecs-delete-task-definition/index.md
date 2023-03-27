@@ -8,11 +8,9 @@ filterDimensions:
     value: aws-cli
   - key: type
     value: script
+authors:
+ - sbcoulto
 ---
-
-## {{ $frontmatter.title }}
-
-{{ $frontmatter.description }}
 
 #### Installation
 

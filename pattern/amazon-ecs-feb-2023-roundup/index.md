@@ -6,9 +6,13 @@ image: cover.png
 filterDimensions:
   - key: type
     value: video
----
+authors:
+  - jldeen
+  - maishsk
+  - peckn
+  - sbcoulto
 
-## {{ $frontmatter.title }}
+---
 
 Watch the February 2023 Amazon ECS roundup. This monthly segment discusses the latest announcements about Amazon Elastic Container Service.
 
