@@ -27,7 +27,7 @@ if (!authorDetails) {
   float: left;
   background-color: rgb(210, 231, 245);
   border-radius: 5px;
-  max-width: 190px;
+  max-width: 200px;
   padding: 0px;
   font-family: Arial, Helvetica, sans-serif;
   font-size: .75em;
@@ -35,14 +35,8 @@ if (!authorDetails) {
   padding: 5px;
   display: flex;
   align-items: center;
-  margin-bottom: 20px;
   margin-right: 5px;
-}
-
-.author::after {
-  display: block;
-  clear: both;
-  content: "";
+  margin-bottom: 5px;
 }
 
 .author img {

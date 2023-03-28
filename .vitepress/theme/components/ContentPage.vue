@@ -10,8 +10,9 @@ const { frontmatter } = useData();
     <div class="card content-card">
       <div class="card-body">
         <h1>{{ frontmatter.title }}</h1>
-        <Author v-for="author of frontmatter.authors" :authorId="author" />
-        <div class="clearfix"></div>
+        <div class="authors clearfix">
+          <Author v-for="author of frontmatter.authors" :authorId="author" />
+        </div>
         <Content />
       </div>
     </div>
@@ -80,5 +81,9 @@ table {
   .content img {
     max-width: 700px;
   }
+}
+
+.authors {
+  margin-bottom: 20px;
 }
 </style>
