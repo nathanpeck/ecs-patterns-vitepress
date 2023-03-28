@@ -9,6 +9,7 @@ import ContentList from './components/ContentList.vue'
 import ContentListFilter from './components/ContentListFilter.vue'
 import ContentPageSidebar from './components/ContentPageSidebar.vue'
 import ContentPage from './components/ContentPage.vue'
+import AuthorPage from './components/AuthorPage.vue'
 import Header from './components/Header.vue'
 import Footer from './components/Footer.vue'
 
@@ -32,7 +33,7 @@ const { site, frontmatter } = useData()
 
 <template>
   <Header />
-  <div v-if="frontmatter.home">
+  <div v-if="frontmatter.type == 'home'">
     <div class="container-fluid">
       <div class="wrapper">
         <ContentListFilter />
@@ -40,7 +41,14 @@ const { site, frontmatter } = useData()
       </div>
     </div>
   </div>
-  <div v-else>
+  <div v-if="frontmatter.type == 'author'">
+    <div class="container-fluid">
+      <div class="wrapper">
+        <AuthorPage />
+      </div>
+    </div>
+  </div>
+  <div v-if="frontmatter.title">
     <div class="container-fluid">
       <div class="wrapper">
         <ContentPageSidebar />

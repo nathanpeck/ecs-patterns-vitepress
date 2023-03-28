@@ -1,15 +1,16 @@
 <script setup>
 import Author from '../components/Author.vue'
 
-import { useData } from 'vitepress'
+import { useData, useRoute } from 'vitepress'
 const { frontmatter } = useData();
+const { path } = useRoute();
 </script>
 
 <template>
   <div class="content">
     <div class="card content-card">
       <div class="card-body">
-        <h1>{{ frontmatter.title }}</h1>
+        <h1 class="title"><a :href="path">{{ frontmatter.title }}</a></h1>
         <div class="authors clearfix">
           <Author v-for="author of frontmatter.authors" :authorId="author" />
         </div>
@@ -85,5 +86,15 @@ table {
 
 .authors {
   margin-bottom: 20px;
+}
+
+.title a {
+  text-decoration: none;
+  color: black;
+}
+
+.title a:hover {
+  text-decoration: none;
+  color: rgb(88, 88, 88);
 }
 </style>

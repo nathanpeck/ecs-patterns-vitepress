@@ -5,6 +5,7 @@ const { authorId } = defineProps(['authorId'])
 const store = useContentStore();
 const { teamById } = storeToRefs(store);
 
+let authorLink = `/team/${authorId}`
 let authorDetails = teamById.value[authorId];
 
 if (!authorDetails) {
@@ -14,6 +15,7 @@ if (!authorDetails) {
 
 <template>
   <div class="author clearfix">
+    <a :href="authorLink" class="stretched-link"></a>
     <img :src="authorDetails.image" />
     <div class="meta">
       <b>{{ authorDetails.name }}</b> <br />
@@ -24,6 +26,7 @@ if (!authorDetails) {
 
 <style>
 .author {
+  position: relative;
   float: left;
   background-color: rgb(210, 231, 245);
   border-radius: 5px;
