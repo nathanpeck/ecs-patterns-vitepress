@@ -1,6 +1,8 @@
 <template>
   <div class="footer">
-    Built by the Amazon ECS Developer Advocacy Team :)
+    <a href="https://aws.amazon.com/privacy/">Privacy</a> -
+    <a href="https://aws.amazon.com/terms/">Site Terms</a> -
+    © Copyright 2023 Amazon.com, Inc. or its affiliates. All rights reserved.
   </div>
 </template>
 
@@ -11,5 +13,9 @@
   background-color: black;
   padding: 20px;
   margin-top: 20px;
+}
+
+.footer a {
+  color: rgb(255, 146, 45);
 }
 </style>

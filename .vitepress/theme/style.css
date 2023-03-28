@@ -12640,3 +12640,11 @@ fieldset:disabled .btn {
 body {
   background-color: rgb(246, 242, 235);
 }
+
+a {
+  color: rgb(255, 146, 45);
+}
+
+a:hover {
+  color: rgb(254, 168, 85);
+}
