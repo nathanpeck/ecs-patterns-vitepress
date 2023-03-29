@@ -130,5 +130,6 @@ table {
   width: 20px;
   vertical-align: middle;
   margin-right: 5px;
+  display: inline;
 }
 </style>
