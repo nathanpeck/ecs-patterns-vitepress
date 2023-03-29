@@ -9,6 +9,7 @@ import ContentList from './components/ContentList.vue'
 import ContentListFilter from './components/ContentListFilter.vue'
 import ContentPageSidebar from './components/ContentPageSidebar.vue'
 import ContentPage from './components/ContentPage.vue'
+import AuthorPageSidebar from './components/AuthorPageSidebar.vue'
 import AuthorPage from './components/AuthorPage.vue'
 import Header from './components/Header.vue'
 import Footer from './components/Footer.vue'
@@ -44,6 +45,7 @@ const { site, frontmatter } = useData()
   <div v-if="frontmatter.type == 'author'">
     <div class="container-fluid">
       <div class="wrapper">
+        <AuthorPageSidebar />
         <AuthorPage />
       </div>
     </div>

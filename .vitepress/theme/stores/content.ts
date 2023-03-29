@@ -11,7 +11,8 @@ export interface Content {
   title: string,
   description: string,
   image: string,
-  filterDimensions: Array<FilterDimension>
+  filterDimensions: Array<FilterDimension>,
+  authors: Array<string>
 }
 
 export interface Filter {
@@ -155,6 +156,30 @@ export const useContentStore = defineStore('content', () => {
     });
   })
 
+  // A computed dictionary of content pieces per author
+  const labelledContentByAuthor = computed(() => {
+    const dict = {}
+
+    // Prepopulate an empty array for each team member
+    for (const author of team.value) {
+      dict[author.id] = [];
+    }
+
+    // Put each piece of content into the list of each author
+    for (const thisContent of content.value) {
+      for (const thisAuthor of thisContent.authors) {
+        dict[thisAuthor].push({
+          ...thisContent,
+          tags: thisContent.filterDimensions.map(function (dimension) {
+            return filtersByKeyValue.value[`${dimension.key}:${dimension.value}`]
+          })
+        });
+      }
+    }
+
+    return dict;
+  })
+
   // Action which resets all checked filters, causing all other
   // computed properties to be recalculated.
   function resetAllFilters() {
@@ -176,6 +201,7 @@ export const useContentStore = defineStore('content', () => {
     filtersByKeyValue,
     filterGroupsByKey,
     team,
-    teamById
+    teamById,
+    labelledContentByAuthor
   }
 });
