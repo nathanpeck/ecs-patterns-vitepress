@@ -12,7 +12,8 @@ export interface Content {
   description: string,
   image: string,
   filterDimensions: Array<FilterDimension>,
-  authors: Array<string>
+  authors: Array<string>,
+  date: Date
 }
 
 export interface Filter {
@@ -52,6 +53,12 @@ export const useContentStore = defineStore('content', () => {
   const filters = ref([] as Array<Filter>)
   const filterGroups = ref([] as Array<FilterGroup>)
   const team = ref([] as Array<TeamMember>)
+
+  // The following computed properties are automatically reactive,
+  // meaning that the code within the `computed` function runs
+  // automatically whenever the referenced base variables from above
+  // change values. This allows us to regenerate computed properties
+  // automatically whenever an action is taken like enabling a filter
 
   // Computed dictionary of team members by id
   const teamById = computed(() => {
@@ -109,16 +116,30 @@ export const useContentStore = defineStore('content', () => {
     return [...categories];
   })
 
+  // A computed list of the content which has had human readable labels
+  // attached to the content
+  const labelledContent = computed(() => {
+    // Apply labels to all the content based on it's dimensions
+    return content.value.map((contentPiece) => {
+      return {
+        ...contentPiece,
+        tags: contentPiece.filterDimensions.map(function (dimension) {
+          return filtersByKeyValue.value[`${dimension.key}:${dimension.value}`]
+        })
+      }
+    });
+  })
+
   // A computed list of the available content filtered according to
   // the checked filters.
-  const filteredContent = computed(() => {
+  const labelledFilteredContent = computed(() => {
     // Fast path: if no filters are applied, then return all content.
     if (checkedFilters.value.length == 0) {
-      return content.value;
+      return labelledContent.value;
     }
 
     // If filters are applied then find at least one match from each category
-    return content.value.filter(function (thisContent) {
+    return labelledContent.value.filter(function (thisContent) {
       for (const requiredCategory of filterCategories.value) {
         let matchedCategory = false;
         for (const dimension of thisContent.filterDimensions) {
@@ -143,19 +164,6 @@ export const useContentStore = defineStore('content', () => {
     });
   })
 
-  // A computed list of the filtered content with the human readable labels applied to it.
-  const labelledFilteredContent = computed(() => {
-    // Apply labels to all the content based on it's dimensions
-    return filteredContent.value.map((contentPiece) => {
-      return {
-        ...contentPiece,
-        tags: contentPiece.filterDimensions.map(function (dimension) {
-          return filtersByKeyValue.value[`${dimension.key}:${dimension.value}`]
-        })
-      }
-    });
-  })
-
   // A computed dictionary of content pieces per author
   const labelledContentByAuthor = computed(() => {
     const dict = {}
@@ -166,14 +174,9 @@ export const useContentStore = defineStore('content', () => {
     }
 
     // Put each piece of content into the list of each author
-    for (const thisContent of content.value) {
+    for (const thisContent of labelledContent.value) {
       for (const thisAuthor of thisContent.authors) {
-        dict[thisAuthor].push({
-          ...thisContent,
-          tags: thisContent.filterDimensions.map(function (dimension) {
-            return filtersByKeyValue.value[`${dimension.key}:${dimension.value}`]
-          })
-        });
+        dict[thisAuthor].push(thisContent);
       }
     }
 
@@ -192,7 +195,6 @@ export const useContentStore = defineStore('content', () => {
   // consumers of the store.
   return {
     content,
-    filteredContent,
     filters,
     filterGroups,
     filterList,

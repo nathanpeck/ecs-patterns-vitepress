@@ -2,7 +2,7 @@
 import Author from '../components/Author.vue'
 
 import { useData, useRoute } from 'vitepress'
-const { frontmatter } = useData();
+const { frontmatter, page } = useData();
 const { path } = useRoute();
 </script>
 
@@ -15,6 +15,20 @@ const { path } = useRoute();
           <Author v-for="author of frontmatter.authors" :authorId="author" />
         </div>
         <Content />
+        <div class="content-meta">
+          <div class="edit"><a href="#">
+              <svg data-v-2d8bc1e6="" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="edit-link-icon"
+                aria-label="edit icon">
+                <path
+                  d="M18,23H4c-1.7,0-3-1.3-3-3V6c0-1.7,1.3-3,3-3h7c0.6,0,1,0.4,1,1s-0.4,1-1,1H4C3.4,5,3,5.4,3,6v14c0,0.6,0.4,1,1,1h14c0.6,0,1-0.4,1-1v-7c0-0.6,0.4-1,1-1s1,0.4,1,1v7C21,21.7,19.7,23,18,23z">
+                </path>
+                <path
+                  d="M8,17c-0.3,0-0.5-0.1-0.7-0.3C7,16.5,6.9,16.1,7,15.8l1-4c0-0.2,0.1-0.3,0.3-0.5l9.5-9.5c1.2-1.2,3.2-1.2,4.4,0c1.2,1.2,1.2,3.2,0,4.4l-9.5,9.5c-0.1,0.1-0.3,0.2-0.5,0.3l-4,1C8.2,17,8.1,17,8,17zM9.9,12.5l-0.5,2.1l2.1-0.5l9.3-9.3c0.4-0.4,0.4-1.1,0-1.6c-0.4-0.4-1.2-0.4-1.6,0l0,0L9.9,12.5z M18.5,2.5L18.5,2.5L18.5,2.5z">
+                </path>
+              </svg>
+              Edit this page on Github</a></div>
+          <div class="content-date" v-if="frontmatter.date">Updated {{ frontmatter.date }}</div>
+        </div>
       </div>
     </div>
   </div>
@@ -96,5 +110,24 @@ table {
 .title a:hover {
   text-decoration: none;
   color: rgb(88, 88, 88);
+}
+
+.content-meta {
+  font-size: .75em;
+  margin-top: 30px;
+}
+
+.content-meta .edit {
+  float: left;
+}
+
+.edit-link-icon {
+  width: 20px;
+  vertical-align: middle;
+  margin-right: 5px;
+}
+
+.content-meta .content-date {
+  float: right;
 }
 </style>

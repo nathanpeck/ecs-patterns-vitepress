@@ -40,7 +40,7 @@ if (!authorDetails) {
 
 .name {
   text-align: center;
-  font-size: 2em;
+  font-size: 1.5em;
 }
 
 .avatar {

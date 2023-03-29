@@ -12,7 +12,7 @@
   color: white;
   background-color: black;
   padding: 20px;
-  margin-top: 20px;
+  border-top: 3px solid rgb(190, 174, 168);
 }
 
 .footer a {

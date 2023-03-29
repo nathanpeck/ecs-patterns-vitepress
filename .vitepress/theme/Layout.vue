@@ -62,9 +62,18 @@ const { site, frontmatter } = useData()
 </template>
 
 <style scoped>
+.container-fluid {
+  margin: 0px;
+  padding: 0px;
+}
+
 .wrapper {
   display: flex;
-  flex-direction: row
+  flex-direction: row;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 20px;
+  background-color: rgb(246, 242, 235);
 }
 
 /* On mobile width move the sidebar to the top
