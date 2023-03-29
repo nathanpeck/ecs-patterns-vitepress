@@ -102,6 +102,10 @@ table {
   margin-bottom: 20px;
 }
 
+.title {
+  margin-bottom: 20px;
+}
+
 .title a {
   text-decoration: none;
   color: black;
