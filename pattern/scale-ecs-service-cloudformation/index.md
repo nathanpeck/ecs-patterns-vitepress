@@ -10,6 +10,7 @@ filterDimensions:
     value: pattern
 authors:
   - peckn
+date: March 30, 2023
 ---
 
 Autoscaling is very important to making sure that your services stay online when traffic increases unexpectedly. In both EC2 and AWS Fargate one way to ensure your service autoscales is to increase and decrease the number of copies of your application container that are running in the cluster.

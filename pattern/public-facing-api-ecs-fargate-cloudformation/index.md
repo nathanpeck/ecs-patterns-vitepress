@@ -1,7 +1,7 @@
 ---
 title: Serverless public facing API hosted on AWS Fargate
 description: >-
-  A serverless, containerized public facing API in a private network, managed by EC2, hosted on AWS Fargate
+  A serverless, containerized public facing API in a private network, managed by ECS, hosted on AWS Fargate
 image: cover.png
 filterDimensions:
   - key: tool
@@ -14,6 +14,7 @@ filterDimensions:
     value: pattern
 authors:
   - peckn
+date: March 30, 2023
 ---
 
   Sometimes you want to create a public facing service, but you want stricter control over the networking of the service. This pattern is suitable for many of the same use cases of the public facing website pattern, but it is especially used in the following cases:

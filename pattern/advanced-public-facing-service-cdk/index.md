@@ -13,6 +13,7 @@ filterDimensions:
     value: ec2
 authors:
   - peckn
+date: Jul 21, 2022
 ---
 
 #### Usage

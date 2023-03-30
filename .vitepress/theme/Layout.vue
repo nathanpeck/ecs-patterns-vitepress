@@ -42,6 +42,13 @@ const { site, frontmatter } = useData()
       </div>
     </div>
   </div>
+  <div v-if="frontmatter.type == 'page'">
+    <div class="container-fluid">
+      <div class="wrapper">
+        <ContentPage />
+      </div>
+    </div>
+  </div>
   <div v-if="frontmatter.type == 'author'">
     <div class="container-fluid">
       <div class="wrapper">

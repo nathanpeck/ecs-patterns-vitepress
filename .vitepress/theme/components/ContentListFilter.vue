@@ -24,10 +24,19 @@ const { resetAllFilters } = contentStore;
         </form>
       </div>
     </div>
+    <div class="card">
+      <div class="card-body">
+        <a href="/about">About</a>
+      </div>
+    </div>
   </div>
 </template>
 
 <style scoped>
+.card {
+  margin-bottom: 20px;
+}
+
 .choice {
   margin-bottom: 10px;
   padding-bottom: 10px;

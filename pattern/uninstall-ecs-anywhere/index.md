@@ -12,6 +12,7 @@ filterDimensions:
     value: anywhere
 authors:
   - peckn
+date: Dec 2021
 ---
 
 The following script removes the components of ECS Anywhere from a host. After running

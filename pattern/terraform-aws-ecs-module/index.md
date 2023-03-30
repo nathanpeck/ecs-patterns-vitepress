@@ -19,6 +19,7 @@ license:
   link: https://github.com/terraform-aws-modules/terraform-aws-ecs/blob/master/LICENSE
 authors:
   - peckn
+date: Jul 25, 2022
 ---
 
 #### Available Features

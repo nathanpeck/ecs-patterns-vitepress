@@ -32,7 +32,8 @@ export default defineConfig({
   cleanUrls: true,
   srcExclude: ['**/README.md', '**/TODO.md'],
   rewrites: {
-    'pattern/:patternName/index.md': 'pattern/:patternName.md'
+    'pattern/:patternName/index.md': 'pattern/:patternName.md',
+    'team/': 'team'
   },
   head: [
     //['link', { rel: 'stylesheet', href: 'https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css' }]

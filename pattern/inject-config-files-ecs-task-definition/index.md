@@ -11,6 +11,7 @@ filterDimensions:
     value: pattern
 authors:
   - peckn
+date: Dec 2022
 ---
 
 The following snippet is an AWS CloudFormation template for an ECS task definition.

@@ -15,6 +15,7 @@ filterDimensions:
 repositoryLink: https://github.com/aws-ia/ecs-blueprints
 authors:
   - peckn
+date: Jan 24, 2023
 ---
 
 #### Prerequisites

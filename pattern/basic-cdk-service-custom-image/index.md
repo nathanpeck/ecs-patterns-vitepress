@@ -14,6 +14,7 @@ filterDimensions:
     value: fargate
 authors:
   - peckn
+date: Jul 21, 2022
 ---
 
 #### Usage

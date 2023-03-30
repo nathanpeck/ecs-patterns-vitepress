@@ -16,7 +16,7 @@ if (!authorDetails) {
 <template>
   <div class="author clearfix">
     <a :href="authorLink" class="stretched-link"></a>
-    <img :src="authorDetails.image" />
+    <img class='authorImage' :src="authorDetails.image" />
     <div class="meta">
       <b>{{ authorDetails.name }}</b> <br />
       {{ authorDetails.title }}
@@ -42,9 +42,10 @@ if (!authorDetails) {
   margin-bottom: 5px;
 }
 
-.author img {
+.author .authorImage {
   float: left;
   height: 50px;
+  width: 50px;
   vertical-align: middle;
   border-radius: 100%;
   margin: 0px !important;

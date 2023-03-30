@@ -1,9 +1,26 @@
 <script setup>
+import { ref, onMounted, watchEffect } from 'vue';
 import Author from '../components/Author.vue'
 
 import { useData, useRoute } from 'vitepress'
-const { frontmatter, page } = useData();
+const { frontmatter } = useData();
 const { path } = useRoute();
+
+const date = new Date(frontmatter.value.date)
+const datetime = ref('')
+
+// This hook hook updates the date string to match the end user's desired
+// date format based on the localization of their browser. It happens in a
+// mount hook because this will ensure that it doesn't cause a hydration
+// mismatch between the server rendered version of the page and the client
+// side version of the page.
+onMounted(() => {
+  watchEffect(() => {
+    datetime.value = date.toLocaleString(window.navigator.language, { dateStyle: 'medium' })
+  })
+})
+
+const githubPath = `https://github.com/nathanpeck/ecs-patterns-vitepress/tree/main/${path}/index.md`;
 </script>
 
 <template>
@@ -16,7 +33,7 @@ const { path } = useRoute();
         </div>
         <Content />
         <div class="content-meta">
-          <div class="edit"><a href="#">
+          <div class="edit"><a :href="githubPath">
               <svg data-v-2d8bc1e6="" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="edit-icon"
                 aria-label="edit icon">
                 <path
@@ -27,7 +44,7 @@ const { path } = useRoute();
                 </path>
               </svg>
               Edit this page on Github</a></div>
-          <div class="content-date" v-if="frontmatter.date">Updated {{ frontmatter.date }}</div>
+          <div class="content-date" v-if="frontmatter.date">Last Updated {{ datetime }}</div>
         </div>
       </div>
     </div>
@@ -70,6 +87,7 @@ table {
 
 .content img {
   max-width: 1000px;
+  width: 100%;
   margin-top: 20px;
   margin-bottom: 20px;
 }

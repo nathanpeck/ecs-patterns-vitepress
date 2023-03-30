@@ -41,7 +41,7 @@ const { tags } = defineProps(['title', 'description', 'image', 'tags', 'to', 'id
 
 @media screen and (max-width: 1000px) {
   .content-card {
-    flex: 0 1 calc(100% - .5em);
+    flex: 0 1 calc(100%);
   }
 }
 
