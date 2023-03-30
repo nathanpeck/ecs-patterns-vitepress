@@ -5,7 +5,7 @@ const { authorId } = defineProps(['authorId'])
 const store = useContentStore();
 const { authorsById } = storeToRefs(store);
 
-let authorLink = `/team/${authorId}`
+let authorLink = `/author/${authorId}`
 let authorDetails = authorsById.value[authorId];
 
 if (!authorDetails) {
