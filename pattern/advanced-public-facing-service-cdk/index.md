@@ -16,9 +16,43 @@ authors:
 date: Jul 21, 2022
 ---
 
-#### Usage
+#### About
 
-- Install AWS CDK: https://docs.aws.amazon.com/cdk/v2/guide/hello_world.html
-- Run `cdk deploy`
+This pattern shows how to setup an AWS Cloud Development Kit (CDK) application
+for building a container image and deploying it to EC2 capacity, fronted by an Application Load Balancer that serves as the ingress for the application. The container application will be managed by Amazon Elastic Container Service (ECS).
+
+#### Development environment
+
+This pattern uses TypeScript and Node. First, ensure that you have Node.js installed on your development machine. Then create the following `package.json` file which will install all required dependencies:
+
+<<< @/pattern/advanced-public-facing-service-cdk/files/package.json
+
+Next create a `tsconfig.json` file which will configure the TypeScript settings for the project:
+
+<<< @/pattern/advanced-public-facing-service-cdk/files/tsconfig.json
+
+#### CDK application
+
+In order to setup context for the CDK application create a file `cdk.json` with the following content:
+
+```json
+{
+  "app": "node index"
+}
+```
+
+Now you can create an `index.ts` file that has the actual code for the CDK application:
 
 <<< @/pattern/advanced-public-facing-service-cdk/files/index.ts
+
+Use the following commands to interact with your CDK application:
+
+* `npm run-script cdk diff` - Show a preview of resources to be deployed
+* `npm run-script cdk deploy` - Deploy the resources onto your AWS account
+* `npm run-script cdk destroy` - Tear down the deployed stack
+
+#### Next steps
+
+* The sample application is launching EC2 capacity of type `t2.micro`. You will probably want a bigger EC2 instance type
+* The sample application is deploying a sample app straight off of Docker Hub. Check out the CDK docs for [`ContainerImage.fromAsset()`](https://docs.aws.amazon.com/cdk/api/v1/docs/@aws-cdk_aws-ecs.ContainerImage.html#static-fromwbrassetdirectory-props) to see how to make CDK build your local application.
+* You may wish to add port 443 to the load balancer, and configure an SSL certificate for HTTPS traffic

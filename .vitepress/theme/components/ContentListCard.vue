@@ -3,7 +3,7 @@ const { tags } = defineProps(['title', 'description', 'image', 'tags', 'to', 'id
 </script>
 
 <template>
-  <div class="card content-card">
+  <div class="card content-list-card">
     <!--<nuxt-img :src="`${id}/${image}`" class='card-img-top' />-->
     <div class="card-body">
       <h5 class="card-title">{{ title }}</h5>
@@ -15,39 +15,39 @@ const { tags } = defineProps(['title', 'description', 'image', 'tags', 'to', 'id
   </div>
 </template>
 
-<style scoped>
-.content-card {
+<style>
+.content-list-card {
   flex: 0 1 calc(25% - .5em);
   margin-bottom: 1em;
 }
 
 @media screen and (max-width: 1600px) {
-  .content-card {
+  .content-list-card {
     flex: 0 1 calc(25% - .5em);
   }
 }
 
 @media screen and (max-width: 1400px) {
-  .content-card {
+  .content-list-card {
     flex: 0 1 calc(33% - .5em);
   }
 }
 
 @media screen and (max-width: 1200px) {
-  .content-card {
+  .content-list-card {
     flex: 0 1 calc(50% - .5em);
   }
 }
 
 @media screen and (max-width: 1000px) {
-  .content-card {
+  .content-list-card {
     flex: 0 1 calc(100%);
   }
 }
 
 /* On mobile the content cards just take the full width of the column */
 @media screen and (max-width: 600px) {
-  .content-card {
+  .content-list-card {
     flex: 0 1 100%;
   }
 }
