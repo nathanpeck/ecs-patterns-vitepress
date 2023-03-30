@@ -6,7 +6,7 @@
   checked: false
 - key: tool
   value: cdk
-  label: AWS Cloud Development Kit
+  label: AWS Cloud Development Kit (CDK)
   color: '#8add80'
   checked: false
 - key: tool

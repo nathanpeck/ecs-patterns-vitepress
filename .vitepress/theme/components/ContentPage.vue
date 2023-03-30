@@ -78,6 +78,7 @@ h2 {
 }
 
 h4 {
+  padding-top: .5em;
   padding-bottom: .5em;
 }
 

@@ -64,6 +64,7 @@ function download() {
 <style>
 .shiki {
   background-color: #2e3440ff;
+  max-height: 1000px;
   overflow: auto;
   overflow-wrap: break-word;
   padding-top: 1rem;
@@ -72,6 +73,32 @@ function download() {
   margin-bottom: 3rem;
   /**white-space: pre-wrap;**/
   border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+/* width */
+.shiki::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+/* Track */
+.shiki::-webkit-scrollbar-track {
+  background: #2e3440ff;
+}
+
+/* Handle */
+.shiki::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+.shiki::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.shiki::-webkit-scrollbar-corner {
+  background-color: #2e3440ff;
   border-bottom-right-radius: 5px;
 }
 
