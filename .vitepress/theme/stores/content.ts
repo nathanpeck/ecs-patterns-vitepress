@@ -40,7 +40,7 @@ export interface Link {
   uri: string
 }
 
-export interface TeamMember {
+export interface Author {
   id: string,
   name: string,
   title: string,
@@ -52,7 +52,7 @@ export const useContentStore = defineStore('content', () => {
   const content = ref([] as Array<Content>)
   const filters = ref([] as Array<Filter>)
   const filterGroups = ref([] as Array<FilterGroup>)
-  const team = ref([] as Array<TeamMember>)
+  const authors = ref([] as Array<Author>)
 
   // The following computed properties are automatically reactive,
   // meaning that the code within the `computed` function runs
@@ -61,9 +61,9 @@ export const useContentStore = defineStore('content', () => {
   // automatically whenever an action is taken like enabling a filter
 
   // Computed dictionary of team members by id
-  const teamById = computed(() => {
+  const authorsById = computed(() => {
     var dict = {}
-    team.value.forEach(function (teamMember) {
+    authors.value.forEach(function (teamMember) {
       dict[teamMember.id] = teamMember;
     })
     return dict;
@@ -117,7 +117,9 @@ export const useContentStore = defineStore('content', () => {
   })
 
   // A computed list of the content which has had human readable labels
-  // attached to the content
+  // attached to the content. This grabs the human readable name for
+  // the tags attached to a post, and the human readable author name instead
+  // of the author id.
   const labelledContent = computed(() => {
     // Apply labels to all the content based on it's dimensions
     return content.value.map((contentPiece) => {
@@ -125,6 +127,9 @@ export const useContentStore = defineStore('content', () => {
         ...contentPiece,
         tags: contentPiece.filterDimensions.map(function (dimension) {
           return filtersByKeyValue.value[`${dimension.key}:${dimension.value}`]
+        }),
+        authorDetails: contentPiece.authors.map(function (authorId) {
+          return authorsById.value[authorId]
         })
       }
     });
@@ -169,7 +174,7 @@ export const useContentStore = defineStore('content', () => {
     const dict = {}
 
     // Prepopulate an empty array for each team member
-    for (const author of team.value) {
+    for (const author of authors.value) {
       dict[author.id] = [];
     }
 
@@ -202,8 +207,8 @@ export const useContentStore = defineStore('content', () => {
     resetAllFilters,
     filtersByKeyValue,
     filterGroupsByKey,
-    team,
-    teamById,
+    authors,
+    authorsById,
     labelledContentByAuthor
   }
 });

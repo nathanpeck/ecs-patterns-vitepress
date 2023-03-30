@@ -3,10 +3,10 @@ import { storeToRefs } from "pinia"
 import { useContentStore } from '../stores/content'
 const { authorId } = defineProps(['authorId'])
 const store = useContentStore();
-const { teamById } = storeToRefs(store);
+const { authorsById } = storeToRefs(store);
 
 let authorLink = `/team/${authorId}`
-let authorDetails = teamById.value[authorId];
+let authorDetails = authorsById.value[authorId];
 
 if (!authorDetails) {
   throw new Error(`Failed to find team member ${authorId} in team.yml`)

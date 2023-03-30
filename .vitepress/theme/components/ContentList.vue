@@ -51,6 +51,12 @@ const displayContent = computed(() => {
       }
     }
 
+    for (const authorDetail of content.authorDetails) {
+      if (authorDetail.name.match(search)) {
+        return true;
+      }
+    }
+
     return false;
   });
 })

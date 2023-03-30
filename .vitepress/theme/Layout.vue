@@ -3,7 +3,7 @@ import { useData } from 'vitepress'
 import { data as posts } from './loaders/posts.data.js'
 import { data as loadedFilters } from './loaders/filters.data.js'
 import { data as loadedFilterGroups } from './loaders/filter-groups.data.js'
-import { data as loadedTeam } from './loaders/team.data.js'
+import { data as loadedAuthors } from './loaders/authors.data.js'
 
 import ContentList from './components/ContentList.vue'
 import ContentListFilter from './components/ContentListFilter.vue'
@@ -18,7 +18,7 @@ import { useContentStore } from './stores/content'
 
 const store = useContentStore();
 
-store.team = loadedTeam;
+store.authors = loadedAuthors;
 store.filterGroups = loadedFilterGroups;
 store.filters = loadedFilters;
 store.content = posts.map((post) => {
