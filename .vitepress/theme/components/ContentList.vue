@@ -107,6 +107,7 @@ const displayContent = computed(() => {
 <style scoped>
 .content {
   margin-top: 20px;
+  width: 100%;
 }
 
 .results {
