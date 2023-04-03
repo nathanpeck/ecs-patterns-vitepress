@@ -12,7 +12,7 @@ const { resetAllFilters } = contentStore;
   <div class="sidebar">
     <div class="card">
       <div class="card-header">
-        <span class="header-text">Filter ({{ labelledFilteredContent.length }} results)</span>
+        Filter ({{ labelledFilteredContent.length }} results)
         <button class="btn btn-sm btn-secondary float-right" @click="resetAllFilters">
           Reset
         </button>
@@ -26,7 +26,7 @@ const { resetAllFilters } = contentStore;
     </div>
     <div class="card">
       <div class="card-body">
-        <a href="/about">About</a>
+        <a href="https://main--prismatic-babka-239bef.netlify.app/">ECS Newsletter</a>
       </div>
     </div>
   </div>

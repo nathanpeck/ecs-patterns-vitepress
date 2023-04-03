@@ -164,4 +164,39 @@ ol li {
   margin-right: 5px;
   display: inline;
 }
+
+.custom-block {
+  margin-bottom: 20px;
+}
+
+/** The magical # anchor that appears on headings in the content
+    on hover. */
+.header-anchor {
+  float: left;
+  margin-left: -.87em;
+  padding-right: .23em;
+  font-weight: 500;
+  opacity: 0;
+  transition: color .25s, opacity .25s;
+  text-decoration: none;
+}
+
+.header-anchor:before {
+  content: "#"
+}
+
+h1:hover .header-anchor,
+h1 .header-anchor:focus,
+h2:hover .header-anchor,
+h2 .header-anchor:focus,
+h3:hover .header-anchor,
+h3 .header-anchor:focus,
+h4:hover .header-anchor,
+h4 .header-anchor:focus,
+h5:hover .header-anchor,
+h5 .header-anchor:focus,
+h6:hover .header-anchor,
+h6 .header-anchor:focus {
+  opacity: 1
+}
 </style>

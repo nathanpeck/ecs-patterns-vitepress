@@ -59,7 +59,7 @@ const { site, frontmatter } = useData()
   </div>
   <div v-if="frontmatter.title">
     <div class="container-fluid">
-      <div class="wrapper">
+      <div class="wide-wrapper">
         <ContentPageSidebar />
         <ContentPage />
       </div>
@@ -87,6 +87,23 @@ const { site, frontmatter } = useData()
    and switch the layout to a column vs a side by side */
 @media screen and (max-width: 600px) {
   .wrapper {
+    flex-direction: column;
+  }
+}
+
+.wide-wrapper {
+  display: flex;
+  flex-direction: row;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 20px;
+  background-color: rgb(246, 242, 235);
+}
+
+/* On mobile width move the sidebar to the top
+   and switch the layout to a column vs a side by side */
+@media screen and (max-width: 900px) {
+  .wide-wrapper {
     flex-direction: column;
   }
 }

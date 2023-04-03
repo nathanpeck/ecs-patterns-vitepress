@@ -24,25 +24,41 @@ for building and deploying a container image. The container image will be deploy
 
 This pattern uses `aws-cdk-lib/aws-ecs-patterns`, which is a higher level CDK library with easy to use SDK's that launch a set of production ready resources for you with a single SDK call.
 
-#### Development environment
+#### Development Environment
 
-To use this pattern you need TypeScript and Node. First, ensure that you have Node.js installed on your development machine. Then create the following `package.json` file which will install all required dependencies:
+To use this pattern you need TypeScript and Node. First, ensure that you have Node.js installed on your development machine. Then create the following files:
+
+<tabs>
+<tab label="package.json">
 
 <<< @/pattern/basic-cdk-service-custom-image/files/package.json
 
-Next create a `tsconfig.json` file which will configure the TypeScript settings for the project:
+</tab>
+
+<tab label='tsconfig.json'>
 
 <<< @/pattern/basic-cdk-service-custom-image/files/tsconfig.json
 
-#### CDK application
+</tab>
 
-In order to setup context for the CDK application create a file `cdk.json` with the following content:
+<tab label='cdk.json'>
 
 ```json
 {
   "app": "node index"
 }
 ```
+
+</tab>
+</tabs>
+
+The files above serve the following purpose:
+
+- `package.json` - This file is used by NPM or Yarn to identify and install all the required dependencies:
+- `tsconfig.json` - Configures the TypeScript settings for the project:
+- `cdk.json` - Tells CDK what command to run, and provides a place to pass other contextual settings to CDK.
+
+#### CDK Application
 
 Now you can create an `index.ts` file that has the actual code for the CDK application:
 

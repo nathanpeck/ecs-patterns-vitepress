@@ -2,6 +2,7 @@
 import { useData } from 'vitepress'
 import { storeToRefs } from "pinia"
 import { useContentStore } from '../stores/content'
+import Outline from '../components/Outline.vue'
 
 const { frontmatter } = useData()
 const store = useContentStore()
@@ -44,55 +45,63 @@ if (frontmatter.value.filterDimensions) {
 
 <template>
   <div class="sidebar">
+    <Outline />
+
     <div class="card">
       <div class="card-header">
-        <a href="/">&lt; Back to all patterns</a>
+        About
       </div>
       <div class="card-body">
         <div class="choice" v-for="dimension in dimensions">
-          <h5>{{ dimension.filterGroupLabel }}</h5>
+          <h6>{{ dimension.filterGroupLabel }}</h6>
           <span class="badge rounded-pill" :style="{ 'background-color': dimension.filter.color }">{{
             dimension.filter.label }} </span>
         </div>
         <div class="choice" v-if="frontmatter.license">
-          <h5>License</h5>
+          <h6>License</h6>
           <a :href="frontmatter.license.link">
             <span class="badge rounded-pill" :style="{ 'background-color': 'black' }">{{ frontmatter.license.label
             }}</span>
           </a>
         </div>
         <div class="choice" v-if="code && !frontmatter.license">
-          <h5>License</h5>
+          <h6>License</h6>
           <a href="https://github.com/aws-samples/aws-cdk-changelogs-demo/blob/master/LICENSE">
             <span class="badge rounded-pill" :style="{ 'background-color': 'black' }">MIT No Attribution</span>
           </a>
         </div>
         <div class="choice" v-if="frontmatter.repositoryLink">
-          <h5>Repository</h5>
+          <h6>Repository</h6>
           <a :href="frontmatter.repositoryLink">
             <span class="badge rounded-pill" :style="{ 'background-color': 'black' }">Github</span>
           </a>
         </div>
       </div>
     </div>
+
   </div>
 </template>
 
 <style scoped>
+.header-text {
+  font-size: 1.2em;
+}
+
 .sidebar {
   max-width: 300px;
   min-width: 300px;
   height: 100%;
-  float: left;
   margin-right: 20px;
   margin-top: 20px;
 }
 
 /* On mobile hide this sidebar */
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 900px) {
   .sidebar {
-    display: none;
+    width: 100%;
+    max-width: none;
   }
+
 }
 
 .choice {

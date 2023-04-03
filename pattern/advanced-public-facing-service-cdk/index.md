@@ -14,6 +14,7 @@ filterDimensions:
 authors:
   - peckn
 date: Jul 21, 2022
+outline: deep
 ---
 
 #### About
@@ -21,25 +22,41 @@ date: Jul 21, 2022
 This pattern shows how to setup an AWS Cloud Development Kit (CDK) application
 for building a container image and deploying it to EC2 capacity, fronted by an Application Load Balancer that serves as the ingress for the application. The container application will be managed by Amazon Elastic Container Service (ECS).
 
-#### Development environment
+#### Development Environment
 
-This pattern uses TypeScript and Node. First, ensure that you have Node.js installed on your development machine. Then create the following `package.json` file which will install all required dependencies:
+To use this pattern you need TypeScript and Node. First, ensure that you have Node.js installed on your development machine. Then create the following files:
+
+<tabs>
+<tab label="package.json">
 
 <<< @/pattern/advanced-public-facing-service-cdk/files/package.json
 
-Next create a `tsconfig.json` file which will configure the TypeScript settings for the project:
+</tab>
+
+<tab label='tsconfig.json'>
 
 <<< @/pattern/advanced-public-facing-service-cdk/files/tsconfig.json
 
-#### CDK application
+</tab>
 
-In order to setup context for the CDK application create a file `cdk.json` with the following content:
+<tab label='cdk.json'>
 
 ```json
 {
   "app": "node index"
 }
 ```
+
+</tab>
+</tabs>
+
+The files above serve the following purpose:
+
+- `package.json` - This file is used by NPM or Yarn to identify and install all the required dependencies:
+- `tsconfig.json` - Configures the TypeScript settings for the project:
+- `cdk.json` - Tells CDK what command to run, and provides a place to pass other contextual settings to CDK.
+
+### CDK Application
 
 Now you can create an `index.ts` file that has the actual code for the CDK application:
 

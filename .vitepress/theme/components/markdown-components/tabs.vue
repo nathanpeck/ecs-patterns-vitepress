@@ -43,6 +43,7 @@ function selectTab(tab) {
   cursor: pointer;
   border-bottom: 2px solid var(--bs-border-color-translucent);
   text-align: center;
+  font-weight: 500;
   width: 100%;
   line-height: 2em;
   list-style: none !important;
@@ -60,6 +61,7 @@ function selectTab(tab) {
 
 .tabs .is-active {
   border-bottom: 2px solid rgb(246, 106, 49);
+  background-color: rgba(0, 0, 0, .05);
 }
 
 .tabs .is-active:hover {

@@ -12648,3 +12648,7 @@ a {
 a:hover {
   color: rgb(254, 168, 85);
 }
+
+.card-header {
+  font-size: 1.2em;
+}
