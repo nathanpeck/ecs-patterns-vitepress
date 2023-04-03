@@ -21,7 +21,7 @@ Download the script below and use `chmod` to make it executable:
 chmod +x delete-tasks.sh
 ```
 
-Script contents:
+#### Script
 
 <<< @/pattern/ecs-delete-task-definition/files/delete-tasks.sh
 
@@ -34,6 +34,10 @@ Modify the following variables to use the script:
 - `END` - The revision number to stop deleting at
 
 Note that task definitions are 1 based, not zero based, so to delete the first 1000 task definition revisions set START=1 and END=1000
+
+::: info
+Deleting task definitions may take a while. The task definitions will not be instantly deleted. Instead they will transition to DELETE_IN_PROGRESS state and ECS will gradually clean up these task definitions in the background when they are no longer in use by any ECS services or running tasks.
+:::
 
 
 #### See also

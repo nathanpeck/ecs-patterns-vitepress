@@ -15,6 +15,23 @@
 - `author` - Folder contains the detail pages for each pattern author
     - `author/<authorId>.md` - The custom bio content for each author profile page.
 
+### Markdown:
+
+Details on available Markdown extensions are available here: https://vitepress.dev/guide/markdown
+
+Additionally, there are custom Vue components available inside of the markdown such as:
+
+YouTube:
+```
+<youtube id="RTeB7Ho88bg" />
+```
+
+Code from a file can be imported and embedded as a code widget using the following syntax:
+```
+<<< @/pattern/ecs-delete-task-definition/files/delete-tasks.sh
+```
+
+
 ### Setup:
 
 Ensure that Node >v18 is installed locally. Then run:

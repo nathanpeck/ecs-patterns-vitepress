@@ -29,6 +29,7 @@ if (!authorDetails) {
   position: relative;
   float: left;
   background-color: rgb(210, 231, 245);
+  border: 1px solid rgb(189, 213, 228);
   border-radius: 5px;
   max-width: 200px;
   padding: 0px;

@@ -7,8 +7,9 @@ const props = defineProps(['label', 'key', 'filters'])
     <h5>{{ label }}</h5>
 
     <div class="form-check" v-for="(choiceOption, index) in filters">
-      <input class="form-check-input" type="checkbox" value="" :id="choiceOption + index" v-model="choiceOption.checked">
-      <label class="form-check-label" :for="choiceOption + index">
+      <input class="form-check-input" type="checkbox" value="" :id="choiceOption.value + index"
+        v-model="choiceOption.checked">
+      <label class="form-check-label" :for="choiceOption.value + index">
         <span class="badge rounded-pill" :style="{ 'background-color': choiceOption.color }">{{ choiceOption.label
         }}</span>
       </label>

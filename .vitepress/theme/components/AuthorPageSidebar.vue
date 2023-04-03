@@ -23,6 +23,12 @@ if (!authorDetails) {
         <img :src="authorDetails.image" class="avatar" />
         <div class="name">{{ authorDetails.name }}</div>
         <div class="title">{{ authorDetails.title }}</div>
+
+        <ul>
+          <li v-for="link in authorDetails.links">
+            <a :href="link.uri">{{ link.type }}</a>
+          </li>
+        </ul>
       </div>
     </div>
   </div>

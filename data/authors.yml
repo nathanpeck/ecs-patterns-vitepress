@@ -6,7 +6,9 @@
     - type: website
       uri: https://nathanpeck.com
     - type: github
-      uri: https://github.com
+      uri: https://github.com/nathanpeck
+    - type: twitter
+      uri: https://twitter.com/nathankpeck
 - id: sbcoulto
   name: Scott Coulton
   title: Principal Developer Advocate at AWS

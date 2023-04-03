@@ -86,6 +86,15 @@ table {
   margin-bottom: 1.2em;
 }
 
+ul li {
+  list-style: disc;
+}
+
+ol li {
+  list-style-type: decimal;
+  list-style: auto;
+}
+
 .content img {
   max-width: 1000px;
   width: 100%;

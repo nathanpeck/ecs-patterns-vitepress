@@ -1,5 +1,4 @@
 import { defineConfig } from 'vitepress'
-import { highlight } from './theme/plugins/highlight'
 import { snippetPlugin } from './theme/plugins/snippet'
 import process from 'node:process'
 import defaultFence from './theme/plugins/default_fence'

@@ -38,7 +38,7 @@
 # Capacity types
 - key: capacity
   value: ec2
-  label: EC2
+  label: EC2 Instances
   color: '#8b87c1'
   checked: false
 - key: capacity

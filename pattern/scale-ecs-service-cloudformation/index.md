@@ -22,3 +22,17 @@ Autoscaling works like this:
 The following template automatically sets up CloudWatch alarms, autoscaling policies, and attaches them to an ECS service.
 
 <<< @/pattern/scale-ecs-service-cloudformation/files/scale-service-by-cpu.yml
+
+#### Usage
+
+- `EnvironmentName` - The name of a base CloudFormation stack that contains the ECS cluster resource. This stack is intended to be one of the other patterns such as the [serverless public facing task stack](pattern/public-facing-api-ecs-fargate-cloudformation)
+- `ServiceName` - The name of the ECS service to scale
+
+You can deploy the template via the AWS CloudFormation web console, or by running an AWS CLI command:
+
+```sh
+aws cloudformation deploy \
+   --stack-name scale-my-service-name \
+   --template-file scale-service-by-cpu.yml \
+   --parameter-overrides EnvironmentName=development ServiceName=my-web-service
+```

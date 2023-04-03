@@ -12,5 +12,8 @@
     "shiki-processor": "^0.1.3",
     "vitepress": "^1.0.0-alpha.61",
     "vue": "^3.2.47"
+  },
+  "devDependencies": {
+    "vitepress-plugin-tabs": "^0.2.0"
   }
 }

@@ -15,7 +15,11 @@ authors:
 date: March 15, 2023
 ---
 
-The easiest way to register external capacity with an ECS cluster is to use the Elastic Container Service web console, as it will automatically create an activation key and code, and prepopulate the commands with the right activation key for you. However if you wish to automate the registration process you can use the following commands as a template:
+::: tip
+The easiest way to register external capacity with an ECS cluster is to use the Elastic Container Service web console, as it will automatically create an activation key and code, and prepopulate the commands with the right activation key for you.
+:::
+
+If you need to automate the ECS Anywhere registration process for Linux you can use the following command as a template:
 
 ```sh
 REGION="desired AWS region here"
@@ -29,3 +33,8 @@ curl --proto "https" -o "/tmp/ecs-anywhere-install.sh" "https://amazon-ecs-agent
 The referenced install script which is downloaded from S3 is also embedded here for your review. This script handles the installation of Docker, the AWS Systems Manager agent, and the Elastic Container Service Agent:
 
 <<< @/pattern/register-ecs-anywhere-linux-capacity/files/ecs-anywhere-install-latest.sh
+
+#### See also
+
+- [Install script for Windows capacity](/pattern/register-ecs-anywhere-windows-capacity)
+- [Official documentation about ECS Anywhere](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-anywhere.html)
