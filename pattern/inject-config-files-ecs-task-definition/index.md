@@ -68,3 +68,7 @@ aws ecs register-task-definition \
 </tab>
 
 </tabs>
+
+### See Also
+
+- [Examples of custom entrypoints and command overrides](/pattern/ecs-entrypoint-command-task-definition)

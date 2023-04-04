@@ -11,6 +11,9 @@ filterDimensions:
 authors:
   - peckn
 date: April 3 2023
+license:
+  label: Apache 2.0
+  link: https://github.com/pulumi/examples/blob/master/LICENSE
 ---
 
 Pulumi is an infrastructure as code framework for software engineers. Instead of writing YAML to define your infrastructure you can use higher level SDK commands, in a familiar programming language, and Pulumi will create the necessary resources for you automatically.

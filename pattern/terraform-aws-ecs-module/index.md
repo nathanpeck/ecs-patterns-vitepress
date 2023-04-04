@@ -15,7 +15,7 @@ filterDimensions:
     value: fargate
 repositoryLink: https://github.com/terraform-aws-modules/terraform-aws-ecs
 license:
-  label: Apache 2
+  label: Apache 2.0
   link: https://github.com/terraform-aws-modules/terraform-aws-ecs/blob/master/LICENSE
 authors:
   - peckn
