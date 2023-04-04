@@ -1,7 +1,7 @@
 ---
-title: Deploy a load balanced ECS service with Pulumi Crosswalk
+title: Use Pulumi Crosswalk to setup an ECS Service in a VPC
 description: >-
-  How to use Pulumi infrastructure as code SDK to deploy a load balanced ECS service
+  How to use Pulumi infrastructure as code SDK to deploy a load balanced ECS service in a VPC
 image: cover.png
 filterDimensions:
   - key: tool
@@ -10,7 +10,7 @@ filterDimensions:
     value: pattern
 authors:
   - peckn
-date: April 3 2023
+date: April 4 2023
 ---
 
 Pulumi is an infrastructure as code framework for software engineers. Instead of writing YAML to define your infrastructure you can use higher level SDK commands, in a familiar programming language, and Pulumi will create the necessary resources for you automatically.
@@ -18,37 +18,37 @@ Pulumi is an infrastructure as code framework for software engineers. Instead of
 <tabs>
 <tab label="TypeScript">
 
-<<< @/pattern/load-balanced-ecs-service-pulumi/files/load-balanced-ecs.ts
+<<< @/pattern/pulumi-ecs-service-in-vpc/files/service-in-vpc.ts
 
 </tab>
 
 <tab label="Python">
 
-<<< @/pattern/load-balanced-ecs-service-pulumi/files/load-balanced-ecs.py
+<<< @/pattern/pulumi-ecs-service-in-vpc/files/service-in-vpc.py
 
 </tab>
 
 <tab label="Go">
 
-<<< @/pattern/load-balanced-ecs-service-pulumi/files/load-balanced-ecs.go
+<<< @/pattern/pulumi-ecs-service-in-vpc/files/service-in-vpc.go
 
 </tab>
 
 <tab label="Java">
 
-<<< @/pattern/load-balanced-ecs-service-pulumi/files/load-balanced-ecs.java
+<<< @/pattern/pulumi-ecs-service-in-vpc/files/service-in-vpc.java
 
 </tab>
 
 <tab label="YAML">
 
-<<< @/pattern/load-balanced-ecs-service-pulumi/files/load-balanced-ecs.yml
+<<< @/pattern/pulumi-ecs-service-in-vpc/files/service-in-vpc.yaml
 
 </tab>
 
 <tab label="C#">
 
-<<< @/pattern/load-balanced-ecs-service-pulumi/files/load-balanced-ecs.cs
+<<< @/pattern/pulumi-ecs-service-in-vpc/files/service-in-vpc.cs
 
 </tab>
 
