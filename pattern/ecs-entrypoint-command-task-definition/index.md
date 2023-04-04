@@ -1,7 +1,9 @@
 ---
-title: Amazon ECS task definition with an entrypoint command
+title: Amazon ECS task definition with a custom entrypoint command
 description: >-
-  How to run a custom command inside of a container image
+  How to run a custom command inside of a container image. Examples of how to
+  override the default entrypoint, as well as pass custom parameters to the
+  default entrypoint.
 image: cover.png
 filterDimensions:
   - key: tool

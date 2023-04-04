@@ -87,7 +87,7 @@
   checked: false
 - key: feature
   value: efs
-  label: Amazon Elastic File System
+  label: Amazon Elastic File System (EFS)
   color: '#e8a490'
   checked: false
 
