@@ -82,7 +82,7 @@ const displayContent = computed(() => {
       <FillerCard />
       <FillerCard />
     </div>
-    <div class="content" v-if="displayContent.length == 0">
+    <div class="not-found" v-if="displayContent.length == 0">
       <div class="card content-card nothing-found">
         <div class="card-body">
           <h2>Nothing found!</h2>
@@ -107,6 +107,10 @@ const displayContent = computed(() => {
 <style scoped>
 .content {
   width: 100%;
+}
+
+.not-found {
+  margin-top: 20px;
 }
 
 .results {

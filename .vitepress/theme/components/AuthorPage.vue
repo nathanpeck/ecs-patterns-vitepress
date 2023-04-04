@@ -49,7 +49,6 @@ const thisAuthorContent = labelledContentByAuthor.value[authorId];
 }
 
 .content {
-  margin-top: 20px;
   min-width: 500px;
   max-width: 1100px;
   flex-grow: 1;

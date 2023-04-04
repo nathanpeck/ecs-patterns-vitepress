@@ -1,13 +1,6 @@
 <script setup>
-import { getHeaders } from './composables/outline';
-import { onContentUpdated } from 'vitepress'
-import { ref } from 'vue';
-
-const headers = ref([]);
-
-onContentUpdated(() => {
-  headers.value = getHeaders();
-})
+import { defineProps } from 'vue';
+const { headers } = defineProps(['headers'])
 </script>
 
 <template>

@@ -1,13 +1,22 @@
 <script setup>
+import { ref } from 'vue'
 import { useData } from 'vitepress'
 import { storeToRefs } from "pinia"
 import { useContentStore } from '../stores/content'
 import Outline from '../components/Outline.vue'
 import CollapsibleSidebarSection from '../components/CollapsibleSidebarSection.vue'
+import { getHeaders } from './composables/outline';
+import { onContentUpdated } from 'vitepress'
 
 const { frontmatter } = useData()
 const store = useContentStore()
 const { filtersByKeyValue, filterGroupsByKey } = storeToRefs(store);
+
+const headers = ref([]);
+
+onContentUpdated(() => {
+  headers.value = getHeaders();
+})
 
 var code = false;
 
@@ -46,8 +55,8 @@ if (frontmatter.value.filterDimensions) {
 
 <template>
   <div class="sidebar">
-    <CollapsibleSidebarSection title="Table of Contents">
-      <Outline />
+    <CollapsibleSidebarSection title="Table of Contents" v-if="headers.length > 0">
+      <Outline :headers="headers" />
     </CollapsibleSidebarSection>
     <CollapsibleSidebarSection title="About">
       <div class="choices">

@@ -41,7 +41,6 @@ if (!authorDetails) {
   height: 100%;
   float: left;
   margin-right: 20px;
-  margin-top: 20px;
 }
 
 .name {
