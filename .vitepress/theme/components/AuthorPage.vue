@@ -24,7 +24,7 @@ const thisAuthorContent = labelledContentByAuthor.value[authorId];
       </div>
     </div>
     <h2 class="label"> {{ thisAuthorContent.length }} items </h2>
-    <div class="content">
+    <div class="content authorContent">
       <ContentListCard v-for="content of thisAuthorContent" :title="content.title" :description="content.description"
         :image="content.image" :key="content.id" :tags="content.tags" :id="content.id" />
 
@@ -46,6 +46,10 @@ const thisAuthorContent = labelledContentByAuthor.value[authorId];
 .authorPageContent {
   display: flex;
   flex-direction: column
+}
+
+.authorContent {
+  margin-top: 20px;
 }
 
 .content {

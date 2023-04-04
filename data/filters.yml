@@ -80,6 +80,16 @@
   label: ECS Service Connect
   color: '#e8a490'
   checked: false
+- key: feature
+  value: exec
+  label: ECS Exec
+  color: '#e8a490'
+  checked: false
+- key: feature
+  value: efs
+  label: Amazon Elastic File System
+  color: '#e8a490'
+  checked: false
 
 # Type of pattern or content
 - key: type
