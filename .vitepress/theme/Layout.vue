@@ -80,6 +80,7 @@ const { site, frontmatter } = useData()
   padding-left: 20px;
   padding-right: 20px;
   padding-bottom: 20px;
+  padding-top: 20px;
   background-color: rgb(246, 242, 235);
 }
 
@@ -97,6 +98,7 @@ const { site, frontmatter } = useData()
   padding-left: 20px;
   padding-right: 20px;
   padding-bottom: 20px;
+  padding-top: 20px;
   background-color: rgb(246, 242, 235);
 }
 

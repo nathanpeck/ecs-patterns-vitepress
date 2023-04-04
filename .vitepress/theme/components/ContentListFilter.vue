@@ -59,7 +59,6 @@ const { resetAllFilters } = contentStore;
   height: 100%;
   float: left;
   margin-right: 20px;
-  margin-top: 20px;
   padding-bottom: 20px;
   max-width: 300px;
   min-width: 300px;

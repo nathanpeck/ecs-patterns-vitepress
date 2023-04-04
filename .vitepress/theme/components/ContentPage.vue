@@ -55,7 +55,6 @@ const githubPath = `https://github.com/nathanpeck/ecs-patterns-vitepress/tree/ma
 /* These styles control the wrapper around the pattern page content */
 .content {
   flex: 1;
-  margin-top: 20px;
   min-width: 500px;
   max-width: 1100px;
   display: flex;

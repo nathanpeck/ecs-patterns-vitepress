@@ -11,28 +11,18 @@ onContentUpdated(() => {
 </script>
 
 <template>
-  <div class="card outline">
-    <div class="card-header">
-      Table of Contents
-    </div>
-    <div class="card-body">
-      <ul class="outline-list">
-        <li v-for="header in headers">
-          <a :href='header.link'>{{ header.title }}</a>
-        </li>
-      </ul>
-    </div>
-  </div>
+  <ul class="outline-list">
+    <li v-for="header in headers">
+      <a :href='header.link'>{{ header.title }}</a>
+    </li>
+  </ul>
 </template>
 
 <style>
-.outline {
-  margin-bottom: 20px;
-}
-
 ul.outline-list {
   list-style-type: none;
   padding-left: 0px;
+  margin-bottom: 0px;
 }
 
 ul.outline-list li {

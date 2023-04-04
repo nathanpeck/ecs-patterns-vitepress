@@ -3,6 +3,7 @@ import { useData } from 'vitepress'
 import { storeToRefs } from "pinia"
 import { useContentStore } from '../stores/content'
 import Outline from '../components/Outline.vue'
+import CollapsibleSidebarSection from '../components/CollapsibleSidebarSection.vue'
 
 const { frontmatter } = useData()
 const store = useContentStore()
@@ -45,13 +46,11 @@ if (frontmatter.value.filterDimensions) {
 
 <template>
   <div class="sidebar">
-    <Outline />
-
-    <div class="card">
-      <div class="card-header">
-        About
-      </div>
-      <div class="card-body">
+    <CollapsibleSidebarSection title="Table of Contents">
+      <Outline />
+    </CollapsibleSidebarSection>
+    <CollapsibleSidebarSection title="About">
+      <div class="choices">
         <div class="choice" v-for="dimension in dimensions">
           <h6>{{ dimension.filterGroupLabel }}</h6>
           <span class="badge rounded-pill" :style="{ 'background-color': dimension.filter.color }">{{
@@ -77,8 +76,8 @@ if (frontmatter.value.filterDimensions) {
           </a>
         </div>
       </div>
-    </div>
 
+    </CollapsibleSidebarSection>
   </div>
 </template>
 
@@ -89,27 +88,42 @@ if (frontmatter.value.filterDimensions) {
 
 .sidebar {
   max-width: 300px;
-  min-width: 300px;
   height: 100%;
   margin-right: 20px;
-  margin-top: 20px;
 }
 
-/* On mobile hide this sidebar */
-@media screen and (max-width: 900px) {
-  .sidebar {
-    width: 100%;
-    max-width: none;
-  }
-
+.choices {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  row-gap: 20px;
 }
 
 .choice {
-  margin-bottom: 10px;
-  padding-bottom: 10px;
+  width: 100%;
 }
 
 .choice:last-child {
   padding-bottom: none;
+}
+
+/* On mobile adjust sidebar to horizontal configuration */
+@media screen and (max-width: 900px) {
+  .sidebar {
+    width: 100%;
+    min-width: 500px;
+    max-width: none;
+  }
+
+  .choice {
+    flex: 0 1 calc(25% - .5em);
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .choice {
+    flex: 0 1 calc(50% - .5em);
+  }
 }
 </style>
