@@ -76,7 +76,7 @@ import DarkModeSwitch from './DarkModeSwitch.vue';
     padding: 5px;
     background: rgb(2, 0, 36);
     background-color: #f39f86;
-    background-image: url(/header.png);
+    background-image: url(/header-smaller.webp);
     background-size: 200px;
     border-bottom: 3px solid rgb(246, 106, 49);
     font-size: 1em;
