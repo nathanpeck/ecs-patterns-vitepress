@@ -1,7 +1,20 @@
 import { defineConfig } from 'vitepress'
 import { snippetPlugin } from './theme/plugins/snippet'
-import process from 'node:process'
 import defaultFence from './theme/plugins/default_fence'
+import { createWriteStream } from 'node:fs'
+import { writeFile } from 'node:fs/promises'
+import { resolve } from 'node:path'
+import { SitemapStream } from 'sitemap'
+import { BUNDLED_LANGUAGES } from 'shiki'
+
+// Patch an issue where it doesn't recognize
+// Dockerfiles as Dockerfiles because there is no alias
+const DOCKER_LANG = BUNDLED_LANGUAGES.find((lang) => {
+  return lang.id == 'docker';
+})
+if (DOCKER_LANG) {
+  DOCKER_LANG.aliases = ['dockerfile']
+}
 
 const extractLang = (info: string) => {
   return info
@@ -23,6 +36,9 @@ const extractFilename = (info: string) => {
     null
   }
 };
+
+const links: Object[] = []
+const pages: Object[] = []
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
@@ -69,6 +85,7 @@ export default defineConfig({
   ],
   markdown: {
     theme: 'css-variables',
+    //languages: ,
     config: (md) => {
       // Fully override the fence rules with my own customized version
       md.renderer.rules.fence = (...args) => {
@@ -87,5 +104,44 @@ export default defineConfig({
       // Now restore the plugins that I want to use
       md.use(snippetPlugin, process.cwd())
     }
+  },
+
+  // Extract a list of all the links in the site
+  transformHtml: (_, id, { pageData }) => {
+    if (!/[\\/]404\.html$/.test(id)) {
+      const cleanUrl = pageData.relativePath.replace(/((^|\/)index)?\.md$/, '$2')
+
+      links.push({
+        // you might need to change this if not using clean urls mode
+        url: cleanUrl,
+        lastmod: pageData.lastUpdated
+      })
+
+      pages.push({
+        title: pageData.title,
+        description: pageData.description,
+        filterDimensions: pageData.frontmatter.filterDimensions,
+        authors: pageData.frontmatter.authors,
+        date: pageData.frontmatter.date,
+        url: cleanUrl
+      });
+    }
+  },
+
+  // Write out some artifacts like a sitemap and index.json file
+  buildEnd: async ({ outDir }) => {
+    // Write out the sitemap.xml
+    const sitemap = new SitemapStream({
+      hostname: 'https://d2rkbl8jpwujc2.cloudfront.net/'
+    })
+    const writeStream = createWriteStream(resolve(outDir, 'sitemap.xml'))
+    sitemap.pipe(writeStream)
+    links.forEach((link) => sitemap.write(link))
+    sitemap.end()
+    await new Promise((r) => writeStream.on('finish', r))
+
+    // Now write out an index file of page data
+    const json = JSON.stringify(pages);
+    await writeFile(resolve(outDir, 'index.json'), json, 'utf-8')
   }
 })

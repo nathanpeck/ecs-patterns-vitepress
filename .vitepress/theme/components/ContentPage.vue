@@ -42,8 +42,7 @@ const githubPath = `https://github.com/nathanpeck/ecs-patterns-vitepress/tree/ma
                 <path
                   d="M8,17c-0.3,0-0.5-0.1-0.7-0.3C7,16.5,6.9,16.1,7,15.8l1-4c0-0.2,0.1-0.3,0.3-0.5l9.5-9.5c1.2-1.2,3.2-1.2,4.4,0c1.2,1.2,1.2,3.2,0,4.4l-9.5,9.5c-0.1,0.1-0.3,0.2-0.5,0.3l-4,1C8.2,17,8.1,17,8,17zM9.9,12.5l-0.5,2.1l2.1-0.5l9.3-9.3c0.4-0.4,0.4-1.1,0-1.6c-0.4-0.4-1.2-0.4-1.6,0l0,0L9.9,12.5z M18.5,2.5L18.5,2.5L18.5,2.5z">
                 </path>
-              </svg>
-              Edit this page on Github</a></div>
+              </svg>Edit this page on Github</a></div>
           <div class="content-date" v-if="frontmatter.date">Last Updated {{ datetime }}</div>
         </div>
       </div>

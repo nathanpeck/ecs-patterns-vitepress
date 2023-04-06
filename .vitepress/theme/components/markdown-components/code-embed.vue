@@ -139,8 +139,9 @@ function download() {
 .codeBlockTopper .btn {
   padding: .4em;
   line-height: 1em;
+  border-radius: 5px;
   background-color: var(--bs-tertiary-bg);
-  border: 1px solid var(--bs-light-border-subtle);
+  border: 1px solid var(--bs-primary-border-subtle);
   color: var(--bs-emphasis-color);
 }
 
@@ -152,12 +153,10 @@ div[class^="language-"] {
 .copy {
   margin-left: 10px;
   border-radius: 5px;
-  border: 1px solid rgb(71, 80, 98);
 }
 
 .download {
   border-radius: 5px;
-  border: 1px solid rgb(71, 80, 98);
 }
 
 @-webkit-keyframes copying {
@@ -194,30 +193,30 @@ div[class^="language-"] {
 }
 
 :root [data-bs-theme=dark] {
-  --shiki-color-text: azure;
+  --shiki-color-text: var(--bs-emphasis-color);
   --shiki-color-background: black;
-  --shiki-token-constant: plum;
-  --shiki-token-string: rgb(209, 185, 208);
-  --shiki-token-comment: salmon;
-  --shiki-token-keyword: powderblue;
+  --shiki-token-constant: #79c0ff;
+  --shiki-token-string: #a5d6ff;
+  --shiki-token-comment: #8b949e;
+  --shiki-token-keyword: #ff7b72;
   --shiki-token-parameter: seashell;
-  --shiki-token-function: dodgerblue;
-  --shiki-token-string-expression: burlywood;
+  --shiki-token-function: #ffa657;
+  --shiki-token-string-expression: #a5d6ff;
   --shiki-token-punctuation: linen;
   --shiki-token-link: honeydew;
 }
 
 :root [data-bs-theme=light] {
-  --shiki-color-text: black;
+  --shiki-color-text: var(--bs-emphasis-color);
   --shiki-color-background: rgb(218, 247, 247);
-  --shiki-token-constant: rgb(215, 75, 215);
-  --shiki-token-string: rgb(72, 7, 70);
-  --shiki-token-comment: rgb(229, 33, 11);
-  --shiki-token-keyword: rgb(1, 140, 158);
-  --shiki-token-parameter: rgb(243, 169, 117);
-  --shiki-token-function: rgb(5, 123, 242);
-  --shiki-token-string-expression: rgb(194, 125, 35);
-  --shiki-token-punctuation: rgb(209, 132, 55);
+  --shiki-token-constant: #0550ae;
+  --shiki-token-string: #1F2328;
+  --shiki-token-comment: #6e7781;
+  --shiki-token-keyword: #cf222e;
+  --shiki-token-parameter: #1F2328;
+  --shiki-token-function: #953800;
+  --shiki-token-string-expression: #0a3069;
+  --shiki-token-punctuation: #0550ae;
   --shiki-token-link: rgb(149, 238, 149);
 }
 </style>

@@ -25,10 +25,14 @@ if (!authorDetails) {
 </template>
 
 <style>
+:root [data-bs-theme=light] {
+  --author-bg-color: rgb(210, 231, 245);
+}
+
 .author {
   position: relative;
   float: left;
-  background-color: var(--bs-primary-bg-subtle);
+  background-color: var(--author-bg-color);
   border: 1px solid var(--bs-primary-border-subtle);
   border-radius: 5px;
   max-width: 200px;
