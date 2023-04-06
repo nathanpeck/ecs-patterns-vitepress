@@ -24,9 +24,9 @@ watch(darkModeToggle, () => {
 <template>
   <div class="dark-mode-switch d-flex" style="margin-top: .30rem;">
     <input type="checkbox" class="checkbox" id="btnSwitch" v-model="darkModeToggle" />
-    <label class="label" for="btnSwitch">
-      <i class="fas fa-moon"></i>
-      <i class="fas fa-sun"></i>
+    <label class="label" for="btnSwitch" aria-label="Toggle light/dark mode">
+      <i class="fas fa-moon" alt="dark mode"></i>
+      <i class="fas fa-sun" alt="light mode"></i>
       <div class="ball"></div>
     </label>
   </div>

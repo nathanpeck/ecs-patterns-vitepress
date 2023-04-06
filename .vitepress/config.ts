@@ -35,6 +35,7 @@ export default defineConfig({
     'team/': 'team'
   },
   head: [
+    //['link', { rel: 'preload', as: 'font', href: 'https://use.fontawesome.com/releases/v5.0.13/webfonts/fa-solid-900.woff2' }],
     ['link', { rel: 'stylesheet', href: 'https://use.fontawesome.com/releases/v5.0.13/css/all.css' }],
 
     // This script must be injected into the head of the document

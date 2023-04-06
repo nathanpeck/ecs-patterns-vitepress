@@ -8,7 +8,7 @@ const { tags } = defineProps(['title', 'description', 'image', 'tags', 'to', 'id
     <div class="card-body">
       <h5 class="card-title">{{ title }}</h5>
       <p class="card-text">{{ description }}</p>
-      <a :href="id" class="stretched-link" alt="{{ title }}" />
+      <a :href="id" class="stretched-link" :aria-label="title" />
       <span class="badge rounded-pill tag" :style="{ 'background-color': tag.color }" v-for="tag in tags">{{ tag.label
       }}</span>
     </div>
@@ -19,6 +19,10 @@ const { tags } = defineProps(['title', 'description', 'image', 'tags', 'to', 'id
 .content-list-card {
   flex: 0 1 calc(25% - .5em);
   margin-bottom: 1em;
+}
+
+.content-list-card .card-title {
+  color: var(--bs-emphasis-color)
 }
 
 @media screen and (max-width: 1600px) {

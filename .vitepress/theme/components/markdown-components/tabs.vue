@@ -18,7 +18,7 @@ function selectTab(tab) {
     <div class="tabs">
       <ul>
         <li v-for="tab in tabs" :class="{ 'is-active': activeTabLabel == tab.props.label }" @click="selectTab(tab)">
-          <a :href="tab.href">{{ tab.props.label }}</a>
+          <a :href="tab.href" rel="nofollow">{{ tab.props.label }}</a>
         </li>
       </ul>
     </div>

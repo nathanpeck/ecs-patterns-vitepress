@@ -15,8 +15,8 @@ if (!authorDetails) {
 
 <template>
   <div class="author clearfix">
-    <a :href="authorLink" class="stretched-link"></a>
-    <img class='authorImage' :src="authorDetails.image" />
+    <a :href="authorLink" class="stretched-link" :aria-label='authorDetails.name + " profile page"'></a>
+    <img class='authorImage' :alt='authorDetails.name + " profile picture"' :src="authorDetails.image" />
     <div class="meta">
       <b>{{ authorDetails.name }}</b> <br />
       {{ authorDetails.title }}
