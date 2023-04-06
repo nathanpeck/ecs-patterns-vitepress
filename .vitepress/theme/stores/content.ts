@@ -1,5 +1,6 @@
 import { ref, computed } from 'vue'
-import { defineStore } from 'pinia'
+import { defineStore, skipHydrate } from 'pinia'
+import { useLocalStorage, usePreferredDark } from '@vueuse/core'
 
 export interface FilterDimension {
   key: string,
@@ -53,6 +54,22 @@ export const useContentStore = defineStore('content', () => {
   const filters = ref([] as Array<Filter>)
   const filterGroups = ref([] as Array<FilterGroup>)
   const authors = ref([] as Array<Author>)
+  const darkMode = ref(false)
+
+  // Set the initial dark mode value. This
+  // will be reconfigured in browser side code.
+  // This is client side code that only works in the browser
+  let preferredDefault;
+
+  const isDarkPreferred = usePreferredDark();
+
+  if (isDarkPreferred.value) {
+    preferredDefault = 'dark'
+  } else {
+    preferredDefault = 'light'
+  }
+
+  const themeSetting = useLocalStorage('theme', preferredDefault)
 
   // The following computed properties are automatically reactive,
   // meaning that the code within the `computed` function runs
@@ -209,6 +226,10 @@ export const useContentStore = defineStore('content', () => {
     filterGroupsByKey,
     authors,
     authorsById,
-    labelledContentByAuthor
+    labelledContentByAuthor,
+
+    // For global usage by components that want to mutate
+    // or implement dark mode
+    themeSetting
   }
 });

@@ -9,10 +9,10 @@
 <style scoped>
 .footer {
   width: 100%;
-  color: white;
-  background-color: black;
+  background-color: var(--bs-body-bg);
+  color: var(--bs-body-color);
   padding: 20px;
-  border-top: 3px solid rgb(190, 174, 168);
+  border-top: 3px solid var(--bs-border-color);
 }
 
 .footer a {

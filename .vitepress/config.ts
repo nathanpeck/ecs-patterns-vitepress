@@ -35,9 +35,39 @@ export default defineConfig({
     'team/': 'team'
   },
   head: [
-    //['link', { rel: 'stylesheet', href: 'https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css' }]
+    ['link', { rel: 'stylesheet', href: 'https://use.fontawesome.com/releases/v5.0.13/css/all.css' }],
+
+    // This script must be injected into the head of the document
+    // to solve the "flash" problem of sites that have dark mode.
+    // Without it the initial load will flash white for a second
+    // until the body JS catches up and turns on dark mode
+    [
+      'script',
+      {},
+      `
+      const query = window.matchMedia("(prefers-color-scheme: dark)");
+      const themePreference = localStorage.getItem("theme");
+
+      let active = query.matches;
+
+      if (themePreference === "dark") {
+        active = true;
+      }
+
+      if (themePreference === "light") {
+        active = false;
+      }
+
+      if (active) {
+        document.documentElement.setAttribute('data-bs-theme', 'dark')
+      } else {
+        document.documentElement.setAttribute('data-bs-theme', 'light')
+      }
+      `
+    ]
   ],
   markdown: {
+    theme: 'css-variables',
     config: (md) => {
       // Fully override the fence rules with my own customized version
       md.renderer.rules.fence = (...args) => {

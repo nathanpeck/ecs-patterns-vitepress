@@ -29,7 +29,9 @@ In this example you will deploy two NGINX web server tasks that have a shared du
 
 <<< @/pattern/cloudformation-ecs-durable-task-storage-with-efs/files/ecs-mount-efs-storage.yml
 
-The stack requires the following three parameters:
+This CloudFormation template provisions an Elastic File System (EFS) and mounts it to an ECS task running in AWS Fargate.
+
+The template begins with defining parameters that will be passed into the CloudFormation stack. The stack requires the following three parameters:
 
 - `VpcId` - A virtual private cloud ID. This can be the default VPC that comes with your AWS account. Example value: `vpc-79508710`
 - `SubnetOne` - A public subnet inside of that VPC. Example value: `subnet-b4676dfe`
@@ -38,6 +40,19 @@ The stack requires the following three parameters:
 ::: tip
 When using the CloudFormation web console it will suggest appropriate parameter values in the drop down on each parameter field, if you are not certain what to enter for each parameter.
 :::
+
+The CloudFormation stack deploys the following resources:
+
+- `Cluster`: an ECS cluster that will be controlling the tasks in AWS Fargate.
+- `EFSFileSystem`: the EFS filesystem itself with properties including encryption, performance mode, and throughput mode.
+- `EFSMountTargetOne` and `EFSMountTargetTwo`: mount targets that allow usage of the EFS inside subnet one and subnet two, respectively.
+- `EFSFileSystemSecurityGroup`: a security group used by the mount targets that allows inbound NFS connections from the AWS Fargate tasks launched.
+- `TaskExecutionRole`: a role used to setup the execution environment for the task, including connecting to the EFS.
+- `TaskRole`: a role used by the containerized task at runtime.
+- `EfsTaskLogGroup`: a log group to store the logs from the task for up to 7 days.
+- `TaskDefinition`: describes how to launch the application and how to mount the Elastic File System into the container, with properties including the task role ARN, execution role ARN, network mode, container definitions, volumes, and requires compatibilities.
+
+This CloudFormation template creates a complete infrastructure to run an application on AWS Fargate, which requires shared, durable file persistence.
 
 Deploy the CloudFormation template by using the web console, or with the following AWS CLI command. (Substitute your own VPC details.)
 

@@ -1,5 +1,5 @@
 <script setup>
-import { ref, defineProps } from 'vue'
+import { ref } from 'vue'
 const { title } = defineProps(['title'])
 
 const collapseMe = ref(null);
@@ -34,6 +34,10 @@ function headerClick() {
 <style>
 .collapseMe {
   margin-bottom: 20px;
+}
+
+.collapseMe .card-header svg {
+  fill: var(--bs-emphasis-color)
 }
 
 .collapseMe .card-header svg {

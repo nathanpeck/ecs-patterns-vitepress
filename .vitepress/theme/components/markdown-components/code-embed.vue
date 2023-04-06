@@ -50,11 +50,15 @@ function download() {
 </script>
 
 <template>
-  <div class="codeBlockTopper clearfix">
-    <span v-if="fileExists" class="badge bg-light text-dark">File: {{ filename }}</span>
-    <span class="badge bg-light text-dark">Language: {{ lang }}</span>
-    <button v-if="fileExists" type="button" class="download btn btn-dark float-end" @click="download">Download</button>
-    <button type="button" class="copy btn btn-dark float-end" @click="copy" ref="copyButton">Copy</button>
+  <div class="codeBlockTopper">
+    <div>
+      <span v-if="fileExists" class="badge">File: {{ filename }}</span>
+      <span class="badge">Language: {{ lang }}</span>
+    </div>
+    <div class="codeBlockTopperButtons">
+      <button v-if="fileExists" type="button" class="download btn" @click="download">Download</button>
+      <button type="button" class="copy btn" @click="copy" ref="copyButton">Copy</button>
+    </div>
   </div>
   <div :class="className" ref="content">
     <slot />
@@ -63,7 +67,9 @@ function download() {
 
 <style>
 .shiki {
-  background-color: #2e3440ff;
+  background-color: var(--bs-tertiary-bg);
+  border: 1px solid var(--bs-border-color);
+  border-top: none;
   max-height: 1000px;
   overflow: auto;
   overflow-wrap: break-word;
@@ -84,12 +90,12 @@ function download() {
 
 /* Track */
 .shiki::-webkit-scrollbar-track {
-  background: #2e3440ff;
+  background: var(--bs-secondary-bg);
 }
 
 /* Handle */
 .shiki::-webkit-scrollbar-thumb {
-  background: #888;
+  background: var(--bs-tertiary-color);
 }
 
 /* Handle on hover */
@@ -98,8 +104,7 @@ function download() {
 }
 
 .shiki::-webkit-scrollbar-corner {
-  background-color: #2e3440ff;
-  border-bottom-right-radius: 5px;
+  background-color: var(--bs-secondary-bg);
 }
 
 .no-line-numbers code .line {
@@ -109,16 +114,34 @@ function download() {
 .codeBlockTopper {
   padding: .3em;
   color: white;
-  line-height: 2.3em;
+  line-height: 1.6em;
   padding-left: 1em;
-  background-color: rgb(26, 30, 36);
+  background-color: var(--bs-tertiary-bg);
+  border: 1px solid var(--bs-border-color);
+  border-bottom: none;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
   max-width: 1000px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .codeBlockTopper .badge {
   margin-right: .3em;
+  line-height: 1em;
+  background-color: var(--bs-light-bg-subtle);
+  border: 1px solid var(--bs-light-border-subtle);
+  color: var(--bs-emphasis-color);
+}
+
+.codeBlockTopper .btn {
+  padding: .4em;
+  line-height: 1em;
+  background-color: var(--bs-tertiary-bg);
+  border: 1px solid var(--bs-light-border-subtle);
+  color: var(--bs-emphasis-color);
 }
 
 div[class^="language-"] {
@@ -127,25 +150,24 @@ div[class^="language-"] {
 }
 
 .copy {
-  margin-right: 10px;
+  margin-left: 10px;
   border-radius: 5px;
   border: 1px solid rgb(71, 80, 98);
 }
 
 .download {
-  margin-right: 10px;
   border-radius: 5px;
   border: 1px solid rgb(71, 80, 98);
 }
 
 @-webkit-keyframes copying {
   0% {
-    background-color: #777;
+    background-color: var(--bs-tertiary-bg);
     opacity: 1;
   }
 
   100% {
-    background-color: #2e3440ff;
+    background-color: var(--bs-primary-bg-subtle);
   }
 }
 
@@ -169,5 +191,33 @@ div[class^="language-"] {
   display: inline-block;
   text-align: right;
   color: rgba(115, 138, 148, .4)
+}
+
+:root [data-bs-theme=dark] {
+  --shiki-color-text: azure;
+  --shiki-color-background: black;
+  --shiki-token-constant: plum;
+  --shiki-token-string: rgb(209, 185, 208);
+  --shiki-token-comment: salmon;
+  --shiki-token-keyword: powderblue;
+  --shiki-token-parameter: seashell;
+  --shiki-token-function: dodgerblue;
+  --shiki-token-string-expression: burlywood;
+  --shiki-token-punctuation: linen;
+  --shiki-token-link: honeydew;
+}
+
+:root [data-bs-theme=light] {
+  --shiki-color-text: black;
+  --shiki-color-background: rgb(218, 247, 247);
+  --shiki-token-constant: rgb(215, 75, 215);
+  --shiki-token-string: rgb(72, 7, 70);
+  --shiki-token-comment: rgb(229, 33, 11);
+  --shiki-token-keyword: rgb(1, 140, 158);
+  --shiki-token-parameter: rgb(243, 169, 117);
+  --shiki-token-function: rgb(5, 123, 242);
+  --shiki-token-string-expression: rgb(194, 125, 35);
+  --shiki-token-punctuation: rgb(209, 132, 55);
+  --shiki-token-link: rgb(149, 238, 149);
 }
 </style>

@@ -2,118 +2,118 @@
 - key: tool
   value: cloudformation
   label: AWS CloudFormation
-  color: '#8add80'
+  color: '#78b470'
   checked: false
 - key: tool
   value: cdk
   label: AWS Cloud Development Kit (CDK)
-  color: '#8add80'
+  color: '#78b470'
   checked: false
 - key: tool
   value: terraform
   label: HashiCorp Terraform
-  color: '#8add80'
+  color: '#78b470'
   checked: false
 - key: tool
   value: pulumi
   label: Pulumi IaC
-  color: '#8add80'
+  color: '#78b470'
   checked: false
 - key: tool
   value: copilot
   label: AWS Copilot CLI
-  color: '#8add80'
+  color: '#78b470'
   checked: false
 - key: tool
   value: proton
   label: AWS Proton
-  color: '#8add80'
+  color: '#78b470'
   checked: false
 - key: tool
   value: aws-cli
   label: AWS CLI
-  color: '#8add80'
+  color: '#78b470'
   checked: false
 
 # Capacity types
 - key: capacity
   value: ec2
   label: EC2 Instances
-  color: '#8b87c1'
+  color: '#74719f'
   checked: false
 - key: capacity
   value: fargate
   label: AWS Fargate
-  color: '#8b87c1'
+  color: '#74719f'
   checked: false
 - key: capacity
   value: anywhere
   label: ECS Anywhere
-  color: '#8b87c1'
+  color: '#74719f'
   checked: false
 
 # Application types
 - key: app
   value: website
   label: Website
-  color: '#ba87c1'
+  color: '#8e6893'
   checked: false
 - key: app
   value: api
   label: API
-  color: '#ba87c1'
+  color: '#8e6893'
   checked: false
 - key: app
   value: worker
   label: Background Worker
-  color: '#ba87c1'
+  color: '#8e6893'
   checked: false
 - key: app
   value: worker
   label: Batch Job
-  color: '#ba87c1'
+  color: '#8e6893'
   checked: false
 
 # Features in use
 - key: feature
   value: service-connect
   label: ECS Service Connect
-  color: '#e8a490'
+  color: '#c88e7d'
   checked: false
 - key: feature
   value: exec
   label: ECS Exec
-  color: '#e8a490'
+  color: '#c88e7d'
   checked: false
 - key: feature
   value: efs
   label: Amazon Elastic File System (EFS)
-  color: '#e8a490'
+  color: '#c88e7d'
   checked: false
 
 # Type of pattern or content
 - key: type
   value: pattern
   label: Infrastructure Pattern
-  color: '#9ddae8'
+  color: '#86b4bf'
   checked: false
 - key: type
   value: video
   label: Video
-  color: '#9ddae8'
+  color: '#86b4bf'
   checked: false
 - key: type
   value: blogpost
   label: Blog Post
-  color: '#9ddae8'
+  color: '#86b4bf'
   checked: false
 - key: type
   value: script
   label: Script
-  color: '#9ddae8'
+  color: '#86b4bf'
   checked: false
 - key: type
   value: tutorial
   label: Tutorial
-  color: '#9ddae8'
+  color: '#86b4bf'
   checked: false

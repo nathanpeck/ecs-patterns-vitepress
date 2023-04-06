@@ -1,28 +1,50 @@
+<script setup>
+import DarkModeSwitch from './DarkModeSwitch.vue';
+</script>
+
 <template>
   <div class="header">
     <a href="/">
       <span class="brand-test">
-        <img src="/ship.svg" />Container Patterns
+        <img src="/ship.svg" alt="Brand logo" />Container Patterns
       </span>
     </a>
+    <div class="headerLinks">
+      <a href="https://main--prismatic-babka-239bef.netlify.app/">Blog</a>
+      <DarkModeSwitch />
+    </div>
   </div>
 </template>
 
 <style scoped>
 .header {
   width: 100%;
-  color: white;
   background: rgb(2, 0, 36);
   background-color: #f39f86;
   background-image: url(/header.png);
   background-size: 600px;
   padding: 20px;
   border-bottom: 5px solid rgb(246, 106, 49);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .header a {
   text-decoration: none;
-  text-decoration-thickness: 0px;
+}
+
+.headerLinks {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.headerLinks a {
+
+  color: var(--bs-dark);
+  margin-right: 20px;
 }
 
 .brand-test {
@@ -31,7 +53,7 @@
 }
 
 .brand-test {
-  color: white;
+  color: var(--bs-dark);
   cursor: pointer;
   text-decoration: none;
   font-size: 2.1em;

@@ -14,9 +14,15 @@ import AuthorPage from './components/AuthorPage.vue'
 import Header from './components/Header.vue'
 import Footer from './components/Footer.vue'
 
+import { storeToRefs } from "pinia"
+import { onBeforeMount, watch } from "vue"
 import { useContentStore } from './stores/content'
 
 const store = useContentStore();
+
+const { themeSetting } = storeToRefs(store)
+
+themeSetting.value = themeSetting.value
 
 store.authors = loadedAuthors;
 store.filterGroups = loadedFilterGroups;
@@ -28,44 +34,54 @@ store.content = posts.map((post) => {
   }
 })
 
+onBeforeMount(() => {
+  document.body.setAttribute('data-bs-theme', themeSetting.value)
+})
+
+watch(themeSetting, () => {
+  document.body.setAttribute('data-bs-theme', themeSetting.value)
+})
+
 // https://vitepress.dev/reference/runtime-api#usedata
-const { site, frontmatter } = useData()
+const { frontmatter } = useData()
 </script>
 
 <template>
-  <Header />
-  <div v-if="frontmatter.type == 'home'">
-    <div class="container-fluid">
-      <div class="wrapper">
-        <ContentListFilter />
-        <ContentList />
+  <div>
+    <Header />
+    <div v-if="frontmatter.type == 'home'">
+      <div class="container-fluid">
+        <div class="wrapper">
+          <ContentListFilter />
+          <ContentList />
+        </div>
       </div>
     </div>
-  </div>
-  <div v-if="frontmatter.type == 'page'">
-    <div class="container-fluid">
-      <div class="wrapper">
-        <ContentPage />
+    <div v-if="frontmatter.type == 'page'">
+      <div class="container-fluid">
+        <div class="wrapper">
+          <ContentPage />
+        </div>
       </div>
     </div>
-  </div>
-  <div v-if="frontmatter.type == 'author'">
-    <div class="container-fluid">
-      <div class="wrapper">
-        <AuthorPageSidebar />
-        <AuthorPage />
+    <div v-if="frontmatter.type == 'author'">
+      <div class="container-fluid">
+        <div class="wrapper">
+          <AuthorPageSidebar />
+          <AuthorPage />
+        </div>
       </div>
     </div>
-  </div>
-  <div v-if="frontmatter.title">
-    <div class="container-fluid">
-      <div class="wide-wrapper">
-        <ContentPageSidebar />
-        <ContentPage />
+    <div v-if="frontmatter.title">
+      <div class="container-fluid">
+        <div class="wide-wrapper">
+          <ContentPageSidebar />
+          <ContentPage />
+        </div>
       </div>
     </div>
+    <Footer />
   </div>
-  <Footer />
 </template>
 
 <style scoped>
@@ -81,7 +97,7 @@ const { site, frontmatter } = useData()
   padding-right: 20px;
   padding-bottom: 20px;
   padding-top: 20px;
-  background-color: rgb(246, 242, 235);
+  background-color: var(--warm-content-bg);
 }
 
 /* On mobile width move the sidebar to the top
@@ -99,7 +115,7 @@ const { site, frontmatter } = useData()
   padding-right: 20px;
   padding-bottom: 20px;
   padding-top: 20px;
-  background-color: rgb(246, 242, 235);
+  background-color: var(--warm-content-bg);
 }
 
 /* On mobile width move the sidebar to the top

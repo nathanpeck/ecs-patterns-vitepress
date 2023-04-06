@@ -125,6 +125,10 @@ ol li {
   }
 }
 
+.content p {
+  /*color: var(--bs-body-color)*/
+}
+
 .authors {
   margin-bottom: 20px;
 }
@@ -135,12 +139,12 @@ ol li {
 
 .title a {
   text-decoration: none;
-  color: black;
+  color: var(--bs-emphasis-color);
 }
 
 .title a:hover {
   text-decoration: none;
-  color: rgb(88, 88, 88);
+  color: var(--bs-body-color);
 }
 
 .content-meta {
@@ -158,7 +162,8 @@ ol li {
 }
 
 .edit-icon {
-  width: 20px;
+  fill: var(--bs-emphasis-color);
+  width: 17px;
   vertical-align: middle;
   margin-right: 5px;
   display: inline;
@@ -197,5 +202,14 @@ h5 .header-anchor:focus,
 h6:hover .header-anchor,
 h6 .header-anchor:focus {
   opacity: 1
+}
+
+.content .custom-block {
+  background-color: var(--bs-tertiary-bg);
+}
+
+.content .custom-block code {
+  background-color: var(--bs-secondary-bg);
+  padding: 4px;
 }
 </style>
