@@ -48,6 +48,7 @@ export default defineConfig({
   srcExclude: ['**/README.md', '**/TODO.md'],
   rewrites: {
     'pattern/:patternName/index.md': 'pattern/:patternName.md',
+    'pattern/index.md': 'pattern.md',
     'team/': 'team'
   },
   head: [
@@ -62,10 +63,10 @@ export default defineConfig({
       'script',
       {},
       `
-      const query = window.matchMedia("(prefers-color-scheme: dark)");
-      const themePreference = localStorage.getItem("theme");
+      var query = window.matchMedia("(prefers-color-scheme: dark)");
+      var themePreference = localStorage.getItem("theme");
 
-      let active = query.matches;
+      var active = query.matches;
 
       if (themePreference === "dark") {
         active = true;

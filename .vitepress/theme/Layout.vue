@@ -13,6 +13,7 @@ import AuthorPageSidebar from './components/AuthorPageSidebar.vue'
 import AuthorPage from './components/AuthorPage.vue'
 import Header from './components/Header.vue'
 import Footer from './components/Footer.vue'
+import Home from './components/Home.vue'
 
 import { storeToRefs } from "pinia"
 import { onBeforeMount, watch } from "vue"
@@ -43,13 +44,20 @@ watch(themeSetting, () => {
 })
 
 // https://vitepress.dev/reference/runtime-api#usedata
-const { frontmatter } = useData()
+const { frontmatter, page } = useData()
+
+/*console.log('frontmatter', frontmatter.value);
+console.log('page', page.value);*/
+
 </script>
 
 <template>
   <div>
     <Header />
     <div v-if="frontmatter.type == 'home'">
+      <Home />
+    </div>
+    <div v-else-if="frontmatter.type == 'pattern-list'">
       <div class="container-fluid">
         <div class="wrapper">
           <ContentListFilter />
@@ -57,14 +65,14 @@ const { frontmatter } = useData()
         </div>
       </div>
     </div>
-    <div v-if="frontmatter.type == 'page'">
+    <div v-else-if="frontmatter.type == 'page'">
       <div class="container-fluid">
         <div class="wrapper">
           <ContentPage />
         </div>
       </div>
     </div>
-    <div v-if="frontmatter.type == 'author'">
+    <div v-else-if="frontmatter.type == 'author'">
       <div class="container-fluid">
         <div class="wrapper">
           <AuthorPageSidebar />
@@ -72,7 +80,7 @@ const { frontmatter } = useData()
         </div>
       </div>
     </div>
-    <div v-if="frontmatter.title">
+    <div v-else-if="frontmatter.type == 'pattern' || frontmatter.filterDimensions">
       <div class="container-fluid">
         <div class="wide-wrapper">
           <ContentPageSidebar />

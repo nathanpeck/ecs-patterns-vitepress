@@ -63,6 +63,7 @@ function headerClick() {
   .collapseMe:not(.expanded) .card-header {
     font-size: 1em;
     padding: 8px;
+    border-bottom: none;
   }
 
   .collapseMe:not(.expanded) .card-header svg {

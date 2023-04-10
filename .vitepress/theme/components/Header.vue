@@ -6,7 +6,7 @@ import DarkModeSwitch from './DarkModeSwitch.vue';
   <div class="header">
     <a href="/">
       <span class="brand-test">
-        <img src="/ship.svg" alt="Brand logo" />Container Patterns
+        <img src="/ship.svg" alt="Brand logo" />Containers on AWS
       </span>
     </a>
     <div class="headerLinks">
@@ -19,7 +19,6 @@ import DarkModeSwitch from './DarkModeSwitch.vue';
 <style scoped>
 .header {
   width: 100%;
-  background: rgb(2, 0, 36);
   background-color: #f39f86;
   background-image: url(/header-smaller.webp);
   background-size: 600px;
@@ -43,7 +42,7 @@ import DarkModeSwitch from './DarkModeSwitch.vue';
 
 .headerLinks a {
 
-  color: var(--bs-dark);
+  color: var(--bs-emphasis-color);
   margin-right: 20px;
 }
 
@@ -53,7 +52,7 @@ import DarkModeSwitch from './DarkModeSwitch.vue';
 }
 
 .brand-test {
-  color: var(--bs-dark);
+  color: var(--bs-emphasis-color);
   cursor: pointer;
   text-decoration: none;
   font-size: 2.1em;

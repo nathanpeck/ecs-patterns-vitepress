@@ -13987,12 +13987,14 @@ fieldset:disabled .btn {
    just a hint of warmth back into the page */
 root,
 [data-bs-theme=light] {
-  --warm-content-bg: #f6f2eb
+  --warm-content-bg: #f6f2eb;
+  --custom-highlight-color: 255, 146, 45;
 }
 
 root,
 [data-bs-theme=dark] {
-  --warm-content-bg: #282624
+  --warm-content-bg: #282624;
+  --custom-highlight-color: 255, 146, 45;
 }
 
 /* Theme the glow around form elements into an orangish */

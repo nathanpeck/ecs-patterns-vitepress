@@ -140,6 +140,14 @@ export const useContentStore = defineStore('content', () => {
   const labelledContent = computed(() => {
     // Apply labels to all the content based on it's dimensions
     return content.value.map((contentPiece) => {
+      if (!contentPiece.filterDimensions) {
+        contentPiece.filterDimensions = [];
+      }
+
+      if (!contentPiece.authors) {
+        contentPiece.authors = [];
+      }
+
       return {
         ...contentPiece,
         tags: contentPiece.filterDimensions.map(function (dimension) {

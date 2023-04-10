@@ -55,6 +55,7 @@ if (frontmatter.value.filterDimensions) {
 
 <template>
   <div class="sidebar">
+    <a class='btn back-button' href="/pattern">Back to all patterns</a>
     <CollapsibleSidebarSection title="Table of Contents" v-if="headers.length > 0">
       <Outline :headers="headers" />
     </CollapsibleSidebarSection>
@@ -117,6 +118,19 @@ if (frontmatter.value.filterDimensions) {
   padding-bottom: none;
 }
 
+.back-button {
+  background-color: rgb(var(--custom-highlight-color));
+  width: 100%;
+  color: white;
+  margin-bottom: 20px;
+}
+
+.back-button:hover,
+.back-botton:active {
+  background-color: rgb(var(--custom-highlight-color), .85);
+  color: white;
+}
+
 /* On mobile adjust sidebar to horizontal configuration */
 @media screen and (max-width: 900px) {
   .sidebar {
@@ -127,6 +141,14 @@ if (frontmatter.value.filterDimensions) {
 
   .choice {
     flex: 0 1 calc(25% - .5em);
+  }
+
+  .back-button {
+    float: left;
+    width: auto;
+    margin-right: 10px;
+    font-size: 1em;
+    padding: 8px;
   }
 }
 
