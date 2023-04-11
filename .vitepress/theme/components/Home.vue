@@ -1,3 +1,17 @@
+<script setup>
+import { ref, onMounted } from 'vue'
+
+const externalLink = ref(null)
+
+onMounted(() => {
+  externalLink.value.addEventListener("click", function (e) {
+    window.location.assign(externalLink.value.getAttribute('href'));
+    e.stopPropagation();
+    return true;
+  });
+})
+</script>
+
 <template>
   <div class="sell-wrapper">
     <div class="selling-point">
@@ -10,15 +24,15 @@
         <li>Over <b>2.25 billion</b> Amazon Elastic Container Service tasks are launched every week</li>
         <li><b>65%</b> of all new AWS containers customers use Amazon ECS, driving <b>tens of thousands</b> of API calls
           per second</li>
-        <li>Largest single account production workload on Amazon ECS reached <b>5.48 million</b> concurrent vCPUs</li>
-        <li><b>750/sec</b> task placement rate acheived using Amazon ECS</li>
+        <li>Largest single account production workload on Amazon ECS: <b>5.48 million</b> concurrent vCPUs</li>
+        <li>Fastest task placement rate for a single Amazon ECS cluster: <b>750 tasks/sec</b></li>
       </ul>
       <a class='btn' href="https://aws.amazon.com/ecs/">
         Learn more about Amazon ECS
       </a>
     </div>
     <div class="selling-point">
-      <img class='featured-img' src="featured-pattern.svg" />
+      <img class='featured-img' src="/featured-pattern.svg" />
       <h2><b>Patterns</b> Collection</h2>
 
       <p>
@@ -37,7 +51,7 @@
       </a>
     </div>
     <div class="selling-point">
-      <img class='featured-img' style="width: 35%;" src="cftc.webp" />
+      <img class='featured-img' style="width: 35%;" src="/cftc.webp" />
       <h2>Get the Latest <b>Updates</b></h2>
 
       <p>
@@ -47,9 +61,9 @@
         Keep up with the latest announcements
         and news in the world of containers on AWS.
       </p>
-      <a class="btn" href="/blog">
+      <button class="btn" ref='externalLink' href="https://d2rkbl8jpwujc2.cloudfront.net/blog/">
         Blog
-      </a>
+      </button>
       <a class="btn" href="https://www.youtube.com/@ContainersfromtheCouch">
         Containers From the Couch <i class="fab fa-youtube social-icon" aria-hidden="true"></i>
       </a>

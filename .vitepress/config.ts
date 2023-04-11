@@ -129,6 +129,10 @@ export default defineConfig({
     }
   },
 
+  ignoreDeadLinks: [
+    '/blog/'
+  ],
+
   // Write out some artifacts like a sitemap and index.json file
   buildEnd: async ({ outDir }) => {
     // Write out the sitemap.xml
