@@ -1,6 +1,7 @@
 <script setup>
 import DarkModeSwitch from './DarkModeSwitch.vue';
 import { ref, onMounted, onUnmounted } from 'vue';
+import { useData } from 'vitepress'
 
 const header = ref(null);
 let checkHeaderInterval = null;
@@ -37,12 +38,10 @@ onMounted(() => {
       // Scrolling down so hide the header
       header.value.classList.add('nav-hidden');
       header.value.classList.remove('nav-shown');
-      console.log('hiding header');
     } else {
       // Scrolling up so show the header
       header.value.classList.add('nav-shown');
       header.value.classList.remove('nav-hidden');
-      console.log('showing header');
     }
 
     lastObservedY = thisObservedY;
@@ -63,7 +62,9 @@ onUnmounted(() => {
       </span>
     </a>
     <div class="headerLinks">
-      <a href="https://main--prismatic-babka-239bef.netlify.app/">Blog</a>
+      <a href="/author">About</a>
+      <a href="/blog/" hijack="false">Blog</a>
+      <a href="/pattern">Patterns</a>
       <DarkModeSwitch />
     </div>
   </div>

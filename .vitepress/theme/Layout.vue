@@ -14,6 +14,7 @@ import AuthorPage from './components/AuthorPage.vue'
 import Header from './components/Header.vue'
 import Footer from './components/Footer.vue'
 import Home from './components/Home.vue'
+import Authors from './components/Authors.vue'
 
 import { storeToRefs } from "pinia"
 import { onBeforeMount, watch } from "vue"
@@ -45,10 +46,6 @@ watch(themeSetting, () => {
 
 // https://vitepress.dev/reference/runtime-api#usedata
 const { frontmatter, page } = useData()
-
-/*console.log('frontmatter', frontmatter.value);
-console.log('page', page.value);*/
-
 </script>
 
 <template>
@@ -56,6 +53,9 @@ console.log('page', page.value);*/
     <Header />
     <div v-if="frontmatter.type == 'home'">
       <Home />
+    </div>
+    <div v-else-if="frontmatter.type == 'authors'">
+      <Authors />
     </div>
     <div v-else-if="frontmatter.type == 'pattern-list'">
       <div class="container-fluid">

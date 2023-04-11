@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 
-const externalLink = ref(null)
+/*const externalLink = ref(null)
 
 onMounted(() => {
   externalLink.value.addEventListener("click", function (e) {
@@ -9,7 +9,7 @@ onMounted(() => {
     e.stopPropagation();
     return true;
   });
-})
+})*/
 </script>
 
 <template>
@@ -61,9 +61,9 @@ onMounted(() => {
         Keep up with the latest announcements
         and news in the world of containers on AWS.
       </p>
-      <button class="btn" ref='externalLink' href="https://d2rkbl8jpwujc2.cloudfront.net/blog/">
+      <a class="btn" hijack='false' href="https://d2rkbl8jpwujc2.cloudfront.net/blog/">
         Blog
-      </button>
+      </a>
       <a class="btn" href="https://www.youtube.com/@ContainersfromtheCouch">
         Containers From the Couch <i class="fab fa-youtube social-icon" aria-hidden="true"></i>
       </a>
@@ -78,6 +78,8 @@ onMounted(() => {
   align-items: flex-start;
   background-color: var(--warm-content-bg);
   padding-top: 40px;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 .selling-point {

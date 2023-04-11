@@ -49,7 +49,7 @@ export default defineConfig({
   rewrites: {
     'pattern/:patternName/index.md': 'pattern/:patternName.md',
     'pattern/index.md': 'pattern.md',
-    'team/': 'team'
+    'author/index.md': 'author.md'
   },
   head: [
     //['link', { rel: 'preload', as: 'font', href: 'https://use.fontawesome.com/releases/v5.0.13/webfonts/fa-solid-900.woff2' }],
@@ -81,6 +81,33 @@ export default defineConfig({
       } else {
         document.documentElement.setAttribute('data-bs-theme', 'light')
       }
+      `
+    ],
+
+    // This intercepts all clicks and avoids the Vitepress router
+    // hijack when possible.
+    [
+      'script',
+      {},
+      `
+      // Add a listener that avoids the Vitepress Router if there is
+      // a link attribute
+      window.addEventListener(
+        'click',
+        (e) => {
+          const link = e.target.closest('a');
+          if (!link) {
+            return
+          }
+
+          if (link.getAttribute('hijack') == 'false') {
+            e.stopImmediatePropagation();
+            window.location = link.getAttribute('href')
+            return true
+          }
+        },
+        { capture: true }
+      )
       `
     ]
   ],
