@@ -24,11 +24,6 @@ const { resetAllFilters } = contentStore;
         </form>
       </div>
     </div>
-    <div class="card">
-      <div class="card-body">
-        <a href="https://main--prismatic-babka-239bef.netlify.app/">ECS Newsletter</a>
-      </div>
-    </div>
   </div>
 </template>
 

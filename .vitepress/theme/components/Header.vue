@@ -46,14 +46,6 @@ onMounted(() => {
     }
 
     lastObservedY = thisObservedY;
-
-    /*var n = e(this).scrollTop();
-    if (Math.abs(t - n) <= o)
-      return;
-    n > t && n > i ? (e("nav").removeClass("nav-down").addClass("nav-up"),
-      e(".nav-up").css("top", -e("nav").outerHeight() + "px")) : n + e(window).height() < e(document).height() && (e("nav").removeClass("nav-up").addClass("nav-down"),
-        e(".nav-up, .nav-down").css("top", "0px")),
-      t = n*/
   }
 })
 
