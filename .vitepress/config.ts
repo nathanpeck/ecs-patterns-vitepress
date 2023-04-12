@@ -172,8 +172,18 @@ export default defineConfig({
     sitemap.end()
     await new Promise((r) => writeStream.on('finish', r))
 
-    // Now write out an index file of page data
+    // Now write out an index file of page data to be used for
+    // a search index.
+
+    // title
+    // authors
+    // url
+    // tags
+    // summary
+    // content
+    // date
+
     const json = JSON.stringify(pages);
-    await writeFile(resolve(outDir, 'index.json'), json, 'utf-8')
+    await writeFile(resolve(outDir, 'patterns.json'), json, 'utf-8')
   }
 })

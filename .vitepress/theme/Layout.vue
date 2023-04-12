@@ -16,15 +16,9 @@ import Footer from './components/Footer.vue'
 import Home from './components/Home.vue'
 import Authors from './components/Authors.vue'
 
-import { storeToRefs } from "pinia"
-import { onBeforeMount, watch } from "vue"
 import { useContentStore } from './stores/content'
 
 const store = useContentStore();
-
-const { themeSetting } = storeToRefs(store)
-
-themeSetting.value = themeSetting.value
 
 store.authors = loadedAuthors;
 store.filterGroups = loadedFilterGroups;
@@ -34,14 +28,6 @@ store.content = posts.map((post) => {
     ...post.frontmatter,
     id: '/pattern/' + post.url.split('/')[2]
   }
-})
-
-onBeforeMount(() => {
-  document.body.setAttribute('data-bs-theme', themeSetting.value)
-})
-
-watch(themeSetting, () => {
-  document.body.setAttribute('data-bs-theme', themeSetting.value)
 })
 
 // https://vitepress.dev/reference/runtime-api#usedata

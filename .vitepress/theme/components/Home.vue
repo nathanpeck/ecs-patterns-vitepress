@@ -25,7 +25,7 @@ onMounted(() => {
         <li><b>65%</b> of all new AWS containers customers use Amazon ECS, driving <b>tens of thousands</b> of API calls
           per second</li>
         <li>Largest single account production workload on Amazon ECS: <b>5.48 million</b> concurrent vCPUs</li>
-        <li>Fastest task placement rate for a single Amazon ECS cluster: <b>750 tasks/sec</b></li>
+        <li>Fastest task placement rate acheived on a single Amazon ECS cluster: <b>750 tasks/sec</b></li>
       </ul>
       <a class='btn' href="https://aws.amazon.com/ecs/">
         Learn more about Amazon ECS

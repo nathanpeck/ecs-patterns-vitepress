@@ -84,11 +84,11 @@ table {
   margin-bottom: 1.2em;
 }
 
-ul li {
+.content ul li {
   list-style: disc;
 }
 
-ol li {
+.content ol li {
   list-style-type: decimal;
   list-style: auto;
 }

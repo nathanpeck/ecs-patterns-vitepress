@@ -1,17 +1,21 @@
 <script setup>
 import { storeToRefs } from "pinia"
 import { useContentStore } from '../stores/content'
-import { ref, watch } from "vue";
+import { ref, watch, onBeforeMount } from "vue";
 
 const contentStore = useContentStore();
 const { themeSetting } = storeToRefs(contentStore);
 
 const darkModeToggle = ref(false);
 
+// During init set the toggle based on the initial value
+// from the local storage setting
 if (themeSetting.value == 'dark') {
   darkModeToggle.value = true;
 }
 
+// Watch the toggle box and when it changes
+// update the theme setting
 watch(darkModeToggle, () => {
   if (darkModeToggle.value) {
     themeSetting.value = 'dark'
@@ -19,6 +23,23 @@ watch(darkModeToggle, () => {
     themeSetting.value = 'light'
   }
 })
+
+// Respond to changes to the theme setting by setting the
+// Bootstrap theme attribute on the body of the document.
+onBeforeMount(() => {
+  document.body.setAttribute('data-bs-theme', themeSetting.value)
+})
+
+watch(themeSetting, () => {
+  document.body.setAttribute('data-bs-theme', themeSetting.value)
+})
+
+/*
+ * Note that this dark mode switch also uses an injected <head> script which
+ * sets the body attribute on the initial page load before any content is
+ * rendered. This script prevents an initial flash of white. You can find the
+ * script in config.ts
+ */
 </script>
 
 <template>

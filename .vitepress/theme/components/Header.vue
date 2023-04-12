@@ -4,6 +4,7 @@ import { ref, onMounted, onUnmounted } from 'vue';
 import { useData } from 'vitepress'
 
 const header = ref(null);
+const collapseSection = ref(null);
 let checkHeaderInterval = null;
 
 onMounted(() => {
@@ -52,124 +53,91 @@ onUnmounted(() => {
   clearInterval(checkHeaderInterval)
 })
 
+// Action when the hamburger button is clicked
+function toggleCollapse() {
+  collapseSection.value.classList.toggle('collapse')
+}
 </script>
 
 <template>
-  <div class="header" ref="header">
-    <a href="/">
-      <span class="brand-test">
-        <img src="/ship.svg" alt="Brand logo" />Containers on AWS
-      </span>
-    </a>
-    <div class="headerLinks">
-      <a href="/author">About</a>
-      <a href="/blog/" hijack="false">Blog</a>
-      <a href="/pattern">Patterns</a>
-      <DarkModeSwitch />
+  <nav class="navbar navbar-expand-md bg-light fixed-top" ref="header">
+    <div class="container-fluid">
+      <a class="navbar-brand" href=" /">
+        <div class="d-flex align-items-center">
+          <img src="/ship.svg" alt="logo" width="80">
+          <div>Containers on AWS</div>
+        </div>
+      </a>
+      <button class="navbar-toggler" type="button" @click="toggleCollapse" aria-controls="navbarTogglerDemo01"
+        aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse flex-row justify-content-end" ref="collapseSection">
+        <ul class="navbar-nav mb-lg-0">
+          <li class="nav-item ">
+            <a class="nav-link" href="/">Home</a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link" hijack="false" href="/search">Search</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" hijack="false" href="/blog">Blog</a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link" hijack="false" href="/static/meet-the-da-team">About</a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link" href="/pattern">Patterns</a>
+          </li>
+        </ul>
+        <DarkModeSwitch />
+      </div>
     </div>
-  </div>
+  </nav>
   <div class="topHeaderPadding"></div>
 </template>
 
 <style scoped>
-.header {
-  z-index: 100;
-  position: fixed;
-  width: 100%;
+.navbar {
   background-color: #f39f86;
-  background-image: url(/header-smaller.webp);
+  background-image: url(/header.webp);
   background-size: 600px;
-  padding: 20px;
   border-bottom: 5px solid rgb(246, 106, 49);
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
+}
+
+.navbar-brand {
+  color: black;
+  line-height: 30px;
+}
+
+.navbar-nav {
+  padding-right: 10px;
+}
+
+.nav-link {
+  color: black;
+}
+
+.header {
+  position: fixed;
+  z-index: 100;
+  width: 100%;
 }
 
 /* This provides a bit of padding behind the collapsible header because
    it is in a fixed position on the page. */
 .topHeaderPadding {
   background-color: var(--warm-content-bg);
-  padding-bottom: 100px;
+  padding-bottom: 70px;
 }
 
-.header.nav-hidden {
+.navbar.nav-hidden {
   margin-top: -100%;
   transition: all 1s;
 }
 
-.header.nav-shown {
+.navbar.nav-shown {
   margin-top: 0;
   transition: all .3s;
-}
-
-.header a {
-  text-decoration: none;
-}
-
-.headerLinks {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-
-.headerLinks a {
-
-  color: var(--bs-emphasis-color);
-  margin-right: 20px;
-}
-
-.brand-test {
-  display: flex;
-  align-items: center;
-}
-
-.brand-test {
-  color: var(--bs-emphasis-color);
-  cursor: pointer;
-  text-decoration: none;
-  font-size: 2.1em;
-  line-height: 54px;
-  margin: 0px;
-  padding: 0px;
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-.brand-test img {
-  vertical-align: middle;
-  margin-right: .2em;
-  height: 54px;
-}
-
-/** Mini header for mobile */
-@media screen and (max-width: 600px) {
-  .header {
-    width: 100%;
-    padding: 5px;
-    background: rgb(2, 0, 36);
-    background-color: #f39f86;
-    background-image: url(/header-smaller.webp);
-    background-size: 200px;
-    border-bottom: 3px solid rgb(246, 106, 49);
-    font-size: 1em;
-  }
-
-  .brand-test {
-    font-size: 1em;
-    line-height: 20px;
-  }
-
-  .brand-test img {
-    height: 34px;
-  }
-
-  .extraLinks {
-    display: none;
-  }
-
-  .topHeaderPadding {
-    padding-bottom: 40px;
-  }
 }
 </style>
