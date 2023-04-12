@@ -2,10 +2,13 @@ import { defineConfig } from 'vitepress'
 import { snippetPlugin } from './theme/plugins/snippet'
 import defaultFence from './theme/plugins/default_fence'
 import { createWriteStream } from 'node:fs'
-import { writeFile } from 'node:fs/promises'
+import { writeFile, readFile } from 'node:fs/promises'
 import { resolve } from 'node:path'
 import { SitemapStream } from 'sitemap'
 import { BUNDLED_LANGUAGES } from 'shiki'
+import yaml from 'js-yaml'
+import { convert } from 'html-to-text';
+
 
 // Patch an issue where it doesn't recognize
 // Dockerfiles as Dockerfiles because there is no alias
@@ -39,6 +42,7 @@ const extractFilename = (info: string) => {
 
 const links: Object[] = []
 const pages: Object[] = []
+const textForPage = {}
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
@@ -135,7 +139,15 @@ export default defineConfig({
   },
 
   // Extract a list of all the links in the site
-  transformHtml: (_, id, { pageData }) => {
+  transformHtml: (_, id, { pageData, content }) => {
+    const text = convert(content, {
+      baseElements: {
+        selectors: ['.content']
+      }
+    });
+
+    textForPage[pageData.relativePath] = text;
+
     if (!/[\\/]404\.html$/.test(id)) {
       const cleanUrl = pageData.relativePath.replace(/((^|\/)index)?\.md$/, '$2')
 
@@ -151,6 +163,7 @@ export default defineConfig({
         filterDimensions: pageData.frontmatter.filterDimensions,
         authors: pageData.frontmatter.authors,
         date: pageData.frontmatter.date,
+        relativePath: pageData.relativePath,
         url: cleanUrl
       });
     }
@@ -162,6 +175,9 @@ export default defineConfig({
 
   // Write out some artifacts like a sitemap and index.json file
   buildEnd: async ({ outDir }) => {
+
+    console.log("Generating sitemap.xml");
+
     // Write out the sitemap.xml
     const sitemap = new SitemapStream({
       hostname: 'https://d2rkbl8jpwujc2.cloudfront.net/'
@@ -183,7 +199,36 @@ export default defineConfig({
     // content
     // date
 
-    const json = JSON.stringify(pages);
+    console.log("Generating search index JSON");
+
+    const filters = yaml.load(await readFile('./data/filters.yml', 'utf-8'))
+
+    var filtersByKeyValue = {}
+    filters.forEach(function (filter) {
+      filtersByKeyValue[`${filter.key}:${filter.value}`] = filter;
+    })
+
+    const formattedPages = pages.map((page) => {
+      let tags = [];
+
+      if (page.filterDimensions) {
+        tags = page.filterDimensions.map((dimension) => {
+          return filtersByKeyValue[`${dimension.key}:${dimension.value}`].label
+        })
+      }
+
+      return {
+        title: page.title,
+        authors: page.authors,
+        url: `/${page.url}`,
+        tags: tags,
+        summary: page.description,
+        content: textForPage[page.relativePath],
+        date: page.date
+      }
+    })
+
+    const json = JSON.stringify(formattedPages);
     await writeFile(resolve(outDir, 'patterns.json'), json, 'utf-8')
   }
 })

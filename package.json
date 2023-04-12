@@ -6,6 +6,7 @@
     "publish": "./scripts/publish.sh"
   },
   "dependencies": {
+    "html-to-text": "^9.0.5",
     "js-yaml": "^4.1.0",
     "markdown-it": "^13.0.1",
     "pinia": "^2.0.33",
