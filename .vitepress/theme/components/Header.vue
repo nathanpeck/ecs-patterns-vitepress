@@ -1,12 +1,14 @@
 <script setup>
 import DarkModeSwitch from './DarkModeSwitch.vue';
 import { ref, onMounted, onUnmounted } from 'vue';
-import { useData } from 'vitepress'
 
 const header = ref(null);
 const collapseSection = ref(null);
 let checkHeaderInterval = null;
 
+// This client side code controls the fixed navbar automatically
+// collapsing when you scroll down the page and then reappearing
+// when you scroll back up.
 onMounted(() => {
   let scrolled = false;
   let lastObservedY = 0;
