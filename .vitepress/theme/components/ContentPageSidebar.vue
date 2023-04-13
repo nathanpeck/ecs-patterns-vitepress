@@ -55,7 +55,7 @@ if (frontmatter.value.filterDimensions) {
 
 <template>
   <div class="sidebar">
-    <a class='btn back-button' href="/pattern">Back to all patterns</a>
+    <a class='btn back-button' href="/">Back to all patterns</a>
     <CollapsibleSidebarSection title="Table of Contents" v-if="headers.length > 0">
       <Outline :headers="headers" />
     </CollapsibleSidebarSection>

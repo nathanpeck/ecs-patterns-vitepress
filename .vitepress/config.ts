@@ -48,12 +48,11 @@ const textForPage = {}
 export default defineConfig({
   title: "ECS Patterns",
   description: "A list of ECS patterns",
+  base: '/pattern/',
   cleanUrls: true,
   srcExclude: ['**/README.md', '**/TODO.md'],
   rewrites: {
-    'pattern/:patternName/index.md': 'pattern/:patternName.md',
-    'pattern/index.md': 'pattern.md',
-    'author/index.md': 'author.md'
+    'pattern/:patternName/index.md': ':patternName.md',
   },
   head: [
     //['link', { rel: 'preload', as: 'font', href: 'https://use.fontawesome.com/releases/v5.0.13/webfonts/fa-solid-900.woff2' }],

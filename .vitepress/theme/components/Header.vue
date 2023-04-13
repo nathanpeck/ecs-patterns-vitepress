@@ -89,7 +89,7 @@ function toggleCollapse() {
             <a class="nav-link" hijack="false" href="/static/meet-the-da-team">About</a>
           </li>
           <li class="nav-item ">
-            <a class="nav-link" href="/pattern">Patterns</a>
+            <a class="nav-link" href="/">Patterns</a>
           </li>
         </ul>
         <DarkModeSwitch />
