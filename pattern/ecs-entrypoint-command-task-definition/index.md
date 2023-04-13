@@ -80,4 +80,4 @@ The resulting task definition can now be launched with ECS `RunTask` API to star
 
 #### See Also
 
-- [How to use a custom entrypoint to inject configuration files](/pattern/inject-config-files-ecs-task-definition)
+- [How to use a custom entrypoint to inject configuration files](/inject-config-files-ecs-task-definition)

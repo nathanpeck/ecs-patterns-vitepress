@@ -82,5 +82,5 @@ Use the following commands to interact with the sample CDK application:
 
 #### Next steps
 
-- If you would prefer to deploy your container onto EC2 capacity instead of serverless AWS Fargate capacity, there is an alternate pattern that demonstrates a [more advanced CDK application deploying a conatiner onto EC2 capacity](/pattern/advanced-public-facing-service-cdk).
+- If you would prefer to deploy your container onto EC2 capacity instead of serverless AWS Fargate capacity, there is an alternate pattern that demonstrates a [more advanced CDK application deploying a conatiner onto EC2 capacity](/advanced-public-facing-service-cdk).
 -

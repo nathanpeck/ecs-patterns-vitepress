@@ -27,7 +27,7 @@ The following template automatically sets up CloudWatch alarms, autoscaling poli
 
 #### Usage
 
-- `EnvironmentName` - The name of a base CloudFormation stack that contains the ECS cluster resource. This stack is intended to be one of the other patterns such as the [serverless public facing task stack](/pattern/public-facing-api-ecs-fargate-cloudformation)
+- `EnvironmentName` - The name of a base CloudFormation stack that contains the ECS cluster resource. This stack is intended to be one of the other patterns such as the [serverless public facing task stack](/public-facing-api-ecs-fargate-cloudformation)
 - `ServiceName` - The name of the ECS service to scale
 
 You can deploy the template via the AWS CloudFormation web console, or by running an AWS CLI command:

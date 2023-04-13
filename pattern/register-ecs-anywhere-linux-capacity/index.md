@@ -36,5 +36,5 @@ The referenced install script which is downloaded from S3 is also embedded here 
 
 #### See also
 
-- [Install script for Windows capacity](/pattern/register-ecs-anywhere-windows-capacity)
+- [Install script for Windows capacity](/register-ecs-anywhere-windows-capacity)
 - [Official documentation about ECS Anywhere](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-anywhere.html)

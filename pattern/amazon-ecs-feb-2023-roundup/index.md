@@ -53,7 +53,7 @@ __Jessica__: All right, so today we're going to kick it off the roundup with a r
 
 __Nathan__: Yeah. I think we got to start out first and foremost talking about the one that was most requested. Almost 2000 people asking on the container roadmap for task definition deletion. I don't know if you all have seen the GitHub issue got a little heated there. There were some funny comments as well. But yeah, this issue is around for a while, and anyone else want to talk about what this exactly does.
 
-__Jessica__: Scott actually wrote the blog post out on this and the announcement. He has some [handy scripts in the blog post](/pattern/ecs-delete-task-definition) as well. So, Scott, why don't you give us a little brief overview of what it is, why it important, and how it kind of came to be.
+__Jessica__: Scott actually wrote the blog post out on this and the announcement. He has some [handy scripts in the blog post](/ecs-delete-task-definition) as well. So, Scott, why don't you give us a little brief overview of what it is, why it important, and how it kind of came to be.
 
 __Scott:__ Okay, well, how it came to be was kind of before my time, but let's talk about where we are now. So basically what this allows you to do is delete task revisions. So if you have the problem of too many task revisions, or you have a task revision that has secrets stored in it before Secrets Manager came in and you want to clean that up, it will allow you to do so. Basically what you got to do is just get the task revision number that you want to clean up, mark it as inactive, and then use the delete command that's available in the CLA and our SDKS.
 
