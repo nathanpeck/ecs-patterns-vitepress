@@ -65,7 +65,7 @@ function toggleCollapse() {
   <nav class="navbar navbar-expand-md bg-light fixed-top" ref="header">
     <div class="container-fluid">
       <a class="navbar-brand" hijack="false" href="/">
-        <img class="ecs-brand" src="/images/ecs-land.png" alt="brand">
+        <img class="ecs-brand" src="pathname:///images/ecs-land.png" alt="brand">
       </a>
       <button class="navbar-toggler" type="button" @click="toggleCollapse" aria-controls="navbarTogglerDemo01"
         aria-expanded="false" aria-label="Toggle navigation">
