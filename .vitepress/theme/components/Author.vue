@@ -26,7 +26,8 @@ if (!authorDetails) {
 </template>
 
 <style>
-:root [data-bs-theme=light] {
+root,
+[data-bs-theme=light] {
   --author-bg-color: rgb(210, 231, 245);
 }
 
