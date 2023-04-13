@@ -1,5 +1,4 @@
 // // @ts-ignore
-import DefaultTheme from 'vitepress/theme'
 import Layout from './Layout.vue'
 import './style.css'
 
@@ -12,7 +11,6 @@ import { createPinia } from 'pinia'
 const pinia = createPinia()
 
 export default {
-  ...DefaultTheme,
   Layout,
   enhanceApp({ app, router, siteData }) {
     // A client side data store for shared data

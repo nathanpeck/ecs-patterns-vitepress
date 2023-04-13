@@ -218,6 +218,8 @@ export default defineConfig({
 
       return {
         title: page.title,
+        image: 'https://ecsland.jldeen.dev/images/featured-pattern.svg',
+        author: page.authors ? page.authors[0] : 'Anonymous',
         authors: page.authors,
         url: `/${page.url}`,
         tags: tags,
