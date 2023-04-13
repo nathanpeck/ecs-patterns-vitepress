@@ -238,7 +238,7 @@ export default defineConfig({
         author: foundAuthor.name,
         authorimage: foundAuthor.image,
         authors: page.authors,
-        url: `/${page.url}`,
+        url: `/pattern/${page.url}`,
         tags: tags,
         summary: page.description,
         content: textForPage[page.relativePath],
