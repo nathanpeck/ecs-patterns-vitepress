@@ -14037,7 +14037,8 @@ fieldset:disabled .btn {
  * Colors Theme
  * -------------------------------------------------------------------------- */
 
-:root {
+root,
+[data-bs-theme=light] {
   --vp-c-bg: #ffffff;
 
   --vp-c-bg-elv: #ffffff;
@@ -14085,7 +14086,8 @@ fieldset:disabled .btn {
   --vp-c-highlight-text: var(--vp-c-black);
 }
 
-.dark {
+root,
+[data-bs-theme=dark] {
   --vp-c-bg: #1e1e20;
 
   --vp-c-bg-elv: #252529;

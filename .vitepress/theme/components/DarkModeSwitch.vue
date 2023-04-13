@@ -27,11 +27,11 @@ watch(darkModeToggle, () => {
 // Respond to changes to the theme setting by setting the
 // Bootstrap theme attribute on the body of the document.
 onBeforeMount(() => {
-  document.body.setAttribute('data-bs-theme', themeSetting.value)
+  document.documentElement.setAttribute('data-bs-theme', themeSetting.value);
 })
 
 watch(themeSetting, () => {
-  document.body.setAttribute('data-bs-theme', themeSetting.value)
+  document.documentElement.setAttribute('data-bs-theme', themeSetting.value);
 })
 
 /*
