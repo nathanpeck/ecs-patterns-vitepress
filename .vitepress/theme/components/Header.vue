@@ -104,6 +104,18 @@ function toggleCollapse() {
   border-bottom: 5px solid rgb(246, 106, 49);
 }
 
+.navbar-toggler {
+  border: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+.navbar-toggler:focus {
+  box-shadow: 0 0 0 var(--bs-navbar-toggler-focus-width) rgba(0, 0, 0, 0.5);
+}
+
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(0, 0, 0, 0.5)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
 .navbar-brand {
   color: black;
   line-height: 30px;
