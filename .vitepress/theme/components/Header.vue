@@ -64,11 +64,8 @@ function toggleCollapse() {
 <template>
   <nav class="navbar navbar-expand-md bg-light fixed-top" ref="header">
     <div class="container-fluid">
-      <a class="navbar-brand" href=" /">
-        <div class="d-flex align-items-center">
-          <img src="/ship.svg" alt="logo" width="80">
-          <div>Containers on AWS</div>
-        </div>
+      <a class="navbar-brand" hijack="false" href="/">
+        <img class="ecs-brand" src="/pattern/ecs-land.png" alt="brand">
       </a>
       <button class="navbar-toggler" type="button" @click="toggleCollapse" aria-controls="navbarTogglerDemo01"
         aria-expanded="false" aria-label="Toggle navigation">
@@ -77,7 +74,7 @@ function toggleCollapse() {
       <div class="collapse navbar-collapse flex-row justify-content-end" ref="collapseSection">
         <ul class="navbar-nav mb-lg-0">
           <li class="nav-item ">
-            <a class="nav-link" href="/">Home</a>
+            <a class="nav-link" hijack="false" href="/">Home</a>
           </li>
           <li class="nav-item ">
             <a class="nav-link" hijack="false" href="/search">Search</a>
@@ -89,7 +86,7 @@ function toggleCollapse() {
             <a class="nav-link" hijack="false" href="/static/meet-the-da-team">About</a>
           </li>
           <li class="nav-item ">
-            <a class="nav-link" href="/">Patterns</a>
+            <a class="nav-link" href="/pattern/">Patterns</a>
           </li>
         </ul>
         <DarkModeSwitch />
@@ -130,7 +127,7 @@ function toggleCollapse() {
    it is in a fixed position on the page. */
 .topHeaderPadding {
   background-color: var(--warm-content-bg);
-  padding-bottom: 70px;
+  padding-bottom: 100px;
 }
 
 .navbar.nav-hidden {
@@ -141,5 +138,12 @@ function toggleCollapse() {
 .navbar.nav-shown {
   margin-top: 0;
   transition: all .3s;
+}
+
+.ecs-brand {
+  width: 175px;
+  border-radius: 80px;
+  border: 3px solid #f66a31;
+  margin-left: 2rem;
 }
 </style>
