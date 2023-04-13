@@ -192,7 +192,8 @@ div[class^="language-"] {
   color: rgba(115, 138, 148, .4)
 }
 
-:root [data-bs-theme=dark] {
+root,
+[data-bs-theme=dark] {
   --shiki-color-text: var(--bs-emphasis-color);
   --shiki-color-background: black;
   --shiki-token-constant: #79c0ff;
@@ -206,7 +207,8 @@ div[class^="language-"] {
   --shiki-token-link: honeydew;
 }
 
-:root [data-bs-theme=light] {
+root,
+[data-bs-theme=light] {
   --shiki-color-text: var(--bs-emphasis-color);
   --shiki-color-background: rgb(218, 247, 247);
   --shiki-token-constant: #0550ae;
