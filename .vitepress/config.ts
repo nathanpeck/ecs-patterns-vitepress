@@ -207,6 +207,13 @@ export default defineConfig({
       filtersByKeyValue[`${filter.key}:${filter.value}`] = filter;
     })
 
+    const authors = yaml.load(await readFile('./data/authors.yml', 'utf-8'))
+
+    var authorsByKey = {}
+    authors.forEach(function (author) {
+      authorsByKey[author.id] = author;
+    })
+
     const formattedPages = pages.map((page) => {
       let tags = [];
 
@@ -216,10 +223,20 @@ export default defineConfig({
         })
       }
 
+      let foundAuthor = {
+        name: 'System',
+        image: 'https://ecsland.jldeen.dev/images/ship.svg'
+      };
+
+      if (page.authors) {
+        foundAuthor = authorsByKey[page.authors[0]]
+      }
+
       return {
         title: page.title,
         image: 'https://ecsland.jldeen.dev/images/featured-pattern.svg',
-        author: page.authors ? page.authors[0] : 'Anonymous',
+        author: foundAuthor.name,
+        authorimage: foundAuthor.image,
         authors: page.authors,
         url: `/${page.url}`,
         tags: tags,
