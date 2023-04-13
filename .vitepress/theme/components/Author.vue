@@ -1,6 +1,7 @@
 <script setup>
 import { storeToRefs } from "pinia"
 import { useContentStore } from '../stores/content'
+import { withBase } from 'vitepress'
 const { authorId } = defineProps(['authorId'])
 const store = useContentStore();
 const { authorsById } = storeToRefs(store);
@@ -15,7 +16,7 @@ if (!authorDetails) {
 
 <template>
   <div class="author clearfix">
-    <a :href="authorLink" class="stretched-link" :aria-label='authorDetails.name + " profile page"'></a>
+    <a :href="withBase(authorLink)" class="stretched-link" :aria-label='authorDetails.name + " profile page"'></a>
     <img class='authorImage' :alt='authorDetails.name + " profile picture"' :src="authorDetails.image" />
     <div class="meta">
       <b>{{ authorDetails.name }}</b> <br />
