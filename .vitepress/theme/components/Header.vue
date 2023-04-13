@@ -99,7 +99,7 @@ function toggleCollapse() {
 <style scoped>
 .navbar {
   background-color: #f39f86;
-  background-image: url(/header.webp);
+  background-image: url(https://ecsland.jldeen.dev/images/header-smaller.webp);
   background-size: 600px;
   border-bottom: 5px solid rgb(246, 106, 49);
 }
