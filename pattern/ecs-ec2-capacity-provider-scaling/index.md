@@ -9,6 +9,8 @@ filterDimensions:
     value: cloudformation
   - key: type
     value: pattern
+  - key: feature
+    value: capacity-provider
 authors:
   - peckn
 date: April 5 2023

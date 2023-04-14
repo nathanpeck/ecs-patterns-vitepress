@@ -90,6 +90,11 @@
   label: Amazon Elastic File System (EFS)
   color: '#a37062'
   checked: false
+- key: feature
+  value: capacity-provider
+  label: ECS Capacity Provider
+  color: '#a37062'
+  checked: false
 
 # Type of pattern or content
 - key: type
