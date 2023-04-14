@@ -1,0 +1,84 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: An example task definition that can deployed onto both
+             Amazon EC2 and AWS Fargate
+
+Properties:
+  Cluster:
+    Type: string
+    Description: The name of the ECS cluster to deploy into
+  ServiceName:
+    Type: string
+    Description: Name of the service
+  VpcId:
+    Type: AWS::EC2::VPC::Id
+    Description: The virtual private network into which to launch all resources
+  SubnetOne:
+    Type: AWS::EC2::Subnet::Id
+    Description: The first subnet across which to distribute the application
+  SubnetTwo:
+    Type: AWS::EC2::Subnet::Id
+    Description: The first subnet across which to distribute the application
+
+Resources:
+
+  SampleTaskDefinition:
+    Type: AWS::ECS::TaskDefinition
+    Properties:
+      Family: nginx
+      RequiresCompatibilities:
+        - EC2
+        - FARGATE
+      NetworkMode: awsvpc
+      Cpu: 256
+      Memory: 128
+      ContainerDefinitions:
+        - Name: nginx
+          Image: public.ecr.aws/nginx/nginx:mainline
+
+  Ec2Service:
+    Type: AWS::ECS::Service
+    Properties:
+      ServiceName: !Ref 'ServiceName'
+      Cluster: !Ref 'Cluster'
+      LaunchType: EC2
+      DeploymentConfiguration:
+        MaximumPercent: 200
+        MinimumHealthyPercent: 75
+      NetworkConfiguration:
+        AwsvpcConfiguration:
+          AssignPublicIp: ENABLED
+          SecurityGroups:
+            - !Ref ServiceSecurityGroup
+          Subnets:
+            - !Ref 'SubnetOne'
+            - !Ref 'SubnetTwo'
+      DesiredCount: 0
+      TaskDefinition: !Ref 'SampleTaskDefinition'
+
+  FargateService:
+    Type: AWS::ECS::Service
+    Properties:
+      ServiceName: !Ref 'ServiceName'
+      Cluster: !Ref 'Cluster'
+      LaunchType: FARGATE
+      DeploymentConfiguration:
+        MaximumPercent: 200
+        MinimumHealthyPercent: 75
+      NetworkConfiguration:
+        AwsvpcConfiguration:
+          AssignPublicIp: ENABLED
+          SecurityGroups:
+            - !Ref ServiceSecurityGroup
+          Subnets:
+            - !Ref 'SubnetOne'
+            - !Ref 'SubnetTwo'
+      DesiredCount: 0
+      TaskDefinition: !Ref 'SampleTaskDefinition'
+
+  # Security group that limits network access
+  # to the task
+  ServiceSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Security group for service
+      VpcId: !Ref VpcId
