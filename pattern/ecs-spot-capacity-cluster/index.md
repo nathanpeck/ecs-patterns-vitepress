@@ -31,8 +31,7 @@ You should follow the appropriate [steps for installing SAM CLI](https://docs.aw
 
 This cluster template demonstrates how to configure an autoscaling group to launch spot capacity
 with mixed types. A variety of EC2 instances of different sizes will be launched.
-However, Amazon ECS can gracefully handle this and adjust container density to match
-the underlying capacity as needed.
+However, Amazon ECS can gracefully handle this and adjust container density on each individual instance to match the size of that instance.
 
 <<< @/pattern/ecs-spot-capacity-cluster/files/spot-cluster.yml
 
