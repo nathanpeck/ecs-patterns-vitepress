@@ -107,3 +107,7 @@ Use the Amazon ECS web console to update the service and set the desired count t
 #### Test out scaling down
 
 Last but not least update the service in the ECS console to adjust its desired count back down to zero. Once all instances are empty you will see ECS begin to shutdown EC2 instances until the cluster has been scaled back down to zero.
+
+#### See Also
+
+- If your workload is interruptible you may prefer to save money on your infrastructure costs by using an [EC2 Spot Capacity provider](/ecs-spot-capacity-cluster) instead.
