@@ -1,5 +1,5 @@
 ---
-title: Running GPU workloads with Amazon ECS and Cloud Development Kit
+title: Running GPU workloads with Amazon ECS and AWS Cloud Development Kit
 description: >-
   A Cloud Development Kit demo app that shows how to run an application
   that depends on GPU resources.
@@ -11,6 +11,9 @@ filterDimensions:
     value: pattern
 authors:
   - peckn
+license:
+  label: Apache 2.0
+  link: https://github.com/aws-samples/aws-cdk-examples/blob/master/LICENSE
 date: April 18 2023
 ---
 
@@ -112,4 +115,12 @@ tab to see its output. You should see something similar to this:
 | 1681813598295 | |  No running processes found                                                 | |
 | 1681813598295 | +-----------------------------------------------------------------------------+ |
 ---------------------------------------------------------------------------------------------------
+```
+
+#### Clean Up
+
+You can tear down the example stack when you are done with it by running:
+
+```sh
+npm run-script cdk destroy
 ```
