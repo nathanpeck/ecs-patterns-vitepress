@@ -209,3 +209,7 @@ With this abbreviated table you can see the history of state changes that an AWS
 In the case of a task that unexpectedly stopped at some point in the past this history of events can be very useful for understanding just what happened to this task and why.
 
 If you are interested in service level events, or container instance level events you can find samples of what those events look like in the [Amazon ECS events documentation](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs_cwe_events.html).
+
+#### See Also
+
+- [Create a custom CloudWatch dashboard for your ECS service](/ecs-service-dashboard-cloudformation)
