@@ -66,6 +66,16 @@ function download() {
 </template>
 
 <style>
+code {
+  background-color: var(--bs-tertiary-bg);
+  border: 1px solid var(--bs-border-color);
+  border-radius: 5px;
+  padding: .1rem;
+  padding-left: .4rem;
+  padding-right: .4rem;
+  color: var(--bs-emphasis-color);
+}
+
 .shiki {
   background-color: var(--bs-tertiary-bg);
   border: 1px solid var(--bs-border-color);
@@ -80,6 +90,13 @@ function download() {
   /**white-space: pre-wrap;**/
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
+}
+
+.shiki code {
+  border: none;
+  background-color: auto;
+  padding: 0px;
+  border-radius: 0px;
 }
 
 /* width */

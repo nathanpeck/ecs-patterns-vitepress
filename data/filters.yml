@@ -95,6 +95,11 @@
   label: ECS Capacity Provider
   color: '#a37062'
   checked: false
+- key: feature
+  value: container-insights
+  label: CloudWatch Container Insights
+  color: '#a37062'
+  checked: false
 
 # Type of pattern or content
 - key: type
