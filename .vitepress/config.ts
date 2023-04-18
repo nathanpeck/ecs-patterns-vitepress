@@ -9,7 +9,6 @@ import { BUNDLED_LANGUAGES } from 'shiki'
 import yaml from 'js-yaml'
 import { convert } from 'html-to-text';
 
-
 // Patch an issue where it doesn't recognize
 // Dockerfiles as Dockerfiles because there is no alias
 const DOCKER_LANG = BUNDLED_LANGUAGES.find((lang) => {
@@ -189,15 +188,6 @@ export default defineConfig({
 
     // Now write out an index file of page data to be used for
     // a search index.
-
-    // title
-    // authors
-    // url
-    // tags
-    // summary
-    // content
-    // date
-
     console.log("Generating search index JSON");
 
     const filters = yaml.load(await readFile('./data/filters.yml', 'utf-8'))

@@ -54,6 +54,11 @@ Resources:
   # themselves as members of the cluster, and run the docker containers.
   ECSAutoScalingGroup:
     Type: AWS::AutoScaling::AutoScalingGroup
+    DependsOn:
+      # This is to ensure that the ASG gets deleted first before these
+      # resources, when it comes to stack teardown.
+      - ECSCluster
+      - EC2Role
     Properties:
       VPCZoneIdentifier:
         - !Select [ 0, !Ref SubnetIds ]

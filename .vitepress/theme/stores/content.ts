@@ -1,5 +1,5 @@
 import { ref, computed } from 'vue'
-import { defineStore, skipHydrate } from 'pinia'
+import { defineStore } from 'pinia'
 import { useLocalStorage, usePreferredDark } from '@vueuse/core'
 
 export interface FilterDimension {
