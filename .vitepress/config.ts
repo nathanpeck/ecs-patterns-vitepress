@@ -54,8 +54,7 @@ export default defineConfig({
     'pattern/:patternName/index.md': ':patternName.md',
   },
   head: [
-    //['link', { rel: 'preload', as: 'font', href: 'https://use.fontawesome.com/releases/v5.0.13/webfonts/fa-solid-900.woff2' }],
-    ['link', { rel: 'stylesheet', href: 'https://use.fontawesome.com/releases/v5.0.13/css/all.css' }],
+    ['link', { rel: 'preload stylesheet', href: 'https://use.fontawesome.com/releases/v5.0.13/css/all.css' }],
 
     // This script must be injected into the head of the document
     // to solve the "flash" problem of sites that have dark mode.

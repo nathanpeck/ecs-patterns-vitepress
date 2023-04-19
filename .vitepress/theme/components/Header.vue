@@ -65,7 +65,7 @@ function toggleCollapse() {
   <nav class="navbar navbar-expand-md bg-light fixed-top" ref="header">
     <div class="container-fluid">
       <a class="navbar-brand" hijack="false" href="/">
-        <img class="ecs-brand" src="https://ecsland.jldeen.dev/images/ecs-land.png" alt="brand">
+        <img class="ecs-brand" width="175" height="70" src="https://ecsland.jldeen.dev/images/ecs-land.png" alt="brand">
       </a>
       <button class="navbar-toggler" type="button" @click="toggleCollapse" aria-controls="navbarTogglerDemo01"
         aria-expanded="false" aria-label="Toggle navigation">
@@ -153,7 +153,6 @@ function toggleCollapse() {
 }
 
 .ecs-brand {
-  width: 175px;
   border-radius: 80px;
   border: 3px solid #f66a31;
   margin-left: 2rem;
