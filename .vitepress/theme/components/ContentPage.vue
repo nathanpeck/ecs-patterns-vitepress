@@ -64,6 +64,7 @@ const githubPath = `https://github.com/nathanpeck/ecs-patterns-vitepress/tree/ma
   padding-right: 40px;
   margin-top: 20px;
   margin-right: 20px;
+  margin-bottom: 20px;
   word-wrap: break-word;
   background-color: var(--bs-body-bg);
   background-clip: border-box;
