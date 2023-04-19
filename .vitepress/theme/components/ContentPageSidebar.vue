@@ -99,7 +99,10 @@ if (frontmatter.value.filterDimensions) {
 .sidebar {
   max-width: 300px;
   height: 100%;
+  margin-top: 20px;
+  margin-left: 20px;
   margin-right: 20px;
+  margin-bottom: none;
 }
 
 .choices {
@@ -107,7 +110,7 @@ if (frontmatter.value.filterDimensions) {
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-between;
-  row-gap: 20px;
+  row-gap: 10px;
 }
 
 .choice {
@@ -125,6 +128,12 @@ if (frontmatter.value.filterDimensions) {
   margin-bottom: 20px;
 }
 
+@media screen and (max-width: 700px) {
+  .back-button {
+    margin-bottom: 10px;
+  }
+}
+
 .back-button:hover,
 .back-botton:active {
   background-color: rgb(var(--custom-highlight-color), .85);
@@ -135,7 +144,6 @@ if (frontmatter.value.filterDimensions) {
 @media screen and (max-width: 900px) {
   .sidebar {
     width: 100%;
-    min-width: 500px;
     max-width: none;
   }
 
@@ -155,6 +163,16 @@ if (frontmatter.value.filterDimensions) {
 @media screen and (max-width: 700px) {
   .choice {
     flex: 0 1 calc(50% - .5em);
+  }
+
+  .sidebar {
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+
+  .choices {
+    row-gap: 10px;
   }
 }
 </style>

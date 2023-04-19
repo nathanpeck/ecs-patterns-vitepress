@@ -36,6 +36,12 @@ function headerClick() {
   margin-bottom: 20px;
 }
 
+@media screen and (max-width: 700px) {
+  .collapseMe {
+    margin-bottom: 10px;
+  }
+}
+
 .collapseMe .card-header svg {
   fill: var(--bs-emphasis-color)
 }

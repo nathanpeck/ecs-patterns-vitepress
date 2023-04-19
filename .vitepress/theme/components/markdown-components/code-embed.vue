@@ -145,6 +145,15 @@ code {
   align-items: center;
 }
 
+/* On narrow screens the buttons can't all fit
+   in a row on the code topper */
+@media screen and (max-width: 800px) {
+  .codeBlockTopper {
+    flex-wrap: wrap;
+    row-gap: 10px;
+  }
+}
+
 .codeBlockTopper .badge {
   margin-right: .3em;
   line-height: 1em;

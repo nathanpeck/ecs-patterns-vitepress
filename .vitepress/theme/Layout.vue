@@ -105,10 +105,6 @@ const { frontmatter, page } = useData()
 .wide-wrapper {
   display: flex;
   flex-direction: row;
-  padding-left: 20px;
-  padding-right: 20px;
-  padding-bottom: 20px;
-  padding-top: 20px;
   background-color: var(--warm-content-bg);
 }
 
