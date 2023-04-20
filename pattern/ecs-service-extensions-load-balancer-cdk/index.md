@@ -51,7 +51,7 @@ The files above serve the following purpose:
 - `tsconfig.json` - Configures the TypeScript settings for the project:
 - `cdk.json` - Tells CDK what command to run, and provides a place to pass other contextual settings to CDK.
 
-Last but not least run the following commands to install dependencies and setup your AWS account for the deployment:
+Run the following commands to install dependencies and setup your AWS account for the deployment:
 
 ```sh
 npm install
@@ -92,7 +92,7 @@ Catalina (ip-10-0-199-15.us-east-2.compute.internal)
 #### Next Steps
 
 * You can use the `ecs.ContainerImage.fromAsset()` SDK call to have Cloud Development Kit automatically build your own local Dockerfile into an image to deploy.
-* Try adding [more built-in extensions](https://www.npmjs.com/package/@aws-cdk-containers/ecs-service-extensions) to the `ServiceDescription` to further enhance the service.
+* Try using [ECS Service Extensions to add the AWS FireLens log router](/ecs-service-extensions-firelens-cdk), for high performance log routing
 
 #### Clean Up
 
