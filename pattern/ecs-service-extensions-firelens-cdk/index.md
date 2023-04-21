@@ -8,8 +8,6 @@ filterDimensions:
     value: cdk
   - key: type
     value: pattern
-  - key: app
-    value: website
   - key: feature
     value: aws-firelens
 authors:
@@ -19,7 +17,7 @@ date: April 20 2023
 
 #### About
 
-The [`ecs-service-extensions`](https://www.npmjs.com/package/@aws-cdk-containers/ecs-service-extensions) package provides an extendable plugin system for defining Amazon ECS service deployments in AWS Cloud Development Kit. To learn the basics of `ecs-service-extensions` refer to ["Load balanced container service with ECS Service Extensions".](/ecs-service-extensions-load-balancer-cdk)
+The [`ecs-service-extensions`](https://www.npmjs.com/package/@aws-cdk-containers/ecs-service-extensions) package is an extendable plugin system for defining Amazon ECS service deployments in AWS Cloud Development Kit. To learn the basics of `ecs-service-extensions` refer to ["Load balanced container service with ECS Service Extensions".](/ecs-service-extensions-load-balancer-cdk)
 
 AWS FireLens is built-in to Amazon ECS to help you get high performance log routing, filtering, and splitting via Fluent Bit. FireLens also enhances your logs with ECS specific metadata such as which task definition version, which cluster, and which task ARN the log originated from. For more info on FireLens read ["Under the hood: FireLens for Amazon ECS Tasks"](https://aws.amazon.com/blogs/containers/under-the-hood-firelens-for-amazon-ecs-tasks/), which goes into depth about FireLens features, with performance benchmark comparisons.
 
@@ -139,3 +137,8 @@ Tear down the CDK application stack with the following command:
 ```sh
 npm run-script cdk destroy
 ```
+
+#### See Also
+
+- [More examples for AWS FireLens](https://github.com/aws-samples/amazon-ecs-firelens-examples), including advanced logging configurations
+- Learn how to [build your own custom ECS Service Extension](/ecs-service-extensions-custom-extension)

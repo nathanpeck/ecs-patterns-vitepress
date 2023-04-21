@@ -17,7 +17,7 @@ date: April 19 2023
 
 #### About
 
-The [`ecs-service-extensions`](https://www.npmjs.com/package/@aws-cdk-containers/ecs-service-extensions) package provides an extendable plugin system for defining Amazon ECS service deployments in AWS Cloud Development Kit.
+The [`ecs-service-extensions`](https://www.npmjs.com/package/@aws-cdk-containers/ecs-service-extensions) package is an extendable plugin system for defining Amazon ECS service deployments in AWS Cloud Development Kit.
 
 This pattern shows how to use `ecs-service-extensions` to deploy a basic load balanced workload through ECS.
 
@@ -93,6 +93,7 @@ Catalina (ip-10-0-199-15.us-east-2.compute.internal)
 
 * You can use the `ecs.ContainerImage.fromAsset()` SDK call to have Cloud Development Kit automatically build your own local Dockerfile into an image to deploy.
 * Try using [ECS Service Extensions to add the AWS FireLens log router](/ecs-service-extensions-firelens-cdk), for high performance log routing
+* Learn how to [build your own custom ECS Service Extension](/ecs-service-extensions-custom-extension)
 
 #### Clean Up
 
