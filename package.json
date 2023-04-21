@@ -15,9 +15,6 @@
     "vitepress": "^1.0.0-alpha.61",
     "vue": "^3.2.47"
   },
-  "devDependencies": {
-    "vitepress-plugin-tabs": "^0.2.0"
-  },
   "overrides": {
     "vitepress": {
       "shiki": "0.14.1"

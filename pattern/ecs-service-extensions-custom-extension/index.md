@@ -274,4 +274,4 @@ npm run-script cdk destroy
 - Read the [official launch blog for ECS Service Extensions](https://aws.amazon.com/blogs/containers/general-availability-amazon-ecs-service-extensions-for-aws-cdk/)
 - Read through the [repository for ECS Service Extensions](https://github.com/cdklabs/cdk-ecs-service-extensions)
 - Check out the [built-in AWS FireLens extension](/ecs-service-extensions-firelens-cdk)
-- See how to use the built-in [HTTP Load balancer extension]((/ecs-service-extensions-load-balancer-cdk))
+- See how to use the built-in [HTTP Load balancer extension](/ecs-service-extensions-load-balancer-cdk)
