@@ -46,7 +46,7 @@ description.add(new HealthCheckTrafficPort())
 description.add(new LongStartupGracePeriod())
 ```
 
-Some of extensions come built in. For example one built-in extension that ships with the project is `HttpLoadBalancerExtension`. This extension will create a load balancer, modify the container port mappings in the task definition, and configure the ECS service and security group to allow traffic between the load balancer and instances of the task. Rather than needing to adjust configuration in multiple places, across multiple AWS resources you can make a single SDK call:
+Some extensions come built-in to ECS Service Extensions. For example one built-in extension that ships with the project is `HttpLoadBalancerExtension`. This extension will create a load balancer, modify the container port mappings in the task definition, and configure the ECS service and security group to allow traffic between the load balancer and instances of the task. Rather than needing to adjust configuration in multiple places, across multiple AWS resources you can make a single SDK call:
 
 ```ts
 description.add(new HttpLoadBalancerExtension());
@@ -144,6 +144,14 @@ The extension defines a container mutating hook which takes an existing containe
 
 The extension then activates that hook by implementing the `addHooks()` method. When the `addHooks()` method is called it uses the `ServiceExtension.addContainerMutatingHook()` to attach it's own mutating hook to the main application container.
 
+Once again you will notice that as a best practice the `HealthCheckTrafficPort` extension does not accept any input values. You add it to a description by simply saying:
+
+```ts
+myServiceDescription.add(new HealthCheckTrafficPort());
+```
+
+The extension can determine the traffic port to run health checks against by reading properties from the `Container` extension, and it is therefore able to configure itself without any further input from the user. This makes the extension opinionated but also reliably self configuring.
+
 #### Hook: `resolveContainerDependencies()`
 
 This hook is for extensions that want to modify container dependencies within the task definition. The hook is run after all extensions have added their containers to the task. The main reason for this hook is so that extensions can call [`ecs.ContainerDefinition.addContainerDependencies()`](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_ecs.ContainerDefinition.html#addwbrcontainerwbrdependenciescontainerdependencies) in order to control the startup order of containers.
@@ -166,11 +174,11 @@ Now the `CloudWatchAgentSidecar` adds itself as a dependency on the main service
 
 #### Put it all together
 
-Now that you have learned about the different hooks available, and seen many examples of custom service extensions, let's see how it looks when you put all the custom extensions together:
+Now that you have learned about the different hooks available, and seen many examples of custom service extensions, let's see how it looks when you put all the custom extensions from above together in one application:
 
 <<< @/pattern/ecs-service-extensions-custom-extension/files/index.ts
 
-The CDK app can import each individial extension, and then use `.add()` statements to attach all the extensions to the service:
+The CDK app can import each individual extension, and then use `.add()` statements to attach all the extensions to the service:
 
 ```ts
 description.add(new SpikyCpuScalingPolicy())
