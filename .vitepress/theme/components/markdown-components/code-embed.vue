@@ -94,7 +94,7 @@ code {
 
 .shiki code {
   border: none;
-  background-color: auto;
+  background-color: transparent;
   padding: 0px;
   border-radius: 0px;
 }
