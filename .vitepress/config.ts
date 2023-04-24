@@ -55,6 +55,7 @@ export default defineConfig({
   },
   head: [
     ['link', { rel: 'preload stylesheet', href: 'https://use.fontawesome.com/releases/v5.0.13/css/all.css', as: 'style' }],
+    ['link', { rel: 'preload stylesheet', href: 'https://prod.assets.shortbread.aws.dev/shortbread.css', as: 'style' }],
 
     // This script must be injected into the head of the document
     // to solve the "flash" problem of sites that have dark mode.
