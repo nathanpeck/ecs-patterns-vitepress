@@ -98,6 +98,7 @@ if (frontmatter.value.filterDimensions) {
 
 .sidebar {
   max-width: 300px;
+  min-width: 300px;
   height: 100%;
   margin-top: 20px;
   margin-left: 20px;
