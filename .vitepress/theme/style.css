@@ -14262,8 +14262,24 @@ root,
   text-decoration: underline;
 }
 
+.custom-block pre {
+  white-space: pre-wrap;
+  padding: 10px;
+}
+
 .custom-block code {
   font-size: var(--vp-custom-block-code-font-size);
+}
+
+.custom-block .shiki code {
+  background-color: transparent;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+.custom-block .no-line-numbers code .line {
+  margin: 0px;
+  padding: 0px;
 }
 
 /************************/

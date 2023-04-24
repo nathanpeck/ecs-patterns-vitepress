@@ -231,6 +231,5 @@ h6 .header-anchor:focus {
 
 .content .custom-block code {
   background-color: var(--bs-secondary-bg);
-  padding: 4px;
 }
 </style>

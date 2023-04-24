@@ -53,11 +53,11 @@ function download() {
   <div class="codeBlockTopper">
     <div>
       <span v-if="fileExists" class="badge">File: {{ filename }}</span>
-      <span class="badge">Language: {{ lang }}</span>
+      <span v-if="lang" class="badge">Language: {{ lang }}</span>
     </div>
     <div class="codeBlockTopperButtons">
       <button v-if="fileExists" type="button" class="download btn" @click="download">Download</button>
-      <button type="button" class="copy btn" @click="copy" ref="copyButton">Copy</button>
+      <button v-if="lang" type="button" class="copy btn" @click="copy" ref="copyButton">Copy</button>
     </div>
   </div>
   <div :class="className" ref="content">
@@ -84,9 +84,8 @@ code {
   overflow: auto;
   overflow-wrap: break-word;
   padding-top: 1rem;
-  padding-right: 1rem;
-  padding-bottom: 1rem;
-  margin-bottom: 3rem;
+  padding-bottom: .5rem;
+  margin-bottom: 1.5rem;
   /**white-space: pre-wrap;**/
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
