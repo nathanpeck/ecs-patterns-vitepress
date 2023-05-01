@@ -31,6 +31,19 @@ Code from a file can be imported and embedded as a code widget using the followi
 <<< @/pattern/ecs-delete-task-definition/files/delete-tasks.sh
 ```
 
+Import a SVG and embed it in the page:
+```
+!!! @/pattern/ecs-task-events-capture-cloudwatch/task-history.svg
+```
+
+In order to generate an SVG diagram for the site the following process should be followed:
+1. Create a PowerPoint presentation, and create your diagram using standard shapes. Images should be kept minimal and small as they will be embedded in the SVG as base64. Recommend using Arial font exclusively. Use solid black (`#000000`) for all text. For arrows use a gray color that works in both light and dark mode.
+2. Select all elements on the page and right click on the selection. Save as image, and choose the SVG format.
+3. Now import the exported SVG file into your Markdown as shown above. The SVG plugin will automatically convert solid black (`#000000`) into a CSS variable that adjusts to dark/light mode. All other elements should be designed in such a way to look good on both light and dark mode.
+4. Save the source PowerPoint into the same folder inside the pattern. This is necessary in case we need to make edits and export the SVG again in the future.
+
+For the code see .vitepress/theme/plugins/svg.ts
+
 
 ### Setup:
 

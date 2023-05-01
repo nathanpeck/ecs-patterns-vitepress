@@ -1,5 +1,6 @@
 import { defineConfig } from 'vitepress'
 import { snippetPlugin } from './theme/plugins/snippet'
+import { svgPlugin } from './theme/plugins/svg'
 import defaultFence from './theme/plugins/default_fence'
 import { createWriteStream } from 'node:fs'
 import { writeFile, readFile } from 'node:fs/promises'
@@ -133,6 +134,7 @@ export default defineConfig({
 
       // Now restore the plugins that I want to use
       md.use(snippetPlugin, process.cwd())
+      md.use(svgPlugin, process.cwd())
     }
   },
 
