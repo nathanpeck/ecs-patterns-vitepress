@@ -73,6 +73,12 @@
   label: Batch Job
   color: '#6a4c6e'
   checked: false
+- key: app
+  value: machine-learning
+  label: Machine Learning
+  color: '#6a4c6e'
+  checked: false
+
 
 # Features in use
 - key: feature
