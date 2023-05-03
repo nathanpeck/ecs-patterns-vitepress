@@ -11,7 +11,7 @@ Parameters:
     ConstraintDescription: Please choose a valid instance type.
   DesiredCapacity:
     Type: Number
-    Default: '1'
+    Default: '0'
     Description: Number of instances to initially launch in your ECS cluster.
   MaxSize:
     Type: Number

@@ -9,6 +9,8 @@ filterDimensions:
     value: cdk
   - key: type
     value: pattern
+  - key: app
+    value: machine-learning
 authors:
   - peckn
 license:

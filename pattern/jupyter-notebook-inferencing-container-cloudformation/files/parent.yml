@@ -1,17 +1,22 @@
 AWSTemplateFormatVersion: "2010-09-09"
 Transform: AWS::Serverless-2016-10-31
-Description: Parent stack that deploys the ECS cluster and capacity provider
-             then launches a service inside of the cluster
+Description: Parent stack that deploys VPC, Amazon ECS cluster with AWS Inferentia capacity
+             and then deploys a JupyterLab IDE (latest Jupyter Notebook) with AWS Neuron SDK for machine
+             learning projects
 
 Parameters:
-  VpcId:
-    Type: AWS::EC2::VPC::Id
-    Description: VPC ID where the ECS cluster is launched
-  SubnetIds:
-    Type: List<AWS::EC2::Subnet::Id>
-    Description: List of subnet IDs where the EC2 instances will be launched
+  ImageUrl:
+    Type: String
+    Description: The URL of the Jupyter image that you built
 
 Resources:
+
+  # The networking configuration. This creates an isolated
+  # network specific to this particular environment
+  VpcStack:
+    Type: AWS::Serverless::Application
+    Properties:
+      Location: vpc.yml
 
   # This stack contains cluster wide resources that will be shared
   # by all services that get launched in the stack
@@ -20,16 +25,26 @@ Resources:
     Properties:
       Location: inferentia-cluster.yml
       Parameters:
-        VpcId: !Ref VpcId
-        SubnetIds: !Join [',', !Ref SubnetIds]
+        VpcId: !GetAtt VpcStack.Outputs.VpcId
+        SubnetIds: !GetAtt VpcStack.Outputs.PrivateSubnetIds
 
-  JupyterNotebook:
+  # Deploys the JupyterLab application into the cluster
+  JupyterNotebookStack:
     Type: AWS::Serverless::Application
     Properties:
       Location: jupyter-notebook.yml
       Parameters:
-        VpcId: !Ref VpcId
-        SubnetIds: !Join [',', !Ref SubnetIds]
+        ImageUrl: !Ref ImageUrl
+        VpcId: !GetAtt VpcStack.Outputs.VpcId
+        SubnetIds: !GetAtt VpcStack.Outputs.PrivateSubnetIds
         ClusterName: !GetAtt BaseStack.Outputs.ClusterName
         ECSTaskExecutionRole: !GetAtt BaseStack.Outputs.ECSTaskExecutionRole
         CapacityProvider: !GetAtt BaseStack.Outputs.CapacityProvider
+
+Outputs:
+  JuypterLabUrl:
+    Description: The URL at which you can find your Juypter Lab installation
+    Value: !GetAtt JupyterNotebookStack.Outputs.LoadBalancerUrl
+  Secret:
+    Description: The ARN of the secret token that protects your JuypterLab
+    Value: !GetAtt JupyterNotebookStack.Outputs.Secret

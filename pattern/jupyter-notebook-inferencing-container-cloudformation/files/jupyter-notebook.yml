@@ -1,6 +1,6 @@
 AWSTemplateFormatVersion: '2010-09-09'
-Description: An example service that deploys an AWS Neuron task
-             onto AWS Inferentia instances
+Description: An example service that deploys an Jupyter Lab notebook
+             with AWS Neuron support for machine learning.
 
 Parameters:
   VpcId:
@@ -23,22 +23,22 @@ Parameters:
     Type: String
     Default: jupyter
     Description: A name for the service
+  ImageUrl:
+    Type: String
+    Description: The URL of a Juypter notebook container to run
   ContainerCpu:
     Type: Number
-    Default: 1024
+    Default: 2048
     Description: How much CPU to give the container. 1024 is 1 CPU
   ContainerMemory:
     Type: Number
-    Default: 2048
+    Default: 4096
     Description: How much memory in megabytes to give the container
-  Command:
+  MyIp:
     Type: String
-    Default: sleep 3600
-    Description: The command to run inside of the container
-  DesiredCount:
-    Type: Number
-    Default: 0
-    Description: How many copies of the service task to run
+    Default: 0.0.0.0/0
+    Description: The IP addresses that you want to accept traffic from.
+                 Default accepts traffic from anywhere on the internet.
 
 Resources:
 
@@ -57,21 +57,21 @@ Resources:
         - EC2
       ExecutionRoleArn: !Ref ECSTaskExecutionRole
       ContainerDefinitions:
-        - Name: !Ref ServiceName
+        - Name: jupyter
           Cpu: !Ref ContainerCpu
           Memory: !Ref ContainerMemory
-          Image: docker tag jupyter-notebook 209640446841.dkr.ecr.us-east-2.amazonaws.com/jupyter-notebook:latest
-docker push 209640446841.dkr.ecr.us-east-2.amazonaws.com/jupyter-notebook:latest
+          Image: !Ref ImageUrl
           EntryPoint:
             - '/bin/sh'
             - '-c'
           Command:
-            - '/opt/conda/bin/jupyter-lab --allow-root --ServerApp.token=${JUPYTER_TOKEN}'
+            - '/opt/conda/bin/jupyter-lab --allow-root --ServerApp.token=${JUPYTER_TOKEN} --ServerApp.ip=*'
           Secrets:
             - Name: JUPYTER_TOKEN
               ValueFrom: !Ref JupyterToken
           PortMappings:
             - ContainerPort: 8888
+              HostPort: 8888
           LogConfiguration:
             LogDriver: 'awslogs'
             Options:
@@ -96,7 +96,7 @@ docker push 209640446841.dkr.ecr.us-east-2.amazonaws.com/jupyter-notebook:latest
     Type: AWS::SecretsManager::Secret
     Properties:
       GenerateSecretString:
-        PasswordLength: 20
+        PasswordLength: 30
         ExcludePunctuation: true
 
   # Attach a policy to the task execution role, which grants
@@ -122,6 +122,7 @@ docker push 209640446841.dkr.ecr.us-east-2.amazonaws.com/jupyter-notebook:latest
   # as monitor the number of running tasks and replace any that have crashed
   Service:
     Type: AWS::ECS::Service
+    DependsOn: PublicLoadBalancerListener
     Properties:
       ServiceName: !Ref ServiceName
       Cluster: !Ref ClusterName
@@ -137,7 +138,7 @@ docker push 209640446841.dkr.ecr.us-east-2.amazonaws.com/jupyter-notebook:latest
       DeploymentConfiguration:
         MaximumPercent: 200
         MinimumHealthyPercent: 75
-      DesiredCount: 0
+      DesiredCount: 1
       NetworkConfiguration:
         AwsvpcConfiguration:
           SecurityGroups:
@@ -146,6 +147,10 @@ docker push 209640446841.dkr.ecr.us-east-2.amazonaws.com/jupyter-notebook:latest
             - !Select [ 0, !Ref SubnetIds ]
             - !Select [ 1, !Ref SubnetIds ]
       TaskDefinition: !Ref TaskDefinition
+      LoadBalancers:
+        - ContainerName: jupyter
+          ContainerPort: 8888
+          TargetGroupArn: !Ref JupyterTargetGroup
 
   # Because we are launching tasks in AWS VPC networking mode
   # the tasks themselves also have an extra security group that is unique
@@ -160,3 +165,81 @@ docker push 209640446841.dkr.ecr.us-east-2.amazonaws.com/jupyter-notebook:latest
   # This log group stores the stdout logs from this service's containers
   LogGroup:
     Type: AWS::Logs::LogGroup
+
+   # Keeps track of the list of tasks running on EC2 instances
+  JupyterTargetGroup:
+    Type: AWS::ElasticLoadBalancingV2::TargetGroup
+    Properties:
+      HealthCheckIntervalSeconds: 6
+      HealthCheckPath: /api
+      HealthCheckProtocol: HTTP
+      HealthCheckTimeoutSeconds: 5
+      HealthyThresholdCount: 2
+      TargetType: ip
+      Port: 8888
+      Protocol: HTTP
+      UnhealthyThresholdCount: 10
+      VpcId: !Ref VpcId
+      TargetGroupAttribute:
+        - Key: deregistration_delay.timeout_seconds
+          Value: 0
+
+  # A public facing load balancer, this is used as ingress for
+  # public facing internet traffic. The traffic is forwarded
+  # down to the Juypter notebook where ever it is currently hosted
+  # on whichever machine Amazon ECS placed it on.
+  PublicLoadBalancerSG:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Access to the public facing load balancer
+      VpcId: !Ref VpcId
+      SecurityGroupIngress:
+        # Allow access to ALB from the specified IP address
+        - CidrIp: !Ref MyIp
+          IpProtocol: -1
+  PublicLoadBalancer:
+    Type: AWS::ElasticLoadBalancingV2::LoadBalancer
+    Properties:
+      Scheme: internet-facing
+      LoadBalancerAttributes:
+      - Key: idle_timeout.timeout_seconds
+        Value: '30'
+      Subnets:
+        # The load balancer is placed into the public subnets, so that traffic
+        # from the internet can reach the load balancer directly via the internet gateway
+        - !Select [ 0, !Ref SubnetIds ]
+        - !Select [ 1, !Ref SubnetIds ]
+      SecurityGroups:
+        - !Ref PublicLoadBalancerSG
+  PublicLoadBalancerListener:
+    Type: AWS::ElasticLoadBalancingV2::Listener
+    DependsOn:
+      - PublicLoadBalancer
+    Properties:
+      DefaultActions:
+        - Type: 'forward'
+          ForwardConfig:
+            TargetGroups:
+              - TargetGroupArn: !Ref JupyterTargetGroup
+                Weight: 100
+      LoadBalancerArn: !Ref 'PublicLoadBalancer'
+      Port: 80
+      Protocol: HTTP
+
+  # The Jupyter services' security group allows inbound
+  # traffic from the public facing ALB
+  JupyterIngressFromPublicALB:
+    Type: AWS::EC2::SecurityGroupIngress
+    Properties:
+      Description: Ingress from the public ALB
+      GroupId: !Ref 'ServiceSecurityGroup'
+      IpProtocol: -1
+      SourceSecurityGroupId: !Ref 'PublicLoadBalancerSG'
+
+Outputs:
+  LoadBalancerUrl:
+    Description: The URL at which you can access the application
+    Value: !GetAtt PublicLoadBalancer.DNSName
+  Secret:
+    Description: The ARN of the secret that was created to protect the Juypter Lab
+    Value: !Ref JupyterToken
