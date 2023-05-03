@@ -6,9 +6,12 @@ Parameters:
   VpcId:
     Type: String
     Description: The VPC that the service is running inside of
-  SubnetIds:
+  PublicSubnetIds:
     Type: List<AWS::EC2::Subnet::Id>
-    Description: List of subnet IDs the AWS VPC tasks are inside of
+    Description: List of public facing subnets
+  PrivateSubnetIds:
+    Type: List<AWS::EC2::Subnet::Id>
+    Description: List of private subnets
   ClusterName:
     Type: String
     Description: The name of the ECS cluster into which to launch capacity.
@@ -28,11 +31,11 @@ Parameters:
     Description: The URL of a Juypter notebook container to run
   ContainerCpu:
     Type: Number
-    Default: 2048
+    Default: 4096
     Description: How much CPU to give the container. 1024 is 1 CPU
   ContainerMemory:
     Type: Number
-    Default: 4096
+    Default: 15673
     Description: How much memory in megabytes to give the container
   MyIp:
     Type: String
@@ -72,6 +75,9 @@ Resources:
           PortMappings:
             - ContainerPort: 8888
               HostPort: 8888
+          MountPoints:
+            - SourceVolume: efs-volume
+              ContainerPath: /home
           LogConfiguration:
             LogDriver: 'awslogs'
             Options:
@@ -90,6 +96,12 @@ Resources:
             Capabilities:
               Add:
                 - "IPC_LOCK"
+      Volumes:
+        - Name: efs-volume
+          EFSVolumeConfiguration:
+            FilesystemId: !Ref EFSFileSystem
+            RootDirectory: /
+            TransitEncryption: ENABLED
 
   # The secret token used to protect the Jupyter notebook
   JupyterToken:
@@ -116,6 +128,26 @@ Resources:
               - secretsmanager:DescribeSecret
               - secretsmanager:GetSecretValue
             Resource: !Ref JupyterToken
+
+  # Attach a policy to the task execution role which allows the
+  # task to access the EFS filesystem that provides durable storage
+  # for the task.
+  TaskAccessToFilesystem:
+    Type: AWS::IAM::Policy
+    Properties:
+      Roles:
+        - !Ref ECSTaskExecutionRole
+      PolicyName: EFSAccess
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Action:
+              - elasticfilesystem:ClientMount
+              - elasticfilesystem:ClientWrite
+              - elasticfilesystem:DescribeMountTargets
+              - elasticfilesystem:DescribeFileSystems
+            Resource: !GetAtt EFSFileSystem.Arn
 
   # The service. The service is a resource which allows you to run multiple
   # copies of a type of task, and gather up their logs and metrics, as well
@@ -144,8 +176,8 @@ Resources:
           SecurityGroups:
             - !Ref ServiceSecurityGroup
           Subnets:
-            - !Select [ 0, !Ref SubnetIds ]
-            - !Select [ 1, !Ref SubnetIds ]
+            - !Select [ 0, !Ref PrivateSubnetIds ]
+            - !Select [ 1, !Ref PrivateSubnetIds ]
       TaskDefinition: !Ref TaskDefinition
       LoadBalancers:
         - ContainerName: jupyter
@@ -180,7 +212,7 @@ Resources:
       Protocol: HTTP
       UnhealthyThresholdCount: 10
       VpcId: !Ref VpcId
-      TargetGroupAttribute:
+      TargetGroupAttributes:
         - Key: deregistration_delay.timeout_seconds
           Value: 0
 
@@ -207,8 +239,8 @@ Resources:
       Subnets:
         # The load balancer is placed into the public subnets, so that traffic
         # from the internet can reach the load balancer directly via the internet gateway
-        - !Select [ 0, !Ref SubnetIds ]
-        - !Select [ 1, !Ref SubnetIds ]
+        - !Select [ 0, !Ref PublicSubnetIds ]
+        - !Select [ 1, !Ref PublicSubnetIds ]
       SecurityGroups:
         - !Ref PublicLoadBalancerSG
   PublicLoadBalancerListener:
@@ -235,6 +267,46 @@ Resources:
       GroupId: !Ref 'ServiceSecurityGroup'
       IpProtocol: -1
       SourceSecurityGroupId: !Ref 'PublicLoadBalancerSG'
+
+  # Filesystem that provides durable storage for the notebook
+  EFSFileSystem:
+    Type: AWS::EFS::FileSystem
+    Properties:
+      Encrypted: true
+      PerformanceMode: generalPurpose
+      ThroughputMode: bursting
+
+  # Mount target allows usage of the EFS inside of subnet one
+  EFSMountTargetOne:
+    Type: AWS::EFS::MountTarget
+    Properties:
+      FileSystemId: !Ref EFSFileSystem
+      SubnetId: !Ref SubnetOne
+      SecurityGroups:
+        - !Ref EFSFileSystemSecurityGroup
+
+  # Mount target allows usage of the EFS inside of subnet two
+  EFSMountTargetTwo:
+    Type: AWS::EFS::MountTarget
+    Properties:
+      FileSystemId: !Ref EFSFileSystem
+      SubnetId: !Ref SubnetTwo
+      SecurityGroups:
+        - !Ref EFSFileSystemSecurityGroup
+
+  # This security group is used by the mount targets so
+  # that they will allow inbound NFS connections from
+  # the AWS Fargate tasks that we launch
+  EFSFileSystemSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Security group for EFS file system
+      VpcId: !Ref VpcId
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 2049
+          ToPort: 2049
+          SourceSecurityGroupId: !Ref ServiceSecurityGroup
 
 Outputs:
   LoadBalancerUrl:

@@ -16,13 +16,26 @@ date: May 2 2023
 
 #### About
 
-The recommended way to configure networking for an Amazon ECS cluster is using AWS VPC networking mode. In this mode ECS gives each task that you start it's own unique private IP address in your VPC. There are significant benefits to this, such as the ability to give your tasks VPC security groups that allow you granular control over container to container communication, even when tasks are running colocated on the same EC2 instance. Additionally, when deploying containers using AWS Fargate you are required to use the AWS VPC networking mode.
+[Amazon Virtual Private Cloud (Amazon VPC)](https://aws.amazon.com/vpc/) gives you full control over your virtual networking environment, including resource placement, connectivity, and security.
 
-One challenge of deploying containers in AWS VPC networking mode is that you must provision a large enough VPC to hold all your containers. Otherwise when you attempt to scale up you will run out of IP address space in the VPC and network interface provisioning will fail.
+The recommended way to configure networking for containers in a Amazon ECS cluster is using VPC networking mode. In this mode ECS gives each task that you start it's own unique private IP address in your VPC. There are significant benefits to this, such as the ability to give your tasks VPC security groups that allow you granular control over container to container communication, even when tasks are running colocated on the same EC2 instance. Additionally, when deploying containers using AWS Fargate you are required to use the VPC networking mode.
 
-Additionally, containers that run in AWS VPC mode on EC2 will only be given private IP addresses. Therefore the VPC requires additional networking configuration to for containerized tasks to be able to communicate with the public internet.
+One challenge of deploying containers in VPC networking mode is that you must provision a large enough VPC to hold all your containers. Otherwise when you attempt to scale up you will run out of IP address space in the VPC and network interface provisioning will fail.
+
+Additionally, containers that run in VPC mode on EC2 will only be given private IP addresses. Therefore the VPC requires additional networking configuration to for containerized tasks to be able to communicate with the public internet.
 
 This pattern creates a large VPC with room to host tens of thousands of containers on AWS Fargate or EC2 instances. It also configures the VPC with NAT gateways for the private subents to ensure that you have full outbound internet access in all subnets of the VPC.
+
+#### Architecture
+
+The following diagram shows the architecture of what will be created:
+
+!!! @/pattern/large-vpc-for-amazon-ecs-cluster/diagram.svg
+
+* The VPC that is created spans two availability zones. This gives you increased availability.
+* Each AZ gets a public subnet and a private subnet.
+* The VPC has an internet gateway that can be used from the public subnets by any container or compute that has a public IP address.
+* This pattern creates two NAT gateways that provide internet access to resources launching in the private subnets.
 
 #### VPC Configuration
 
@@ -40,8 +53,24 @@ This pattern VPC has two private subnets, each with `16,384` addresses. These su
 
 If you are planning to run an incredibly large workload then keep an eye on the [Network Address Usage (NAU) metric and quota](https://docs.aws.amazon.com/vpc/latest/userguide/network-address-usage.html) for your AWS account. You may need to request an increase to your NAU quota.
 
+#### Usage
+
+Deploy the template via the AWS CloudFormation console, or with a CLI command like this:
+
+```shell
+aws cloudformation deploy \
+   --stack-name big-vpc \
+   --template-file vpc.yml
+```
+
+The deployed template has `Outputs` that you can pass into other stacks:
+
+- `VpcId` - Many other AWS resources will need to know the ID of the VPC that they are placed in.
+- `PublicSubnetIds` - A comma separated list of the subnet ID's that have direct internet access.
+- `PrivateSubnetIds` - A comma separates list of the subnet ID's that have internet access via a NAT gateway.
+
 #### Next Steps
 
-- This template only provisions two subnets. For even high availability consider adding a third public and private subnet and NAT gateway.
+- This template only provisions two subnets. For even greater availability consider adding a third public and private subnet and NAT gateway.
 - If your private subnet hosted resources make heavy use of AWS services such as DynamoDB, S3, or other services, then consider adding VPC endpoints for those services. This will remove the need for that traffic to go through the NAT gateway, freeing up it's capacity for other usage, and potentially reducing your networking costs.
 - If this VPC still looks too small for your workload then consider splitting it up across multiple smaller VPC's.

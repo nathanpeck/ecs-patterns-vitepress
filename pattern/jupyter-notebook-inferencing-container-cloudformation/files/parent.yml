@@ -36,7 +36,8 @@ Resources:
       Parameters:
         ImageUrl: !Ref ImageUrl
         VpcId: !GetAtt VpcStack.Outputs.VpcId
-        SubnetIds: !GetAtt VpcStack.Outputs.PrivateSubnetIds
+        PublicSubnetIds: !GetAtt VpcStack.Outputs.PublicSubnetIds
+        PrivateSubnetIds: !GetAtt VpcStack.Outputs.PrivateSubnetIds
         ClusterName: !GetAtt BaseStack.Outputs.ClusterName
         ECSTaskExecutionRole: !GetAtt BaseStack.Outputs.ECSTaskExecutionRole
         CapacityProvider: !GetAtt BaseStack.Outputs.CapacityProvider
