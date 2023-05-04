@@ -26,7 +26,7 @@ date: May 2, 2023
 This pattern will show how to build and deploy a containerized version of Jupyter notebook, with the AWS Neuron SDK for machine learning, accelerated by AWS Inferentia and AWS Trainium hardware.
 
 ::: warning
-This pattern is designed to show how to setup a production ready machine learning environment that can be scaled up later for running extremely large machine learning training or inference jobs accelerated by some of the most powerful hardware that AWS has. Therefore this pattern has a fairly high baseline cost (minimum of about $1 an hour, and some instance choices cost >$12 an hour). Consider using [Amazon Sagemaker Notebooks](https://aws.amazon.com/sagemaker/notebooks/) on smaller EC2 instances for a low cost learning environment that is free tier eligible.
+This pattern is designed to setup a production ready machine learning environment that can be scaled up later for running extremely large machine learning training or inference jobs accelerated by some of the most powerful hardware that AWS has. Therefore this pattern has a fairly high baseline cost (about $2 an hour, and the largest instance choices cost >$12 an hour). Consider using [Amazon Sagemaker Notebooks](https://aws.amazon.com/sagemaker/notebooks/) on smaller EC2 instances for a low cost learning environment that is free tier eligible.
 :::
 
 #### Setup
@@ -44,7 +44,7 @@ The following diagram shows the architecture of what will be deployed:
 !!! @/pattern/jupyter-notebook-inferencing-container-cloudformation/diagram.svg
 
 1. An Application Load Balancer provides ingress from the public internet.
-2. Traffic goes to an `inf2.xlarge` AWS Inferentia powered EC2 instance launched by Amazon ECS.
+2. Traffic goes to an `inf2.8xlarge` AWS Inferentia powered EC2 instance launched by Amazon ECS. You can adjust the AWS Inferentia instance class as desired.
 3. Amazon ECS has placed a container task on the instance, which hosts JupyterLab and the AWS Neuron SDK.
 4. Amazon ECS has connected the container to the underlying Neuron device provided by the AWS Inferentia instance.
 5. Machine learning workloads that you run inside the container are able to connect to the hardware accelerator.
@@ -134,6 +134,8 @@ The template creates a `AWS::SecretsManager::Secret` resource as the secret toke
 
 The `MyIp` parameter can be customized to limit which IP addresses are allowed to access the JupyterLab.
 
+This task definition creates an EFS filesystem and mounts it to the path `/home`. This can be used as durable persistence for models or other important info that you want to save from your Jupyter notebook. Otherwise everything in this notebook will be wiped on restart. See the [tutorial on attaching durable storage to an ECS task](cloudformation-ecs-durable-task-storage-with-efs) for more information on using EFS for durable task storage.
+
 #### Deploy all the stacks
 
 We can use the following parent stack to deploy all three child CloudFormation templates:
@@ -181,7 +183,7 @@ If you wish to change this secret value in AWS Secrets Manager you will need to 
 
 Open up the URL from the outputs section above, and enter the secret token when asked. When it opens you will see a screen similar to this:
 
-![](ide.png)
+![](files/ide.png)
 
 At this point you can begin making use of the underlying AWS Inferentia hardware, via the JupyterLab IDE.
 
@@ -208,7 +210,230 @@ You should see output similar to this:
 
 This verifies that the AWS Neuron SDK inside of the container is able to connect to the AWS Neuron device, which provides the hardware acceleration of the underlying AWS Inferentia hardware. At this point you can begin to use the Neuron SDK to do machine learning tasks inside of the JupyterLab container.
 
+You can also run the following command to open a hardware monitoring interface:
+
+```shell
+neuron-top
+```
+
+This will show more info about the Neuron hardware, including its current usage. Right now the Neuron cores are not in use, so let's change that by running a benchmark test:
+
+#### Test out hardware acceleration
+
+In JupyterLab start a new notebook. Run the following commands as cells in the notebook.
+
+Install dependencies:
+
+```py
+!python -m pip config set global.extra-index-url https://pip.repos.neuron.amazonaws.com
+!pip install neuronx-cc==2.* tensorflow-neuronx ipywidgets transformers
+```
+
+Download a [pretrained BERT model](https://huggingface.co/docs/transformers/model_doc/bert) and compile it for the AWS Neuron device. This machine learning model is analyzing whether two input phrases that you have given it are paraphrases of each other:
+
+```py
+import torch
+import torch_neuronx
+from transformers import AutoTokenizer, AutoModelForSequenceClassification
+import transformers
+
+
+def encode(tokenizer, *inputs, max_length=128, batch_size=1):
+    tokens = tokenizer.encode_plus(
+        *inputs,
+        max_length=max_length,
+        padding='max_length',
+        truncation=True,
+        return_tensors="pt"
+    )
+    return (
+        torch.repeat_interleave(tokens['input_ids'], batch_size, 0),
+        torch.repeat_interleave(tokens['attention_mask'], batch_size, 0),
+        torch.repeat_interleave(tokens['token_type_ids'], batch_size, 0),
+    )
+
+
+# Create the tokenizer and model
+name = "bert-base-cased-finetuned-mrpc"
+tokenizer = AutoTokenizer.from_pretrained(name)
+model = AutoModelForSequenceClassification.from_pretrained(name, torchscript=True)
+
+# Set up some example inputs
+sequence_0 = "The company HuggingFace is based in New York City"
+sequence_1 = "Apples are especially bad for your health"
+sequence_2 = "HuggingFace's headquarters are situated in Manhattan"
+
+paraphrase = encode(tokenizer, sequence_0, sequence_2)
+not_paraphrase = encode(tokenizer, sequence_0, sequence_1)
+
+# Run the original PyTorch BERT model on CPU
+cpu_paraphrase_logits = model(*paraphrase)[0]
+cpu_not_paraphrase_logits = model(*not_paraphrase)[0]
+
+# Compile the model for Neuron
+model_neuron = torch_neuronx.trace(model, paraphrase)
+
+# Save the TorchScript for inference deployment
+filename = 'model.pt'
+torch.jit.save(model_neuron, filename)
+```
+
+Now run the model on the CPU, and compare the results to running the model on the AWS Neuron device:
+
+```py
+# Load the TorchScript compiled model
+model_neuron = torch.jit.load(filename)
+
+# Verify the TorchScript works on both example inputs
+neuron_paraphrase_logits = model_neuron(*paraphrase)[0]
+neuron_not_paraphrase_logits = model_neuron(*not_paraphrase)[0]
+
+# Compare the results
+print('CPU paraphrase logits:        ', cpu_paraphrase_logits.detach().numpy())
+print('Neuron paraphrase logits:    ', neuron_paraphrase_logits.detach().numpy())
+print('CPU not-paraphrase logits:    ', cpu_not_paraphrase_logits.detach().numpy())
+print('Neuron not-paraphrase logits: ', neuron_not_paraphrase_logits.detach().numpy())
+```
+
+You should see output similar to this:
+
+```txt
+CPU paraphrase logits:         [[-0.34945598  1.9003887 ]]
+Neuron paraphrase logits:     [[-0.34909704  1.8992746 ]]
+CPU not-paraphrase logits:     [[ 0.5386365 -2.2197142]]
+Neuron not-paraphrase logits:  [[ 0.537705  -2.2180324]]
+```
+
+Whether you do model inference on the CPU or the AWS Neuron device it should produce very similar results, however model inference with Neuron will be faster because of the underlying hardware acceleration.
+
+Run the model in a loop as a benchmark to test out performance on the underlying hardware:
+
+```py
+import time
+import concurrent.futures
+import numpy as np
+
+
+def benchmark(filename, example, n_models=2, n_threads=2, batches_per_thread=10000):
+    """
+    Record performance statistics for a serialized model and its input example.
+
+    Arguments:
+        filename: The serialized torchscript model to load for benchmarking.
+        example: An example model input.
+        n_models: The number of models to load.
+        n_threads: The number of simultaneous threads to execute inferences on.
+        batches_per_thread: The number of example batches to run per thread.
+
+    Returns:
+        A dictionary of performance statistics.
+    """
+
+    # Load models
+    models = [torch.jit.load(filename) for _ in range(n_models)]
+
+    # Warmup
+    for _ in range(8):
+        for model in models:
+            model(*example)
+
+    latencies = []
+
+    # Thread task
+    def task(model):
+        for _ in range(batches_per_thread):
+            start = time.time()
+            model(*example)
+            finish = time.time()
+            latencies.append((finish - start) * 1000)
+
+    # Submit tasks
+    begin = time.time()
+    with concurrent.futures.ThreadPoolExecutor(max_workers=n_threads) as pool:
+        for i in range(n_threads):
+            pool.submit(task, models[i % len(models)])
+    end = time.time()
+
+    # Compute metrics
+    boundaries = [50, 95, 99]
+    percentiles = {}
+
+    for boundary in boundaries:
+        name = f'latency_p{boundary}'
+        percentiles[name] = np.percentile(latencies, boundary)
+    duration = end - begin
+    batch_size = 0
+    for tensor in example:
+        if batch_size == 0:
+            batch_size = tensor.shape[0]
+    inferences = len(latencies) * batch_size
+    throughput = inferences / duration
+
+    # Metrics
+    metrics = {
+        'filename': str(filename),
+        'batch_size': batch_size,
+        'batches': len(latencies),
+        'inferences': inferences,
+        'threads': n_threads,
+        'models': n_models,
+        'duration': duration,
+        'throughput': throughput,
+        **percentiles,
+    }
+
+    display(metrics)
+
+
+def display(metrics):
+    """
+    Display the metrics produced by `benchmark` function.
+
+    Args:
+        metrics: A dictionary of performance statistics.
+    """
+    pad = max(map(len, metrics)) + 1
+    for key, value in metrics.items():
+
+        parts = key.split('_')
+        parts = list(map(str.title, parts))
+        title = ' '.join(parts) + ":"
+
+        if isinstance(value, float):
+            value = f'{value:0.3f}'
+
+        print(f'{title :<{pad}} {value}')
+
+
+# Benchmark BERT on Neuron
+benchmark(filename, paraphrase)
+```
+
+While this notebook code runs you can check `neuron-top` and you should see output similar to this:
+
+![](files/neuron-top.png)
+
+You can see that Neuron cores are in use as the benchmark runs the pretrained BERT model, however the CPU has very little utilization. This is exactly what you want to see: the machine learning inference workload has been almost fully offloaded onto AWS Inferentia hardware.
+
+The benchmark output should look similar to this:
+
+```txt
+Filename:    model.pt
+Batch Size:  1
+Batches:     20000
+Inferences:  20000
+Threads:     2
+Models:      2
+Duration:    9.944
+Throughput:  2011.203
+Latency P50: 0.994
+Latency P95: 1.017
+Latency P99: 1.045
+```
+
+The model has been run 20k times in under 10 seconds, with a p99 latency of ~1ms. As you can see the AWS Inferentia hardware acceleration is ideal for realtime inference applications such as doing inference on demand in response to a web request.
+
 #### Next Steps
 
-- Currently if you restart the JuypterLab it will wipe all changes that you have made, including any code files you have written. If you would like data that you store inside of your Jupyter notebook to survive ECS task restarts, then consider using the [tutorial on attaching durable storage to an ECS task](cloudformation-ecs-durable-task-storage-with-efs) and use a similar technique to mount a durable Elastic File System to the Jupyter Task.
 - Look at the `jupyer-notebook.yml` stack, and notice the `MyIp` parameter. It is currently set to `0.0.0.0/0` which allows inbound traffic from all IP addresses. Look up your home or office IP address and set it like `1.2.3.4/32` to ensure that the JupyterLab only accepts inbound traffic from you and you alone. This adds a second layer of protection in addition to the secret token.
+- If you launch even larger Inferentia instances like `inf2.24xlarge` or `inf2.48xlarge` then you should note that they have multiple Neuron devices attached to them. You can run `ls /dev/neuron*` on the EC2 instance to see a list of the Neuron devices. Right now the task defintiion only mounts `/dev/neuron0` so you will only be able to access two Neuron cores inside the task. For larger Inferentia instances you should update the ECS task definition to mount all of the host Neuron devices into the container.

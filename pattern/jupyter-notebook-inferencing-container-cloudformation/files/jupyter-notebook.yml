@@ -31,11 +31,11 @@ Parameters:
     Description: The URL of a Juypter notebook container to run
   ContainerCpu:
     Type: Number
-    Default: 4096
+    Default: 10240
     Description: How much CPU to give the container. 1024 is 1 CPU
   ContainerMemory:
     Type: Number
-    Default: 15673
+    Default: 32768
     Description: How much memory in megabytes to give the container
   MyIp:
     Type: String
@@ -53,8 +53,6 @@ Resources:
       - TaskAccessToJupyterToken
     Properties:
       Family: !Ref ServiceName
-      Cpu: !Ref ContainerCpu
-      Memory: !Ref ContainerMemory
       NetworkMode: awsvpc
       RequiresCompatibilities:
         - EC2
@@ -62,7 +60,7 @@ Resources:
       ContainerDefinitions:
         - Name: jupyter
           Cpu: !Ref ContainerCpu
-          Memory: !Ref ContainerMemory
+          MemoryReservation: !Ref ContainerMemory
           Image: !Ref ImageUrl
           EntryPoint:
             - '/bin/sh'
@@ -281,7 +279,7 @@ Resources:
     Type: AWS::EFS::MountTarget
     Properties:
       FileSystemId: !Ref EFSFileSystem
-      SubnetId: !Ref SubnetOne
+      SubnetId: !Select [ 0, !Ref PrivateSubnetIds ]
       SecurityGroups:
         - !Ref EFSFileSystemSecurityGroup
 
@@ -290,7 +288,7 @@ Resources:
     Type: AWS::EFS::MountTarget
     Properties:
       FileSystemId: !Ref EFSFileSystem
-      SubnetId: !Ref SubnetTwo
+      SubnetId: !Select [ 1, !Ref PrivateSubnetIds ]
       SecurityGroups:
         - !Ref EFSFileSystemSecurityGroup
 
