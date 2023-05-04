@@ -52,10 +52,10 @@ The following diagram shows the architecture of what will be deployed:
 
 #### Build a Jupyter notebook container
 
-In order to build a Jupyter notebook container image we will start with a prebuilt container image from the AWS Deep Learning Container collection, then install JupyterLab on top of it:
+In order to build a Jupyter notebook container image we will start with a prebuilt container image from the [AWS Deep Learning Container collection](https://github.com/aws/deep-learning-containers), then install JupyterLab on top of it:
 
 ```Dockerfile
-FROM 763104351884.dkr.ecr.us-east-2.amazonaws.com/huggingface-pytorch-inference-neuron:1.10.2-transformers4.20.1-neuron-py37-sdk1.19.1-ubuntu18.04
+FROM 763104351884.dkr.ecr.us-west-2.amazonaws.com/pytorch-inference-neuronx:1.13.0-neuronx-py38-sdk2.9.0-ubuntu20.04
 RUN pip install jupyterlab
 CMD jupyter-lab
 ```
@@ -130,6 +130,8 @@ Some things to note:
 
 You will need to pass the `ImageUrl` parameter so that the stack launches the container image URI that you just uploaded to Amazon ECR. This will be handled later when we deploy the parent stack.
 
+In the `ContainerDefinitions[0].LinuxParameters` section you will see that the task definition is mounting the `/dev/neuron0` device from the host into the container. This is what gives the Neuron SDK inside the container the ability to utilize the underlying hardware acceleration. Extremely large `inf2` instances have multiple `neuron*` devices that need to be mounted into the container.
+
 The template creates a `AWS::SecretsManager::Secret` resource as the secret token used to protect the Jupyter notebook from unauthorized access. You will see this token passed in as a `Secret` in the task definition body.
 
 The `MyIp` parameter can be customized to limit which IP addresses are allowed to access the JupyterLab.
@@ -174,7 +176,7 @@ This tells you the URL where you can access your Juypter Lab notebook, as well a
 the details about where you can access to automatically generated secret value that
 is the token for accessing your notebook.
 
-#### Get in to the JupyterLab
+#### Access JupyterLab
 
 Open up the [AWS Secrets Manager console](https://us-east-2.console.aws.amazon.com/secretsmanager/listsecrets?region=us-east-2) and look for the secret called `JupyterToken` as
 referenced in the outputs section above. After you click on the secret, scroll down and click on "Retrieve Secret Value". Copy the secret value and keep it safe, as this will be the password that you use to get access to your JupyterLab over the internet.
@@ -435,5 +437,6 @@ The model has been run 20k times in under 10 seconds, with a p99 latency of ~1ms
 
 #### Next Steps
 
-- Look at the `jupyer-notebook.yml` stack, and notice the `MyIp` parameter. It is currently set to `0.0.0.0/0` which allows inbound traffic from all IP addresses. Look up your home or office IP address and set it like `1.2.3.4/32` to ensure that the JupyterLab only accepts inbound traffic from you and you alone. This adds a second layer of protection in addition to the secret token.
+- Look at the `jupyter-notebook.yml` stack, and notice the `MyIp` parameter. It is currently set to `0.0.0.0/0` which allows inbound traffic from all IP addresses. Look up your home or office IP address and set `MyIp` to a CIDR like `1.2.3.4/32` to ensure that the load balancer in front of JupyterLab only accepts inbound traffic from you and you alone. This adds a second layer of network protection in addition to the secret token.
+- Instead of running the model inside of JupyterLab consider creating a model server that does inference in reponse to a network request, and returns the results over the network. Now you can horizontally scale ythe workload across multiple Inferentia instances behind a load balancer, allowing you to do extremely high volume machine learning real time inference at low latency.
 - If you launch even larger Inferentia instances like `inf2.24xlarge` or `inf2.48xlarge` then you should note that they have multiple Neuron devices attached to them. You can run `ls /dev/neuron*` on the EC2 instance to see a list of the Neuron devices. Right now the task defintiion only mounts `/dev/neuron0` so you will only be able to access two Neuron cores inside the task. For larger Inferentia instances you should update the ECS task definition to mount all of the host Neuron devices into the container.
