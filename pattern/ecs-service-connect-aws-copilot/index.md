@@ -8,6 +8,8 @@ filterDimensions:
     value: copilot
   - key: type
     value: pattern
+  - key: capacity
+    value: fargate
   - key: feature
     value: service-connect
 authors:

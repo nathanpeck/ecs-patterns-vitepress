@@ -9,6 +9,8 @@ filterDimensions:
     value: cloudformation
   - key: type
     value: pattern
+  - key: capacity
+    value: ec2
   - key: feature
     value: capacity-provider
 authors:

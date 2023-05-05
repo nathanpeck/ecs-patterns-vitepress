@@ -69,7 +69,7 @@
   color: '#6a4c6e'
   checked: false
 - key: app
-  value: worker
+  value: batch
   label: Batch Job
   color: '#6a4c6e'
   checked: false

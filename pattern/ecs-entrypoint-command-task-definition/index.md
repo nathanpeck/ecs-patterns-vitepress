@@ -11,7 +11,7 @@ filterDimensions:
   - key: type
     value: pattern
   - key: app
-    value: worker
+    value: batch
 authors:
   - peckn
 date: April 4 2023
