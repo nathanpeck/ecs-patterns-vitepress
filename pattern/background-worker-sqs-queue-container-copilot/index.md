@@ -1,7 +1,7 @@
 ---
 title: Background worker that gets jobs from an SQS queue
 description: >-
-  Use AWS Copilot to deploy a worker that does jobs from an SQS queue.
+  Use AWS Copilot to deploy a serverless worker container in AWS Fargate that does jobs off an SQS queue.
 image: cover.png
 filterDimensions:
   - key: tool
