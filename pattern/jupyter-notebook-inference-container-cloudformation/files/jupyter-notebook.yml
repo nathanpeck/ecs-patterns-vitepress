@@ -294,7 +294,7 @@ Resources:
 
   # This security group is used by the mount targets so
   # that they will allow inbound NFS connections from
-  # the AWS Fargate tasks that we launch
+  # the ECS tasks that we launch
   EFSFileSystemSecurityGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:

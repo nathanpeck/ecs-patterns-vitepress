@@ -26,22 +26,22 @@ date: May 2, 2023
 This pattern will show how to build and deploy a containerized version of Jupyter notebook, with the AWS Neuron SDK for machine learning, accelerated by AWS Inferentia and AWS Trainium hardware.
 
 ::: warning
-This pattern is designed to setup a production ready machine learning environment that can be scaled up later for running extremely large machine learning training or inference jobs accelerated by some of the most powerful hardware that AWS has. Therefore this pattern has a fairly high baseline cost (about $2 an hour, and the largest instance choices cost >$12 an hour). Consider using [Amazon Sagemaker Notebooks](https://aws.amazon.com/sagemaker/notebooks/) on smaller EC2 instances for a low cost learning environment that is free tier eligible.
+This pattern is designed to setup a production ready machine learning environment that can be scaled up later for running extremely large machine learning training or real time inference jobs accelerated by some of the most powerful hardware that AWS has. Therefore this pattern has a fairly high baseline cost (about $2 an hour, and the largest instance choice available costs >$12 an hour). Consider using [Amazon Sagemaker Notebooks](https://aws.amazon.com/sagemaker/notebooks/) on smaller EC2 instances for a low cost learning environment that is free tier eligible.
 :::
 
 #### Setup
 
 If not already installed, ensure that you have the following dependencies installed locally:
 
-* [Docker](https://www.docker.com/) or other OCI compatible container builder
-* [Amazon ECR Credential Helper](https://github.com/awslabs/amazon-ecr-credential-helper)
-* [AWS SAM CLI](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/install-sam-cli.html)
+* [Docker](https://www.docker.com/) or other OCI compatible container builder. This will be used to prepare a custom JupyterLab image.
+* [Amazon ECR Credential Helper](https://github.com/awslabs/amazon-ecr-credential-helper). This will assist you with uploading your container image to Amazon Elastic Container Registry.
+* [AWS SAM CLI](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/install-sam-cli.html). This tool will help you deploy multiple CloudFormation stacks at once and pass values from one stack to the next automatically.
 
 #### Architecture
 
 The following diagram shows the architecture of what will be deployed:
 
-!!! @/pattern/jupyter-notebook-inferencing-container-cloudformation/diagram.svg
+!!! @/pattern/jupyter-notebook-inference-container-cloudformation/diagram.svg
 
 1. An Application Load Balancer provides ingress from the public internet.
 2. Traffic goes to an `inf2.8xlarge` AWS Inferentia powered EC2 instance launched by Amazon ECS. You can adjust the AWS Inferentia instance class as desired.
@@ -108,15 +108,15 @@ If you get a `401 Unauthorized` error then make sure you have installed the [Ama
 
 The following CloudFormation file defines a VPC for the workload.
 
-<<< @/pattern/jupyter-notebook-inferencing-container-cloudformation/files/vpc.yml
+<<< @/pattern/jupyter-notebook-inference-container-cloudformation/files/vpc.yml
 
 For more info about this VPC see the pattern ["Large sized AWS VPC for an Amazon ECS cluster"](/large-vpc-for-amazon-ecs-cluster).
 
 #### Define Amazon ECS cluster of AWS Inferentia instances
 
-The following CloudFormation file defines an Amazon ECS cluster that launches AWS Inferentia instances as capacity for running containers. These instances have hardware acceleration that is optimized for running machine learning inferencing jobs.
+The following CloudFormation file defines an Amazon ECS cluster that launches AWS Inferentia instances as capacity for running containers. These instances have hardware acceleration that is optimized for running machine learning inference jobs.
 
-<<< @/pattern/jupyter-notebook-inferencing-container-cloudformation/files/inferentia-cluster.yml
+<<< @/pattern/jupyter-notebook-inference-container-cloudformation/files/inferentia-cluster.yml
 
 By default this template deploys `inf2.xlarge` instances. You can launch additional tasks in the Amazon ECS cluster to automatically scale out the number of AWS Inferentia instances. If you plan to run containers that do not need machine learning acceleration, then do not use this pattern, and instead deploy a cluster that uses a less expensive EC2 instance that is compute optimized instead of machine learning optimized.
 
@@ -124,7 +124,7 @@ By default this template deploys `inf2.xlarge` instances. You can launch additio
 
 The following CloudFormation template deploys a Jupyter Notebook task under Amazon ECS orchestration:
 
-<<< @/pattern/jupyter-notebook-inferencing-container-cloudformation/files/jupyter-notebook.yml
+<<< @/pattern/jupyter-notebook-inference-container-cloudformation/files/jupyter-notebook.yml
 
 Some things to note:
 
@@ -132,17 +132,17 @@ You will need to pass the `ImageUrl` parameter so that the stack launches the co
 
 In the `ContainerDefinitions[0].LinuxParameters` section you will see that the task definition is mounting the `/dev/neuron0` device from the host into the container. This is what gives the Neuron SDK inside the container the ability to utilize the underlying hardware acceleration. Extremely large `inf2` instances have multiple `neuron*` devices that need to be mounted into the container.
 
-The template creates a `AWS::SecretsManager::Secret` resource as the secret token used to protect the Jupyter notebook from unauthorized access. You will see this token passed in as a `Secret` in the task definition body.
+The template generates an `AWS::SecretsManager::Secret` resource as the secret token used to protect the Jupyter notebook from unauthorized access. You will see this token passed in as a `Secret` in the task definition body.
 
 The `MyIp` parameter can be customized to limit which IP addresses are allowed to access the JupyterLab.
 
-This task definition creates an EFS filesystem and mounts it to the path `/home`. This can be used as durable persistence for models or other important info that you want to save from your Jupyter notebook. Otherwise everything in this notebook will be wiped on restart. See the [tutorial on attaching durable storage to an ECS task](cloudformation-ecs-durable-task-storage-with-efs) for more information on using EFS for durable task storage.
+This task definition creates an EFS filesystem and mounts it to the path `/home`. This can be used as durable persistence for models or other important info that you want to save from your Jupyter notebook. Otherwise everything else in this notebook will be wiped on restart because the container's filesystem is fundamentally ephemeral. However `/home` directory will survive restarts. See the [tutorial on attaching durable storage to an ECS task](cloudformation-ecs-durable-task-storage-with-efs) for more information on using EFS for durable task storage.
 
 #### Deploy all the stacks
 
 We can use the following parent stack to deploy all three child CloudFormation templates:
 
-<<< @/pattern/jupyter-notebook-inferencing-container-cloudformation/files/parent.yml
+<<< @/pattern/jupyter-notebook-inference-container-cloudformation/files/parent.yml
 
 Use AWS SAM CLI to deploy the parent stack with a command like this one. You will need to substitute in your own `ImageUrl` value from the container image that you built and pushed earlier:
 
@@ -280,7 +280,7 @@ filename = 'model.pt'
 torch.jit.save(model_neuron, filename)
 ```
 
-Now run the model on the CPU, and compare the results to running the model on the AWS Neuron device:
+Now run the model on the AWS Neuron device, and compare with the results from running model on the CPU:
 
 ```py
 # Load the TorchScript compiled model
@@ -306,7 +306,7 @@ CPU not-paraphrase logits:     [[ 0.5386365 -2.2197142]]
 Neuron not-paraphrase logits:  [[ 0.537705  -2.2180324]]
 ```
 
-Whether you do model inference on the CPU or the AWS Neuron device it should produce very similar results, however model inference with Neuron will be faster because of the underlying hardware acceleration.
+Whether you do model inference on the CPU or the AWS Neuron device it should produce very similar results, however model inference with Neuron was offloaded onto the underlying Inferentia accelerator, leaving the rest of the EC2 instances resources free for other tasks.
 
 Run the model in a loop as a benchmark to test out performance on the underlying hardware:
 
@@ -438,5 +438,6 @@ The model has been run 20k times in under 10 seconds, with a p99 latency of ~1ms
 #### Next Steps
 
 - Look at the `jupyter-notebook.yml` stack, and notice the `MyIp` parameter. It is currently set to `0.0.0.0/0` which allows inbound traffic from all IP addresses. Look up your home or office IP address and set `MyIp` to a CIDR like `1.2.3.4/32` to ensure that the load balancer in front of JupyterLab only accepts inbound traffic from you and you alone. This adds a second layer of network protection in addition to the secret token.
-- Instead of running the model inside of JupyterLab consider creating a model server that does inference in reponse to a network request, and returns the results over the network. Now you can horizontally scale ythe workload across multiple Inferentia instances behind a load balancer, allowing you to do extremely high volume machine learning real time inference at low latency.
-- If you launch even larger Inferentia instances like `inf2.24xlarge` or `inf2.48xlarge` then you should note that they have multiple Neuron devices attached to them. You can run `ls /dev/neuron*` on the EC2 instance to see a list of the Neuron devices. Right now the task defintiion only mounts `/dev/neuron0` so you will only be able to access two Neuron cores inside the task. For larger Inferentia instances you should update the ECS task definition to mount all of the host Neuron devices into the container.
+- Right now if you restart the ECS task it will wipe any changes that you made to the container's ephemeral filesystem. You may not wish to wipe installed Python packages though. Consider setting up a Python virtual environment that lives inside of the `/home` directory, since this directory is an Elastic File System that provides durable persistance for the container.
+- Instead of running the model inside of JupyterLab consider creating a model server that does inference in reponse to a network request, and returns the results over the network. Now you can horizontally scale the workload across multiple Inferentia instances behind a load balancer, allowing you to do extremely high volume real time inference machine learning at low latency.
+- If you launch even larger Inferentia instances like `inf2.24xlarge` or `inf2.48xlarge` then you should note that they have multiple Neuron devices attached to them. You can run `ls /dev/neuron*` on the EC2 instance to see a list of the Neuron devices. Right now the task definition only mounts `/dev/neuron0` so you will only be able to access two Neuron cores inside the task. For larger Inferentia instances you should update the ECS task definition to mount all of the available host Neuron devices into the container.
