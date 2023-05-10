@@ -1,8 +1,8 @@
 ---
 title: Use target tracking to scale container deployments with Amazon ECS
 description: >-
-  Create a target tracking scaling policy with CloudFormation, to keep
-  service resource utilization around a desired target number.
+  Create a target tracking scaling policy with CloudFormation, to scale a service
+  based on resource utilization.
 image: cover.png
 filterDimensions:
   - key: tool
