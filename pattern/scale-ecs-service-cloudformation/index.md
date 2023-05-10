@@ -10,31 +10,63 @@ filterDimensions:
     value: pattern
 authors:
   - peckn
-date: March 30, 2023
+date: May 10, 2023
 ---
 
-Autoscaling is very important to making sure that your services stay online when traffic increases unexpectedly. In both EC2 and AWS Fargate one way to ensure your service autoscales is to increase and decrease the number of copies of your application container that are running in the cluster.
+#### About
 
-Autoscaling works like this:
+Auto scaling is very important for ensuring that your services can stay online when traffic increases unexpectedly. In both EC2 and AWS Fargate you can configure Amazon ECS to automatically increase and decrease the number of copies of your application container that are running in the cluster.
 
-![](./files/diagram.png)
+#### Architecture
 
-#### CloudFormation
+This is how auto scaling works:
 
-The following template automatically sets up CloudWatch alarms, autoscaling policies, and attaches them to an ECS service.
+!!! @/pattern/scale-ecs-service-cloudformation/architecture.svg
+
+1. Your application container uses CPU, memory, and other computing resources
+2. An ECS agent running on the same EC2 instance or AWS Fargate task gathers telemetry from your application container's usage statistics
+3. Telemetry is stored in AWS CloudWatch metrics
+4. AWS Application Auto Scaling triggers scaling rules based on CloudWatch metrics
+4. Amazon ECS receives an `UpdateService` call from AWS Application Auto Scaling, which adjusts the desired count for the service
+4. Amazon ECS launches additional copies of your application container on EC2 or AWS Fargate, or scales in the service to reduce the number of copies of your application, when there is no utilization.
+
+#### CloudFormation Template
+
+The following template automatically sets up CloudWatch alarms, auto scaling policies, and attaches them to an ECS service.
 
 <<< @/pattern/scale-ecs-service-cloudformation/files/scale-service-by-cpu.yml
 
+The template requires the following input parameters:
+
+- `ClusterName` - The name of the ECS cluster that runs the service you would like to scale
+- `ServiceName` - The name of the service you want to scale
+
+Things to note in this template:
+
+- `HighCpuUsageAlarm.Properties.MetricName` - Change this from `CPUUtilization` to `MemoryUtilization` if you want to scale based on memory utilization instead of CPU utilization.
+- `HighCpuUsageAlarm.Properties.Threshold` - The CPU utilization threshold at which to start applying scaling policies. In this case it is set to 70% to provide some headroom for small deployments to absorb spikes of incoming traffic. The larger your service is the closer you can push this to 100%.
+- `ScaleUpPolicy.Properties.StepScalingPolicyConfiguration` - This controls the behavior for how fast to scale up based on how far out on bounds the metric is. The more CPU goes above the target utiliation the faster ECS will launch additional tasks to try to bring the CPU utilization back in bounds.
+
 #### Usage
 
-- `EnvironmentName` - The name of a base CloudFormation stack that contains the ECS cluster resource. This stack is intended to be one of the other patterns such as the [serverless public facing task stack](/public-facing-api-ecs-fargate-cloudformation)
-- `ServiceName` - The name of the ECS service to scale
+You can deploy the template via the AWS CloudFormation web console, or by running an AWS CLI command similar to this:
 
-You can deploy the template via the AWS CloudFormation web console, or by running an AWS CLI command:
-
-```sh
+```shell
 aws cloudformation deploy \
    --stack-name scale-my-service-name \
    --template-file scale-service-by-cpu.yml \
-   --parameter-overrides EnvironmentName=development ServiceName=my-web-service
+   --capabilities CAPABILITY_IAM \
+   --parameter-overrides ClusterName=development ServiceName=my-web-service
 ```
+
+#### Cleanup
+
+You can delete the auto scaling configuration by tearing down the CloudFormation stack with:
+
+```shell
+aws cloudformation delete-stack --stack-name scale-my-service-name
+```
+
+#### See Also
+
+- Consider setting up a target tracking auto scaling rule for your service if you want an even easier way to keep utilization near a specific target as your service scales up.

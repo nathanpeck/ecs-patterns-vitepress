@@ -1,10 +1,10 @@
 AWSTemplateFormatVersion: '2010-09-09'
-Description: Deploy a service into an ECS cluster with service discovery endpoint
+Description: Add autoscaling rules that scale an ECS service based on CPU utilization
 Parameters:
-  EnvironmentName:
+  ClusterName:
     Type: String
-    Default: production
-    Description: The name of the environment to add this service to
+    Default: default
+    Description: The cluster that is running the service you want to scale
   ServiceName:
     Type: String
     Default: nginx
@@ -12,36 +12,50 @@ Parameters:
 
 Resources:
 
+  # Role that Application Auto Scaling will use to interact with
+  # CloudWatch and Amazon ECS
+  AutoscalingRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+        - Effect: Allow
+          Principal:
+            Service: [application-autoscaling.amazonaws.com]
+          Action: ['sts:AssumeRole']
+      Path: /
+      Policies:
+      - PolicyName: service-autoscaling
+        PolicyDocument:
+          Statement:
+          - Effect: Allow
+            Action:
+              - 'application-autoscaling:*'
+              - 'cloudwatch:DescribeAlarms'
+              - 'cloudwatch:PutMetricAlarm'
+              - 'ecs:DescribeServices'
+              - 'ecs:UpdateService'
+            Resource: '*'
+
   # Enable autoscaling for the service
   ScalableTarget:
     Type: AWS::ApplicationAutoScaling::ScalableTarget
     Properties:
       ServiceNamespace: 'ecs'
       ScalableDimension: 'ecs:service:DesiredCount'
-      ResourceId:
-        Fn::Join:
-          - '/'
-          - - service
-            - Fn::ImportValue: !Sub ${EnvironmentName}:ClusterName
-            - !Ref 'ServiceName'
+      ResourceId: !Sub 'service/${ClusterName}/${ServiceName}'
       MinCapacity: 2
       MaxCapacity: 10
-      RoleARN:
-        Fn::ImportValue: !Sub ${EnvironmentName}:AutoscalingRole
+      RoleARN: !GetAtt AutoscalingRole.Arn
 
   # Create scaling policies that describe how to scale the service up and down.
   ScaleDownPolicy:
     Type: AWS::ApplicationAutoScaling::ScalingPolicy
     DependsOn: ScalableTarget
     Properties:
-      PolicyName: !Sub scale-${EnvironmentName}-${ServiceName}-down
+      PolicyName: !Sub scale-${ClusterName}-${ServiceName}-down
       PolicyType: StepScaling
-      ResourceId:
-        Fn::Join:
-          - '/'
-          - - service
-            - Fn::ImportValue: !Sub ${EnvironmentName}:ClusterName
-            - !Ref 'ServiceName'
+      ResourceId: !Sub 'service/${ClusterName}/${ServiceName}'
       ScalableDimension: 'ecs:service:DesiredCount'
       ServiceNamespace: 'ecs'
       StepScalingPolicyConfiguration:
@@ -56,14 +70,9 @@ Resources:
     Type: AWS::ApplicationAutoScaling::ScalingPolicy
     DependsOn: ScalableTarget
     Properties:
-      PolicyName: !Sub scale-${EnvironmentName}-${ServiceName}-up
+      PolicyName: !Sub scale-${ClusterName}-${ServiceName}-up
       PolicyType: StepScaling
-      ResourceId:
-        Fn::Join:
-          - '/'
-          - - service
-            - Fn::ImportValue: !Sub ${EnvironmentName}:ClusterName
-            - !Ref 'ServiceName'
+      ResourceId: !Sub 'service/${ClusterName}/${ServiceName}'
       ScalableDimension: 'ecs:service:DesiredCount'
       ServiceNamespace: 'ecs'
       StepScalingPolicyConfiguration:
@@ -84,16 +93,15 @@ Resources:
   LowCpuUsageAlarm:
     Type: AWS::CloudWatch::Alarm
     Properties:
-      AlarmName: !Sub low-cpu-${EnvironmentName}-${ServiceName}
-      AlarmDescription: !Sub "Low CPU utilization for service ${ServiceName} in environment ${EnvironmentName}"
+      AlarmName: !Sub low-cpu-${ClusterName}-${ServiceName}
+      AlarmDescription: !Sub "Low CPU utilization for service ${ServiceName} in cluster ${ClusterName}"
       MetricName: CPUUtilization
       Namespace: AWS/ECS
       Dimensions:
         - Name: ServiceName
           Value: !Ref 'ServiceName'
         - Name: ClusterName
-          Value:
-            Fn::ImportValue: !Sub ${EnvironmentName}:ClusterName
+          Value: !Ref 'ClusterName'
       Statistic: Average
       Period: 60
       EvaluationPeriods: 1
@@ -105,16 +113,15 @@ Resources:
   HighCpuUsageAlarm:
     Type: AWS::CloudWatch::Alarm
     Properties:
-      AlarmName: !Sub high-cpu-${EnvironmentName}-${ServiceName}
-      AlarmDescription: !Sub "High CPU utilization for service ${ServiceName} in environment ${EnvironmentName}"
+      AlarmName: !Sub high-cpu-${ClusterName}-${ServiceName}
+      AlarmDescription: !Sub "High CPU utilization for service ${ServiceName} in cluster ${ClusterName}"
       MetricName: CPUUtilization
       Namespace: AWS/ECS
       Dimensions:
         - Name: ServiceName
           Value: !Ref 'ServiceName'
         - Name: ClusterName
-          Value:
-            Fn::ImportValue: !Sub ${EnvironmentName}:ClusterName
+          Value: !Ref 'ClusterName'
       Statistic: Average
       Period: 60
       EvaluationPeriods: 1
