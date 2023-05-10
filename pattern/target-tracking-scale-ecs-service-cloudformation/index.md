@@ -1,7 +1,8 @@
 ---
-title: Step scaling policy for ECS service based on CPU consumption
+title: Use target tracking to scale container deployments with Amazon ECS
 description: >-
-  CloudFormation for automatically scaling an ECS service up and down based on CPU usage
+  Create a target tracking scaling policy with CloudFormation, to keep
+  service resource utilization around a desired target number.
 image: cover.png
 filterDimensions:
   - key: tool
@@ -15,7 +16,9 @@ date: May 10, 2023
 
 #### About
 
-Auto scaling is very important for ensuring that your services can stay online when traffic increases unexpectedly. In both EC2 and AWS Fargate you can configure Amazon ECS to automatically increase and decrease the number of copies of your application container that are running in the cluster.
+[AWS Application Auto Scaling](https://aws.amazon.com/autoscaling/) implements automated scaling policies and rules across many AWS services, including Amazon ECS.
+
+Target tracking is a scaling mode in which Application Auto Scaling automatically learns how to adjust your scale to meet your expectation that a target metric will stay at a specified target. Target tracking works best with larger services, where there is a linear relationship between scaling and metrics.
 
 #### Architecture
 
@@ -34,7 +37,7 @@ This is how auto scaling works:
 
 The following template automatically sets up CloudWatch alarms, auto scaling policies, and attaches them to an ECS service.
 
-<<< @/pattern/scale-ecs-service-cloudformation/files/scale-service-by-cpu.yml
+<<< @/pattern/target-tracking-scale-ecs-service-cloudformation/files/target-tracking-scale.yml
 
 The template requires the following input parameters:
 
@@ -43,9 +46,10 @@ The template requires the following input parameters:
 
 Things to note in this template:
 
-- `HighCpuUsageAlarm.Properties.MetricName` - Change this from `CPUUtilization` to `MemoryUtilization` if you want to scale based on memory utilization instead of CPU utilization.
-- `HighCpuUsageAlarm.Properties.Threshold` - The CPU utilization threshold at which to start applying scaling policies. In this case it is set to 70% to provide some headroom for small deployments to absorb spikes of incoming traffic. The larger your service is the closer you can push this to 100%.
-- `ScaleUpPolicy.Properties.StepScalingPolicyConfiguration` - This controls the behavior for how fast to scale up based on how far out on bounds the metric is. The more CPU goes above the target utiliation the faster ECS will launch additional tasks to try to bring the CPU utilization back in bounds.
+- `ScalingPolicy.Properties.TargetTrackingScalingPolicyConfiguration` - This controls the metric to base scaling off of, and what target utilization to try to maintain.
+- There are two valid ECS specific values for `PredefinedMetricType`:
+  * `ECSServiceAverageCPUUtilization` - Monitor the CPU utilization
+  * `ECSServiceAverageMemoryUtilization` - Monitor the memory utilization
 
 #### Usage
 
@@ -54,7 +58,7 @@ You can deploy the template via the AWS CloudFormation web console, or by runnin
 ```shell
 aws cloudformation deploy \
    --stack-name scale-my-service-name \
-   --template-file scale-service-by-cpu.yml \
+   --template-file target-tracking-scale.yml \
    --capabilities CAPABILITY_IAM \
    --parameter-overrides ClusterName=development ServiceName=my-web-service
 ```
@@ -69,4 +73,4 @@ aws cloudformation delete-stack --stack-name scale-my-service-name
 
 #### See Also
 
-- Consider [setting up a target tracking auto scaling rule](/target-tracking-scale-ecs-service-cloudformation) for your service if you want an even easier way to keep utilization near a specific target as your service scales up.
+- If you are running a smaller service, or want to have more precise control over how your service scales in response to load then consider [setting up a step scaling policy](/scale-ecs-service-cloudformation).
