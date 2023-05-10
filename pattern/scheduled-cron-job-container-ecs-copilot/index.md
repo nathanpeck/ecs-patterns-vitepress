@@ -52,7 +52,7 @@ This architecture is designed to be serverless and not have a single point of fa
 
 #### Instructions
 
-First we need to creat a `Dockerfile` to define the cron job to run. To simulate a batch job you can use the following basic Dockerfile which does nothing but sleep for one hour:
+First we need to create a `Dockerfile` to define the cron job to run. To simulate a batch job you can use the following basic Dockerfile which does nothing but sleep for one hour:
 
 ```
 FROM public.ecr.aws/docker/library/busybox:stable
