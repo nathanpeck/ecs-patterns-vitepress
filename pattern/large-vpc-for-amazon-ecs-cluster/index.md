@@ -37,6 +37,25 @@ The following diagram shows the architecture of what will be created:
 * The VPC has an internet gateway that can be used from the public subnets by any container or compute that has a public IP address.
 * This pattern creates two NAT gateways that provide internet access to resources launching in the private subnets.
 
+#### Subnet Compatibility
+
+For this example VPC the following table shows subnet support for internet access and networking across each capacity and networking mode.
+
+| Configuration |     Private Subnets      |  Public Subnets    |
+| ---------------- | ------------------------ | ------------------ |
+| EC2 Bridge mode  | <i style='color: green' class='fas fa-check'></i>       | <i style='color: green' class='fas fa-check'></i>  |
+| EC2 Host mode  | <i style='color: green' class='fas fa-check'></i>        | <i style='color: green' class='fas fa-check'></i>  |
+| EC2 AWS VPC | <i style='color: green' class='fas fa-check'></i>        | <i style='color: red' class='fas fa-times'></i>   |
+| Fargate AWS VPC | <i style='color: green' class='fas fa-check'></i>  | <i style='color: orange' class='fas fa-exclamation'></i> (requires assign public IP) |
+
+::: danger
+Note that when using AWS VPC networking mode on EC2 it is not supported to place tasks in the public subnet, because the task ENI only has a private IP address. In the public subnet outbound networking traffic will go directly to the internet gateway, however because the task has no public IP address there is no return path to the task.
+:::
+
+::: warning
+AWS Fargate can be launched with "assign public IP" turned on. This allows tasks to be launched in a public subnet and use the internet gateway directly. But if you don't turn on public IP assignment then internet access will not work.
+:::
+
 #### VPC Configuration
 
 Deploy the following CloudFormation template to create the VPC:

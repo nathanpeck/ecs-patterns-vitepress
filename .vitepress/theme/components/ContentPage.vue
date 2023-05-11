@@ -232,4 +232,39 @@ h6 .header-anchor:focus {
 .content .custom-block code {
   background-color: var(--bs-secondary-bg);
 }
+
+.content table {
+  display: block;
+  border-collapse: collapse;
+  margin: 20px 0;
+  overflow-x: auto
+}
+
+.content tr {
+  border-top: 1px solid var(--bs-border-color-translucent);
+  transition: background-color .5s
+}
+
+.content tr:nth-child(2n) {
+  background-color: var(--bs-tertiary-bg)
+}
+
+.content th,
+.content td {
+  border: 1px solid var(--bs-border-color-translucent);
+  padding: 8px 16px
+}
+
+.content th {
+  text-align: left;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--bs-emphasis-color);
+  background-color: var(--bs-tertiary-bg)
+}
+
+.content td {
+  font-size: 14px;
+  padding: 8px 16px;
+}
 </style>
