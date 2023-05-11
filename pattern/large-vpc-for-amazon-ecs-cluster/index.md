@@ -93,3 +93,4 @@ The deployed template has `Outputs` that you can pass into other stacks:
 - This template only provisions two subnets. For even greater availability consider adding a third public and private subnet and NAT gateway.
 - If your private subnet hosted resources make heavy use of AWS services such as DynamoDB, S3, or other services, then consider adding VPC endpoints for those services. This will remove the need for that traffic to go through the NAT gateway, freeing up it's capacity for other usage, and potentially reducing your networking costs.
 - If this VPC still looks too small for your workload then consider splitting it up across multiple smaller VPC's.
+- If you do not wish to pay for NAT gateways then consider the [low cost VPC for Amazon ECS](/low-cost-vpc-amazon-ecs-cluster). Note that this VPC choice does limit your capabilities when running on EC2 instances, although you can still use AWS Fargate capacity without NAT gateway.
