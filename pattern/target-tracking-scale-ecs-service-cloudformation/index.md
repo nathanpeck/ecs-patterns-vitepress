@@ -46,10 +46,15 @@ The template requires the following input parameters:
 
 Things to note in this template:
 
-- `ScalingPolicy.Properties.TargetTrackingScalingPolicyConfiguration` - This controls the metric to base scaling off of, and what target utilization to try to maintain.
-- There are two valid ECS specific values for `PredefinedMetricType`:
+`ScalingPolicy.Properties.TargetTrackingScalingPolicyConfiguration` - This controls the metric to base scaling off of, and what target utilization to try to maintain.
+
+There are two valid ECS specific values for `PredefinedMetricType`:
   * `ECSServiceAverageCPUUtilization` - Monitor the CPU utilization
   * `ECSServiceAverageMemoryUtilization` - Monitor the memory utilization
+
+::: warning
+Be careful about scaling based on memory utilization because with most application runtime frameworks memory is not correlated with utilization. Most applications don't release memory after load decreases. Instead they keep memory allocated in case they need to use it again. For this reason average memory utilization does not work with target tracking scaling because there is not a linear relationship between load and memory utilization.
+:::
 
 #### Usage
 

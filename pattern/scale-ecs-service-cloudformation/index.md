@@ -43,9 +43,13 @@ The template requires the following input parameters:
 
 Things to note in this template:
 
-- `HighCpuUsageAlarm.Properties.MetricName` - Change this from `CPUUtilization` to `MemoryUtilization` if you want to scale based on memory utilization instead of CPU utilization.
+- `HighCpuUsageAlarm.Properties.MetricName` - The metric name to scale on. This is scaling based on CPU utilization.
 - `HighCpuUsageAlarm.Properties.Threshold` - The CPU utilization threshold at which to start applying scaling policies. In this case it is set to 70% to provide some headroom for small deployments to absorb spikes of incoming traffic. The larger your service is the closer you can push this to 100%.
 - `ScaleUpPolicy.Properties.StepScalingPolicyConfiguration` - This controls the behavior for how fast to scale up based on how far out on bounds the metric is. The more CPU goes above the target utiliation the faster ECS will launch additional tasks to try to bring the CPU utilization back in bounds.
+
+::: tip
+Note that this example CloudFormation template is scaling based on CPU Utilization. This is the correct way to scale for almost all application frameworks. Be careful about scaling based on memory utilization because with most application runtime frameworks memory is not correlated with utilization. Most applications don't release memory after load decreases. Instead they keep the memory allocated in case they need to use it again. So scaling on memory utilization may scale out but never scale back down.
+:::
 
 #### Usage
 
