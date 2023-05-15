@@ -1,7 +1,6 @@
 import fs from 'fs'
 import path from 'path'
-import { parseSync, stringify } from 'svgson'
-import { decode } from 'html-entities';
+import { optimize } from 'svgo';
 
 import type { RuleBlock } from 'markdown-it/lib/parser_block'
 
@@ -41,17 +40,40 @@ export const svgPlugin = (md: MarkdownIt, srcDir: string) => {
 
       let svgContent = fs.readFileSync(svgFilename, 'utf8')
 
-      // Convert the SVG into an HAST tree for manipulation
-      const parsedSvg = parseSync(svgContent);
+      // Crunch the SVG down a bit and clean it up
+      const result = optimize(svgContent, {
+        plugins: [
+          // Convert fill='#000000' into a CSS variable that can adjust to
+          // dark mode.
+          {
+            name: 'apply-css-variables',
+            fn: applyVariables,
+          },
+          'preset-default',
+          'removeDimensions',
+          'removeOffCanvasPaths',
+          // PowerPoint export does weird things with clipping
+          // which break some embedded images when you do the conversion
+          // to a viewbox.
+          {
+            name: "removeAttrs",
+            params: {
+              attrs: "clip-path"
+            }
+          },
+          // Simply adds some margin above and below. Note that this
+          // completely overrides the inline style attribute, so may need
+          // to be adjusted later if there are other inline styles.
+          {
+            name: 'add-margin',
+            fn: applyMargin
+          }
+        ]
+      });
+      const optimizedSvgString = result.data;
 
-      // Apply some rules that will make the SVG look better
-      enforceViewbox(parsedSvg);
-      applyVariables(parsedSvg);
-      applyMargin(parsedSvg);
-      fixEntities(parsedSvg);
-
-      // Synthesize the HAST tree back into an SVG
-      token.content = stringify(parsedSvg);
+      // Put the optimized SVG content into the markdown
+      token.content = optimizedSvgString;
     }
 
     return true;
@@ -62,27 +84,12 @@ export const svgPlugin = (md: MarkdownIt, srcDir: string) => {
   md.core.ruler.before('inline', 'svg', parser)
 }
 
-// Transform any static width and height into a viewbox.
-// This makes the SVG scale with the page width nicely.
-function enforceViewbox(svg) {
-  const width = svg.attributes.width;
-  const height = svg.attributes.height;
-
-  if (width && height) {
-    svg.attributes.viewBox = `0 0 ${width} ${height}`;
-    delete svg.attributes.width;
-    delete svg.attributes.height;
-  }
-}
-
 // Find all nodes that are filled with solid black.
 // We then transform those fills into a CSS variable
 // so that black areas of the SVG can adapt to dark/light mode.
 function applyVariables(svgNode) {
-  if (svgNode.attributes.fill) {
-    if (svgNode.attributes.fill == '#000000') {
-      svgNode.attributes.fill = 'var(--bs-emphasis-color)'
-    }
+  if (svgNode.attributes && svgNode.attributes.fill == '#000000') {
+    svgNode.attributes.fill = 'var(--bs-emphasis-color)'
   }
 
   if (svgNode.children) {
@@ -92,24 +99,13 @@ function applyVariables(svgNode) {
   }
 }
 
-// Simply adds some margin above and below. Note that this
-// completely overrides the inline style attribute, so may need
-// to be adjusted later if there are other inline styles.
-function applyMargin(svg) {
-  svg.attributes.style = 'margin-top: 20px; margin-bottom: 20px;'
-}
-
-// Decodes all HTML entities in the text. This is used because
-// the svgson library already handles entities in text by wrapping
-// them in a CDATA block. (https://github.com/elrumordelaluz/svgson/issues/27)
-function fixEntities(svgNode) {
-  if (svgNode.type == 'text') {
-    svgNode.value = decode(svgNode.value);
+function applyMargin(svgNode) {
+  if (svgNode.type == 'element' && svgNode.name == 'svg') {
+    svgNode.attributes.style = 'margin-top: 20px; margin-bottom: 20px;'
   }
-
   if (svgNode.children) {
     for (const child of svgNode.children) {
-      fixEntities(child);
+      applyMargin(child);
     }
   }
 }
