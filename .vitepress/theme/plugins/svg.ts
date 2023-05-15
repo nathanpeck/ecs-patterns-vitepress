@@ -51,14 +51,13 @@ export const svgPlugin = (md: MarkdownIt, srcDir: string) => {
           },
           'preset-default',
           'removeDimensions',
-          'removeOffCanvasPaths',
           // PowerPoint export does weird things with clipping
           // which break some embedded images when you do the conversion
           // to a viewbox.
           {
             name: "removeAttrs",
             params: {
-              attrs: "clip-path"
+              attrs: "g:clip-path"
             }
           },
           // Simply adds some margin above and below. Note that this

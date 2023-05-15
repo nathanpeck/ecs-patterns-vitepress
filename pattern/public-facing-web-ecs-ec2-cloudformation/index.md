@@ -21,18 +21,19 @@ date: May 12, 2023
 
 This is a simple public facing web service, hosted on EC2 instances, and fronted by an Application Load Balancer that provides ingress from the internet. This pattern is well suited for:
 
-- A static HTML website, perhaps hosted by NGINX or Apache
+- A static HTML website, perhaps hosted by an NGINX or Apache webserver container
 - A dynamically generated web app, perhaps served by a Node.js process
 - An API service intended for the public to access
-- A public facing endpoint designed to receive push notifications, perhaps from Amazon SNS (Simple Notification Service)
-- An edge service which needs to make outbound connections to other services on the internet
+- An edge service which needs to make many outbound requests to other services or API's on the public internet
 
+::: warning
 This pattern is not well suited for:
 
 - A private internal service
 - An application that has strict networking security requirements
 
 For the above use cases instead consider using the [AWS VPC version of this pattern, designed for private services](worker-ecs-ec2-cloudformation).
+:::
 
 #### Architecture
 
@@ -107,4 +108,12 @@ sam deploy \
 
 #### Test it out
 
+Open the Amazon ECS cluster in the web console and verify that the service has been created with a desired count of two. You will observe the service create pending tasks that are waiting in PROVISIONING state. The ECS capacity provider will launch EC2 instances to fulfill the EC2 capacity demand and ECS will place the provisioning tasks onto those EC2 instances. Last but not least you will the Application Load Balancer get each task registered into it's target group.
+
+On the "Health & Metrics" tab of the service details page you can click on the load balancer name to navigate to the load balancer in the EC2 console. This will give you the load balancer's public facing CNAME that you can copy and paste into your browser to verify that the sample NGINX webserver is up and running.
+
 #### Tear it down
+
+```shell
+sam delete --stack-name web-service-environment
+```

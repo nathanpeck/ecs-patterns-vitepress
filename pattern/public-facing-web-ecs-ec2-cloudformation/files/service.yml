@@ -43,7 +43,7 @@ Parameters:
     Description: What port that the application expects traffic on
   DesiredCount:
     Type: Number
-    Default: 0
+    Default: 2
     Description: How many copies of the service task to run
   ContainerHostSecurityGroup:
     Type: String
