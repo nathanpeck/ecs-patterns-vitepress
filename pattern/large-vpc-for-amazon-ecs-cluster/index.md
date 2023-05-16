@@ -53,7 +53,7 @@ Note that when using AWS VPC networking mode on EC2 it is not supported to place
 :::
 
 ::: warning
-AWS Fargate can be launched with "assign public IP" turned on. This allows tasks to be launched in a public subnet and use the internet gateway directly. But if you don't turn on public IP assignment then internet access will not work.
+AWS Fargate tasks can be launched with "assign public IP" turned on. This allows tasks to be launched in a public subnet and use the internet gateway directly. But if you don't turn on public IP assignment then internet access will not work properly.
 :::
 
 #### VPC Configuration

@@ -24,15 +24,15 @@ This is a simple public facing web service, hosted on EC2 instances, and fronted
 - A static HTML website, perhaps hosted by an NGINX or Apache webserver container
 - A dynamically generated web app, perhaps served by a Node.js process
 - An API service intended for the public to access
-- An edge service which needs to make many outbound requests to other services or API's on the public internet
+- An edge service which needs to make many outbound requests, or high bandwidth connections, to other services or API's on the public internet
 
 ::: warning
 This pattern is not well suited for:
 
-- A private internal service
-- An application that has strict networking security requirements
+- A private internal API service
+- An application that has very strict networking security requirements
 
-For the above use cases instead consider using the [AWS VPC version of this pattern, designed for private services](worker-ecs-ec2-cloudformation).
+For the above use cases instead consider using the [AWS VPC version of this pattern, designed for private API services](public-facing-api-ecs-ec2-cloudformation).
 :::
 
 #### Architecture
@@ -74,7 +74,7 @@ Download the `vpc.yml` file from your chosen pattern, but do not deploy it yet. 
 
 #### Define the cluster
 
-The following CloudFormation defines an ECS cluster that has a capacity provider that launches EC2 instances on demand as you request for ECS to deploy containers.
+The following CloudFormation defines an ECS cluster that has a capacity provider that launches EC2 instances on demand as you request for ECS to deploy containers. The instances will be launched in the public subnet.
 
 <<< @/pattern/public-facing-web-ecs-ec2-cloudformation/files/cluster.yml
 
@@ -117,3 +117,8 @@ On the "Health & Metrics" tab of the service details page you can click on the l
 ```shell
 sam delete --stack-name web-service-environment
 ```
+
+#### See Also
+
+- [Public facing web service on AWS Fargate](/public-facing-web-ecs-fargate-cloudformation). The serverless equivalent of this pattern. It sets up a public facing, publically networked service hosted in AWS Fargate instead of on EC2 instances
+- This stack does not deploy an automatic scaling for the containerized service. If you expect varying amounts of traffic you should [add automatic scaling to your service](/scale-ecs-service-cloudformation).

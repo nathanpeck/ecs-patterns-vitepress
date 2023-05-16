@@ -1,15 +1,20 @@
 AWSTemplateFormatVersion: '2010-09-09'
-Description: An example service that deploys a bridge networking mode
+Description: An example service that deploys in AWS VPC networking mode
              on EC2 capacity. Service uses a capacity provider to request
-             EC2 instances to run on.
+             EC2 instances to run on. Service runs with networking in private
+             subnets, but still accessible to the internet via a load balancer
+             hosted in public subnets.
 
 Parameters:
   VpcId:
     Type: String
     Description: The VPC that the service is running inside of
-  SubnetIds:
+  PublicSubnetIds:
     Type: List<AWS::EC2::Subnet::Id>
-    Description: List of public subnet ID's the load balancer is hosted in.
+    Description: List of public subnet ID's to put the load balancer in
+  PrivateSubnetIds:
+    Type: List<AWS::EC2::Subnet::Id>
+    Description: List of private subnet ID's that the AWS VPC tasks are in
   ClusterName:
     Type: String
     Description: The name of the ECS cluster into which to launch capacity.
@@ -45,11 +50,6 @@ Parameters:
     Type: Number
     Default: 2
     Description: How many copies of the service task to run
-  ContainerHostSecurityGroup:
-    Type: String
-    Description: Name of the security group that is used by the EC2 instances.
-                 Used so that the service can add its load balancer's security
-                 group as an authorized source of inbound traffic.
 
 Resources:
 
@@ -61,7 +61,7 @@ Resources:
       Family: !Ref ServiceName
       Cpu: !Ref ContainerCpu
       Memory: !Ref ContainerMemory
-      NetworkMode: bridge
+      NetworkMode: awsvpc
       RequiresCompatibilities:
         - EC2
       ExecutionRoleArn: !Ref ECSTaskExecutionRole
@@ -72,7 +72,7 @@ Resources:
           Image: !Ref ImageUrl
           PortMappings:
             - ContainerPort: 80
-              HostPort: 0 # Dynamic port mapping to random port from ephemeral range
+              HostPort: 80
           LogConfiguration:
             LogDriver: 'awslogs'
             Options:
@@ -100,6 +100,11 @@ Resources:
         - Base: 0
           CapacityProvider: !Ref CapacityProvider
           Weight: 1
+      NetworkConfiguration:
+        AwsvpcConfiguration:
+          SecurityGroups:
+            - !Ref ServiceSecurityGroup
+          Subnets: !Ref PrivateSubnetIds
       DeploymentConfiguration:
         MaximumPercent: 200
         MinimumHealthyPercent: 75
@@ -110,6 +115,14 @@ Resources:
           ContainerPort: 80
           TargetGroupArn: !Ref ServiceTargetGroup
 
+  # Security group that limits network access
+  # to the task
+  ServiceSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Security group for service
+      VpcId: !Ref VpcId
+
   # Keeps track of the list of tasks for the service
   ServiceTargetGroup:
     Type: AWS::ElasticLoadBalancingV2::TargetGroup
@@ -119,8 +132,8 @@ Resources:
       HealthCheckProtocol: HTTP
       HealthCheckTimeoutSeconds: 5
       HealthyThresholdCount: 2
-      TargetType: instance
-      Port: 80 # Port will be ignored in this case because of bridge networking mode
+      TargetType: ip
+      Port: 80
       Protocol: HTTP
       UnhealthyThresholdCount: 10
       VpcId: !Ref VpcId
@@ -146,7 +159,7 @@ Resources:
       LoadBalancerAttributes:
       - Key: idle_timeout.timeout_seconds
         Value: '30'
-      Subnets: !Ref SubnetIds
+      Subnets: !Ref PublicSubnetIds
       SecurityGroups:
         - !Ref PublicLoadBalancerSG
   PublicLoadBalancerListener:
@@ -164,14 +177,13 @@ Resources:
       Port: 80
       Protocol: HTTP
 
-  # Because we are launching tasks with bridge networking mode
-  # we need to open up ingress on the EC2 instances themselves so that they
-  # allow inbound traffic from the load balancer.
-  EcsSecurityGroupIngressFromPublicALB:
+  # Open up the service's security group to traffic originating
+  # from the security group of the load balancer.
+  ServiceIngressfromLoadBalancer:
     Type: AWS::EC2::SecurityGroupIngress
     Properties:
       Description: Ingress from the public ALB
-      GroupId: !Ref 'ContainerHostSecurityGroup'
+      GroupId: !Ref ServiceSecurityGroup
       IpProtocol: -1
       SourceSecurityGroupId: !Ref 'PublicLoadBalancerSG'
 
