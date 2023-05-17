@@ -108,6 +108,8 @@ On the "Health & Metrics" tab of the service details page you can click on the l
 
 #### Tear it down
 
+You can tear down the entire stack with the following command:
+
 ```shell
 sam delete --stack-name serverless-web-environment
 ```

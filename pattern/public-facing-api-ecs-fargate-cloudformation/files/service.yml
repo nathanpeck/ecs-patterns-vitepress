@@ -1,7 +1,7 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Description: An example service that deploys in AWS VPC networking mode
-             on AWS Fargate. Service runs with networking in public
-             subnets and public IP addresses
+             on AWS Fargate. Service runs with networking in private subnets
+             and with private IP addresses only.
 
 Parameters:
   VpcId:
@@ -9,7 +9,10 @@ Parameters:
     Description: The VPC that the service is running inside of
   PublicSubnetIds:
     Type: List<AWS::EC2::Subnet::Id>
-    Description: List of public subnet ID's to put the load balancer and tasks in
+    Description: List of public subnet ID's to put the load balancer in
+  PrivateSubnetIds:
+    Type: List<AWS::EC2::Subnet::Id>
+    Description: List of private subnet ID's to put the tasks in
   ClusterName:
     Type: String
     Description: The name of the ECS cluster into which to launch capacity.
@@ -88,7 +91,7 @@ Resources:
           AssignPublicIp: ENABLED
           SecurityGroups:
             - !Ref ServiceSecurityGroup
-          Subnets: !Ref PublicSubnetIds
+          Subnets: !Ref PrivateSubnetIds
       DeploymentConfiguration:
         MaximumPercent: 200
         MinimumHealthyPercent: 75
