@@ -118,7 +118,7 @@ sam deploy \
   --capabilities CAPABILITY_IAM
 ```
 
-#### Test it Out
+#### Test it out
 
 Open the Amazon ECS cluster in the web console and verify that the service has been created with a desired count of two. You will observe the service create pending tasks that are waiting in PROVISIONING state. The ECS capacity provider will launch EC2 instances to fulfill the EC2 capacity demand and ECS will place the provisioning tasks onto those EC2 instances. Last but not least you will the Application Load Balancer get each task registered into it's target group.
 
@@ -127,5 +127,4 @@ On the "Health & Metrics" tab of the service details page you can click on the l
 #### Next Steps
 
 - This stack does not deploy an automatic scaling for the containerized service. You should [add scaling to your service](/scale-ecs-service-cloudformation).
-- This example stack currently deploys a statically sized EC2 Autoscaling Group (ASG). You can manually scale up the ASG as needed to add more EC2 capacity for hosting more containers, but you may prefer to instead use an ECS Capacity Provider to have ECS automatically manage the ASG size on your behalf.
 - Alternatively, you may prefer to not manage EC2 capacity at all. In that case consider using the [AWS Fargate version of this stack](/public-facing-api-ecs-fargate-cloudformation), which launches your container on serverless capacity.

@@ -104,3 +104,6 @@ sam delete --stack-name serverless-api-environment
 ```
 
 #### See Also
+
+- If you plan to run an extremely large workload that requires many vCPU's worth of compute resources, or you wish to have more control over the precise CPU generation used to power your application, then consider [using Amazon ECS to host your containerized API service on EC2](/public-facing-api-ecs-ec2-cloudformation).
+- This pattern does not configure scaling. Consider [using the target tracking scaling pattern to add autoscaling](/target-tracking-scale-ecs-service-cloudformation).
