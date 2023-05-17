@@ -32,7 +32,7 @@ This pattern is not well suited for:
 - A private internal API service
 - An application that has very strict networking security requirements
 
-For the above use cases instead consider using the [AWS VPC version of this pattern, designed for private API services](public-facing-api-ecs-ec2-cloudformation).
+For the above use cases instead consider using the [AWS VPC version of this pattern, designed for private API services that only have private IP addresses](public-facing-api-ecs-ec2-cloudformation).
 :::
 
 #### Architecture
