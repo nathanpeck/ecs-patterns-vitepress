@@ -137,6 +137,10 @@ You can use the following command to tear down the stack:
 sam delete --stack-name internal-service-environment
 ```
 
+::: warning
+If you followed the test instructions to launch a Cloud9 IDE inside of the VPC you will also need to go into the Cloud9 dashboard to delete that IDE.
+:::
+
 #### See Also
 
-- [Deploy an internal worker service on AWS Fargate, that does jobs from an SQS queue](/background-worker-sqs-queue-container-copilot)
+- Prefer to run serverless containers? [Deploy an internal worker service on AWS Fargate, that does jobs from an SQS queue](/background-worker-sqs-queue-container-copilot)
