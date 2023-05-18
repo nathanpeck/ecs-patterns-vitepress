@@ -1,13 +1,17 @@
 <script setup>
+import { computed, toRef } from "vue";
 import { storeToRefs } from "pinia"
 import { useContentStore } from '../stores/content'
 import { withBase } from 'vitepress'
-const { authorId } = defineProps(['authorId'])
+const props = defineProps(['authorId'])
+const authorId = toRef(props, 'authorId');
 const store = useContentStore();
 const { authorsById } = storeToRefs(store);
 
-let authorLink = `/author/${authorId}`
-let authorDetails = authorsById.value[authorId];
+let authorLink = `/author/${authorId.value}`
+const authorDetails = computed(() => {
+  return authorsById.value[authorId.value];
+})
 
 if (!authorDetails) {
   throw new Error(`Failed to find team member ${authorId} in team.yml`)

@@ -1,4 +1,14 @@
+# Exclude downloaded Node modules
 node_modules
+
+# Exclude VitePress generated content
 .vitepress/dist
 .vitepress/cache
+
+# Exclude Cloud Development Kit generated content
 cdk.out
+
+# Exclude Terraform generated content
+*.tfstate
+*.tfstate.backup
+.terraform*

@@ -19,6 +19,15 @@ if (DOCKER_LANG) {
   DOCKER_LANG.aliases = ['dockerfile']
 }
 
+// Load in Terraform language
+const TerraformGrammar = require('./theme/langs/Terraform.json')
+const Terraform = {
+  id: 'terraform',
+  scopeName: 'source.terraform',
+  grammar: TerraformGrammar,
+  aliases: ['terraform', 'tf']
+}
+
 const extractLang = (info: string) => {
   return info
     .trim()
@@ -114,9 +123,11 @@ export default defineConfig({
       `
     ]
   ],
+
+  // Extend the Markdown parser with extra features
   markdown: {
     theme: 'css-variables',
-    //languages: ,
+    languages: [Terraform],
     config: (md) => {
       // Fully override the fence rules with my own customized version
       md.renderer.rules.fence = (...args) => {
@@ -169,6 +180,9 @@ export default defineConfig({
     }
   },
 
+  // Because blog is hosted using a different system we want
+  // any cross links between patterns and blog to be ignored
+  // otherwise the VitePress build will call them out as dead links
   ignoreDeadLinks: [
     '/blog/'
   ],

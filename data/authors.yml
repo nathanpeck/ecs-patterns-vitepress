@@ -9,6 +9,7 @@
       uri: https://github.com/nathanpeck
     - type: twitter
       uri: https://twitter.com/nathankpeck
+
 - id: sbcoulto
   name: Scott Coulton
   title: Principal Developer Advocate at AWS
@@ -16,6 +17,7 @@
   links:
     - type: twitter
       uri: https://twitter.com/scottcoulton
+
 - id: maishsk
   name: Maish Saidel-Keesing
   title: Senior Developer Advocate at AWS
@@ -23,7 +25,13 @@
   links:
     - type: twitter
       uri: https://twitter.com/maishsk
+
 - id: jldeen
   name: Jessica Deen
   title: Principal Developer Advocate at AWS
   image: https://d2908q01vomqb2.cloudfront.net/fe2ef495a1152561572949784c16bf23abb28057/2023/02/02/Jessica-2023.jpg
+
+- id: arvsoni
+  name: Arvind Soni
+  title: WW Head of GTM for ECS at AWS
+  image: /images/arvsoni.jpg

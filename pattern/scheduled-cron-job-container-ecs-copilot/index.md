@@ -7,7 +7,7 @@ filterDimensions:
   - key: tool
     value: copilot
   - key: type
-    value: pattern
+    value: tutorial
   - key: capacity
     value: fargate
   - key: app

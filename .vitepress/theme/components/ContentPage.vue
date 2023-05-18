@@ -5,7 +5,6 @@ import Author from '../components/Author.vue'
 import { useData, useRoute } from 'vitepress'
 const { frontmatter } = useData();
 const { path } = useRoute();
-
 const date = new Date(frontmatter.value.date)
 const datetime = ref('')
 
