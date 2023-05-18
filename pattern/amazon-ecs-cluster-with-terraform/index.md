@@ -34,19 +34,30 @@ This pattern will demonstrate how to use the community `terraform-aws-modules` t
 
 #### Architecture
 
-The AWS resources created are:
+This pattern will create the following AWS resources:
+
+!!! @/pattern/amazon-ecs-cluster-with-terraform/diagram.svg
 
 - Networking
   - VPC
     - 3 public subnets, 1 per AZ. If a region has less than 3 AZs it will create same number of public subnets as AZs.
     - 3 private subnets, 1 per AZ. If a region has less than 3 AZs it will create same number of private subnets as AZs.
-    - 1 NAT Gateway (note for a production environment you will want two NAT gateways for redundancy)
+    - 1 NAT Gateway (see warning below)
     - 1 Internet Gateway
     - Associated Route Tables
 - 1 ECS Cluster with AWS CloudWatch Container Insights enabled.
 - Task execution IAM role
 - CloudWatch log groups
 - CloudMap service discovery namespace default
+
+::: warning
+This pattern deploys a single shared NAT gateway in a single AZ. This saves cost in most cases but has the following downsides:
+
+- The shared NAT gateway is a single point of failure if that AZ has an outage.
+- In cases where you make heavy use of the NAT gateway because your application makes many outbound connections to the public internet, you may acrue additional cross AZ charges because resources in the other two AZ's are generating cross AZ traffic to a NAT gateway hosted in a different AZ.
+
+In these cases consider adding a NAT gateway for each AZ. This will be a higher baseline cost but safer and will limit cross AZ traffic.
+:::
 
 #### Define the infrastructure
 
