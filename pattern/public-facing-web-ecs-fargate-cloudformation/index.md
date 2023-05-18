@@ -2,7 +2,6 @@
 title: Serverless public facing website hosted on AWS Fargate
 description: >-
   A containerized website, hosted as a public facing service, managed by ECS, hosted on serverless AWS Fargate capacity
-image: cover.png
 filterDimensions:
   - key: tool
     value: cloudformation

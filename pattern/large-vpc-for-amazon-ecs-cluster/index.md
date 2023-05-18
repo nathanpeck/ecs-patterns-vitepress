@@ -3,7 +3,6 @@ title: Large sized AWS VPC for an Amazon ECS cluster
 description: >-
   Reusable CloudFormation pattern for deploying a large VPC capable of hosting
   thousands of container tasks, with internet access.
-image: cover.png
 filterDimensions:
   - key: tool
     value: cloudformation

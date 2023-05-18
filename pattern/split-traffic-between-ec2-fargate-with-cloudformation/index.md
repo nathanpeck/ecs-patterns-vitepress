@@ -3,7 +3,6 @@ title: Split web traffic between Amazon EC2 and AWS Fargate
 description: >-
   CloudFormation example of how to setup an Application Load Balancer
   that distributes web traffic across an ECS service running on both EC2 and Fargate.
-image: cover.png
 filterDimensions:
   - key: tool
     value: cloudformation

@@ -2,7 +2,6 @@
 title: Capture ECS task events into Amazon CloudWatch using Amazon EventBridge
 description: How to persist ECS task events and telemetry in Amazon CloudWatch, so that you can
   view old task history and debug historical crashed tasks.
-image: cover.png
 filterDimensions:
   - key: tool
     value: cloudformation

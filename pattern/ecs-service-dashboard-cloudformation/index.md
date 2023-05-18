@@ -2,7 +2,6 @@
 title: Deploy a CloudWatch dashboard for an Amazon ECS service
 description: >-
   Create your own custom CloudWatch dashboard for an ECS service
-image: cover.png
 filterDimensions:
   - key: tool
     value: cloudformation

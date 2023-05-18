@@ -3,7 +3,6 @@ title: Create an Amazon ECS Cluster with Terraform
 description: >-
   Example Terraform to configure an AWS VPC, Elastic Container Service cluster, and
   supporting IAM roles
-image: cover.png
 filterDimensions:
   - key: tool
     value: terraform

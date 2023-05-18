@@ -2,7 +2,6 @@
 title: Load balanced container service with ECS Service Extensions
 description: >-
   Use the ECS Service Extensions package for AWS Cloud Development Kit to deploy a simple load balanced web container.
-image: cover.png
 filterDimensions:
   - key: tool
     value: cdk

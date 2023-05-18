@@ -2,7 +2,6 @@
 title: Schedule a containerized cron job using Amazon ECS and AWS Copilot
 description: >-
   Setup a background batch job on a cron schedule. It will be run in AWS Fargate by Amazon ECS. Pattern is setup using AWS Copilot.
-image: cover.png
 filterDimensions:
   - key: tool
     value: copilot

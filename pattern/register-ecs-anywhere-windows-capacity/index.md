@@ -2,7 +2,6 @@
 title: Register ECS Anywhere Windows Capacity
 description: >-
   Command line scripts for registering external Windows instances with an ECS Cluster
-image: cover.png
 filterDimensions:
   - key: tool
     value: aws-cli

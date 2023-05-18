@@ -2,7 +2,6 @@
 title: Amazon Elastic Container Service Q4 2022 Recap
 description: >-
   The latest news and announcements about Amazon Elastic Container Service, for Q4 2022
-image: cover.png
 filterDimensions:
   - key: type
     value: video

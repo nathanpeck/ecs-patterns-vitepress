@@ -2,7 +2,6 @@
 title: Serverless public facing API hosted on AWS Fargate
 description: >-
   A serverless, containerized public facing API in a private network, managed by ECS, hosted on AWS Fargate
-image: cover.png
 filterDimensions:
   - key: tool
     value: cloudformation

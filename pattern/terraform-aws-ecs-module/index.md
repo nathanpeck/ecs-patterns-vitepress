@@ -3,7 +3,6 @@ title: AWS ECS Terraform module
 description: >-
   A higher level Terraform module designed to minimize
   the configuration surface area you touch
-image: cover.png
 filterDimensions:
   - key: tool
     value: terraform

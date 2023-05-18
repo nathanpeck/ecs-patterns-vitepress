@@ -2,7 +2,6 @@
 title: Create new Elastic Container Service (ECS) task definition revision
 description: >-
   A bash script example showing how to create a new revision of an ECS task definition, with variables for image URI, and other values.
-image: cover.png
 filterDimensions:
   - key: tool
     value: aws-cli

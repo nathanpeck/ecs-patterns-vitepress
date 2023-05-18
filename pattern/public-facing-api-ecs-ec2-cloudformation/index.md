@@ -2,7 +2,6 @@
 title: Public facing API hosted on EC2 instances
 description: >-
   A containerized public facing API in a private network, managed by EC2, hosted on EC2 capacity.
-image: cover.png
 filterDimensions:
   - key: tool
     value: cloudformation

@@ -2,7 +2,6 @@
 title: Amazon Elastic Container Service February 2023 round up
 description: >-
   The latest news and announcements about Amazon Elastic Container Service, for the month of February 2023
-image: cover.png
 filterDimensions:
   - key: type
     value: video

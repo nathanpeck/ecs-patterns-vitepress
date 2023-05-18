@@ -3,7 +3,6 @@ title: Running GPU workloads with Amazon ECS and AWS Cloud Development Kit
 description: >-
   A Cloud Development Kit demo app that shows how to run an application
   that depends on GPU resources.
-image: cover.png
 filterDimensions:
   - key: tool
     value: cdk

@@ -2,7 +2,6 @@
 title: Step scaling policy for ECS service based on CPU consumption
 description: >-
   CloudFormation for automatically scaling an ECS service up and down based on CPU usage
-image: cover.png
 filterDimensions:
   - key: tool
     value: cloudformation

@@ -3,7 +3,6 @@ title: Amazon ECS Capacity Providers for EC2 instances
 description: >-
   How to automatically scale the EC2 capacity for your ECS cluster
   by using an ECS Capacity Provider
-image: cover.png
 filterDimensions:
   - key: tool
     value: cloudformation

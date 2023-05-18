@@ -2,7 +2,6 @@
 title: Amazon ECS task with maximum lifespan
 description: >-
   An Amazon ECS task that will run for a specified duration, then be automatically stopped.
-image: cover.png
 filterDimensions:
   - key: tool
     value: cloudformation

@@ -2,7 +2,6 @@
 title: Delete an ECS task definition using AWS CLI
 description: >-
   A bash script for deleting ECS task definitions using the AWS CLI
-image: cover.png
 filterDimensions:
   - key: tool
     value: aws-cli

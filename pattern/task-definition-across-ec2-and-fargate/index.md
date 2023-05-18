@@ -4,7 +4,6 @@ description: >-
   How to make a task definition that can deploy the same container
   either as a serverless application on AWS Fargate or hosted on
   EC2 instance capacity
-image: cover.png
 filterDimensions:
   - key: tool
     value: cloudformation

@@ -3,7 +3,6 @@ title: Build a custom ECS Service Extension in CDK
 description: >-
   How to build a reusable ECS configuration using the CDK package
   ECS Service Extensions
-image: cover.png
 filterDimensions:
   - key: tool
     value: cdk

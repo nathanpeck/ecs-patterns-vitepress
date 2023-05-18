@@ -2,7 +2,6 @@
 title: Low cost AWS VPC for an Amazon ECS cluster
 description: >-
   Deploy a low cost VPC, with public subnets only.
-image: cover.png
 filterDimensions:
   - key: tool
     value: cloudformation

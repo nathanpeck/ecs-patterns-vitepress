@@ -2,7 +2,6 @@
 title: Uninstall ECS Anywhere
 description: >-
   A bash script that cleans up a host that was used as capacity for ECS Anywhere
-image: cover.png
 filterDimensions:
   - key: tool
     value: aws-cli

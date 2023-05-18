@@ -2,7 +2,6 @@
 title: Use Pulumi Crosswalk to deploy a basic load balanced ECS service
 description: >-
   How to use Pulumi infrastructure as code SDK to deploy a load balanced ECS service
-image: cover.png
 filterDimensions:
   - key: tool
     value: pulumi

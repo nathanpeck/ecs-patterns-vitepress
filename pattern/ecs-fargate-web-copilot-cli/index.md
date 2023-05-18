@@ -3,7 +3,6 @@ title: Load balanced web service deployed using AWS Copilot
 description: >-
   Instructions for how to deploy a container to AWS Fargate using Amazon Elastic
   Container Service (ECS) and AWS Copilot
-image: cover.png
 filterDimensions:
   - key: tool
     value: copilot

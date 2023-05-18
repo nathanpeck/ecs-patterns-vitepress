@@ -2,7 +2,6 @@
 title: Use Pulumi Crosswalk to automate container image builds
 description: >-
   How to use Pulumi infrastructure as code SDK to automate building a container image
-image: cover.png
 filterDimensions:
   - key: tool
     value: pulumi

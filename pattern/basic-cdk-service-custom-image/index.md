@@ -4,7 +4,6 @@ description: >-
   A Cloud Development Kit app showing how to automatically
   build and upload local code as a container image when
   launching your application in AWS Fargate
-image: cover.png
 filterDimensions:
   - key: tool
     value: cdk

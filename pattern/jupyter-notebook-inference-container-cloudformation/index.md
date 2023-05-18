@@ -2,7 +2,6 @@
 title: Deploy Jupyter notebook container with Amazon ECS
 description: >-
   How to use Amazon ECS and CloudFormation to run a Jupyter notebook container for training machine learning models
-image: cover.png
 filterDimensions:
   - key: tool
     value: cloudformation

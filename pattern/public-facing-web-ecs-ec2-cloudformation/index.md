@@ -2,7 +2,6 @@
 title: Public facing website hosted on EC2 instances
 description: >-
   A containerized website, hosted as a public facing service, managed by EC2, hosted on EC2 capacity.
-image: cover.png
 filterDimensions:
   - key: tool
     value: cloudformation

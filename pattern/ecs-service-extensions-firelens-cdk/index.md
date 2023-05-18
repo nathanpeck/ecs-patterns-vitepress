@@ -2,7 +2,6 @@
 title: AWS FireLens with ECS Service Extensions
 description: >-
   Use the ECS Service Extensions package for AWS Cloud Development Kit to easily add FireLens log routing to your container application
-image: cover.png
 filterDimensions:
   - key: tool
     value: cdk

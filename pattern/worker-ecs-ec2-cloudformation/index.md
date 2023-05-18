@@ -2,7 +2,6 @@
 title: Internal worker or background service hosted on EC2 instances
 description: >-
   A containerized worker or internal service, in a private network, managed by EC2, hosted on EC2 capacity.
-image: cover.png
 filterDimensions:
   - key: tool
     value: cloudformation

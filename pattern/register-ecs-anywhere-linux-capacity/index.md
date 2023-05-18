@@ -2,7 +2,6 @@
 title: Register ECS Anywhere Linux Capacity
 description: >-
   Command line scripts for registering external Linux instances with an ECS Cluster
-image: cover.png
 filterDimensions:
   - key: tool
     value: aws-cli

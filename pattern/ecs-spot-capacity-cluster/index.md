@@ -3,7 +3,6 @@ title: Amazon ECS cluster with EC2 Spot Capacity
 description: >-
   CloudFormation template that demonstrates setting up an EC2 Spot capacity provider
   to supply compute for containers in the cluster
-image: cover.png
 filterDimensions:
   - key: tool
     value: cloudformation

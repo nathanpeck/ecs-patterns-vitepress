@@ -2,7 +2,6 @@
 title: Use Pulumi Crosswalk to setup an ECS Service in a VPC
 description: >-
   How to use Pulumi infrastructure as code SDK to deploy a load balanced ECS service in a VPC
-image: cover.png
 filterDimensions:
   - key: tool
     value: pulumi

@@ -2,7 +2,6 @@
 title: Elastic Container Service (ECS) Blueprints for Terraform
 description: >-
   A set of sample Terraform modules for deploying containers to AWS using Elastic Container Service
-image: cover.png
 filterDimensions:
   - key: tool
     value: terraform
