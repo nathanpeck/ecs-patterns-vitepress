@@ -28,6 +28,16 @@ const Terraform = {
   aliases: ['terraform', 'tf']
 }
 
+// Load the CloudWatch Query Language
+// For more see: https://code.amazon.com/packages/LogsReactComponent/blobs/mainline/--/src/components/logs-insights/components/pschorrql-editor/editor-config/pschorrql-language-definition.ts
+const CloudWatchQueryGrammar = require('./theme/langs/CloudWatchQuery.json')
+const CloudWatchQuery = {
+  id: 'cloudwatch',
+  scopeName: 'text.query',
+  grammar: CloudWatchQueryGrammar,
+  aliases: ['query', 'cloudwatch']
+}
+
 const extractLang = (info: string) => {
   return info
     .trim()
@@ -127,7 +137,7 @@ export default defineConfig({
   // Extend the Markdown parser with extra features
   markdown: {
     theme: 'css-variables',
-    languages: [Terraform],
+    languages: [Terraform, CloudWatchQuery],
     config: (md) => {
       // Fully override the fence rules with my own customized version
       md.renderer.rules.fence = (...args) => {
