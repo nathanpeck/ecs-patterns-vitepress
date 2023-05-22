@@ -6,13 +6,35 @@
   "name": "CloudWatch Logs Insights Query",
   "patterns": [
     {
+      "begin": "\"",
+      "end": "\"",
+      "name": "string.quoted.double"
+    },
+    {
+      "begin": "'",
+      "end": "'",
+      "name": "string.quoted.single"
+    },
+    {
       "match": "\\b(?i:(display|fields|filter|limit|sort|stats|parse))\\b",
-      "name": "entity.name.function"
+      "name": "keyword.control"
+    },
+    {
+      "match": "\\b(?i:(and|as|asc|by|desc|group|in|like|not|or))\\b",
+      "name": "keyword.operator"
+    },
+    {
+      "match": "(\\@timestamp|@logStream|@message|@log)",
+      "name": "support.variable"
+    },
+    {
+      "match": "(abs|avg|bin|ceil|coalesce|concat|count|count_distinct|datefloor|dateceil|earliest|floor|fromMillis|greatest|isEmpty|isPresent|isBlank|isValidIp|isValidIpV4|isValidIpV6|isIpInSubnet|isIpv4InSubnet|isIpv6InSubnet|latest|least|log|ltrim|max|median|min|mod|pct|pow|replace|rtrim|sortsFirst|sortsLast|strcontains|strlen|sqrt|stddev|substr|sum|toMillis|toLower|toUpper|trim|unmask)",
+      "name": "support.function"
     },
     {
       "match": "\\b((0(x|X)[0-9a-fA-F]*)|(([0-9]+\\.?[0-9]*)|(\\.[0-9]+))((e|E)(\\+|-)?[0-9]+)?)(L|l|UL|ul|u|U|F|f|ll|LL|ull|ULL)?\\b",
       "name": "constant.numeric"
     }
   ],
-  "uuid": "FF0550E0-3A29-11E3-AA6E-0800200C9A77"
+  "uuid": "0DB90CBB-C53C-4730-80B0-D1E5F244EEAC"
 }
