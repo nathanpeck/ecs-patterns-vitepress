@@ -7,6 +7,8 @@ filterDimensions:
     value: pattern
   - key: capacity
     value: fargate
+  - key: feature
+    value: container-insights
 authors:
   - mreferre
 date: May 22, 2023
@@ -81,3 +83,7 @@ aws cloudwatch get-dashboard \
 - These dashboards are not intended to hint a proper Fargate task size. You should only use them to track tasks with the highest CPU and memory optimization opportunity and do a further analysis from there
 - The default retention of the Container Insights performance logs is 1 day. This means that by default the graphs can only track the previous 24 hours. If you want these data to persist you can change manually the retention period of the cluster CloudWatch log group
 - These are logs and not metrics. Hence, you cannot set alarms like you'd normally do with metrics
+
+#### See Also
+
+- How to [create a custom CloudWatch dashboard using CloudFormation](ecs-service-dashboard-cloudformation).

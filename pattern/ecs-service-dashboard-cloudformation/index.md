@@ -78,3 +78,4 @@ capacity-provider-environment-BaseStack-18PANC6K9E7D8-ECSCluster-NNBNpIh5AkZO
 #### See Also
 
 - [Capture ECS task events into CloudWatch logs](ecs-task-events-capture-cloudwatch), in order to review older tasks that no longer exist. This page also includes sample ECS task telemetry events and task events that may help you in designing your own custom dashboard.
+- A [custom dashboard that identifies AWS Fargate tasks that are under-utilized](fargate-right-sizing-dashboard), and therefore potential optimization targets.
