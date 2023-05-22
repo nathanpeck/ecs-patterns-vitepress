@@ -87,6 +87,12 @@ You should have three files:
 - `outputs.tf` - A list of output variables that will be passed to other Terraform modules you may wish to deploy
 - `versions.tf` - A definition of the underlying requirements for this module.
 
+::: tip
+For a production environment it is highly recommended to create a `backend.tf` file that configures [S3 for state storage and DynamoBD for resource locking](https://developer.hashicorp.com/terraform/language/settings/backends/s3), or [Terraform Cloud for state management](https://developer.hashicorp.com/terraform/tutorials/cloud/cloud-migrate).
+
+The default setup will only track Terraform state locally, and if you lose the state files Terraform will no longer be able to managed the created infrastructure, and you will have to manually track down and delete every resource that Terraform had created.
+:::
+
 #### Deploy the Terraform definition
 
 First we need to download all the dependency modules (defined in `versions.tf`) that this pattern relies on:
@@ -157,6 +163,7 @@ terraform destroy
 #### See Also
 
 - Check out the [ECS Blueprints repository on Github that this pattern is sourced from](https://github.com/aws-ia/ecs-blueprints/tree/main/terraform/fargate-examples/core-infra)
+- Add a [load balanced web service on top of this cluster](/load-balanced-public-service-with-terraform)
 - Prefer CloudFormation? Check out:
   - [Low cost VPC for Amazon ECS](/low-cost-vpc-amazon-ecs-cluster)
   - [Large sized VPC for Amazon ECS](/large-vpc-for-amazon-ecs-cluster)

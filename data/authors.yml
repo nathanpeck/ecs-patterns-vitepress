@@ -34,4 +34,9 @@
 - id: arvsoni
   name: Arvind Soni
   title: WW Head of GTM for ECS at AWS
-  image: /images/arvsoni.jpg
+  image: https://pbs.twimg.com/profile_images/808785129367683072/TtPMTQsp_400x400.jpg
+  links:
+    - type: twitter
+      uri: https://twitter.com/soniarvind
+    - type: github
+      uri: https://github.com/arvindsoni80

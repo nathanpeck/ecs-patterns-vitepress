@@ -12,3 +12,7 @@ cdk.out
 *.tfstate
 *.tfstate.backup
 .terraform*
+
+# These are your own personal settings for your own personal
+# Terraform Cloud deployment
+backend.tf
