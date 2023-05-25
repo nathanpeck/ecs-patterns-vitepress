@@ -11,7 +11,7 @@
   checked: false
 - key: tool
   value: terraform
-  label: HashiCorp Terraform
+  label: Terraform by HashiCorp
   color: '#578751'
   checked: false
 - key: tool

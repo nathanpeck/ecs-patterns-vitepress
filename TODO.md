@@ -1,2 +1,1 @@
 - Fix importing `Dockerfile` as a code snippet from file
-- Add a Markdown shortcode for importing a SVG, with automatic CSS variable interpolation
