@@ -11,7 +11,6 @@
    - `pattern/<pattern-name>` - A folder containing all the data for a specific published pattern
      - `pattern/<pattern-name>/index.md` - Markdown text file with the content of the pattern page itself.
      - `pattern/<pattern-name>/files` - A folder to hold any other files associated with the pattern, such as code, images, etc
-     - `pattern/<pattern-name>/cover.png` - A preview image for the pattern
 - `author` - Folder contains the detail pages for each pattern author
     - `author/<authorId>.md` - The custom bio content for each author profile page.
 

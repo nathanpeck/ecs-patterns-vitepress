@@ -123,6 +123,14 @@ Open the Amazon ECS cluster in the web console and verify that the service has b
 
 On the "Health & Metrics" tab of the service details page you can click on the load balancer name to navigate to the load balancer in the EC2 console. This will give you the load balancer's public facing CNAME that you can copy and paste into your browser to verify that the sample NGINX webserver is up and running.
 
+#### Tear it down
+
+You can tear down the entire stack with the following command:
+
+```shell
+sam delete --stack-name api-environment
+```
+
 #### Next Steps
 
 - This stack does not deploy an automatic scaling for the containerized service. You should [add scaling to your service](/scale-ecs-service-cloudformation).
